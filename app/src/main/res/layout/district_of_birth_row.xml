@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/district_background"
     android:paddingTop="@dimen/row_padding_top"
     android:paddingBottom="@dimen/row_padding_bottom">
 
-    <TextView
+    <org.eyeseetea.uicapp.views.TextCard
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:textColor="@color/district_text"
+        app:tFontName="@string/condensed_font_name"
         android:text="@string/district_title" />
 
-    <EditText
+    <org.eyeseetea.uicapp.views.EditCard
         android:id="@+id/district_edit_text"
         android:layout_marginLeft="@dimen/input_margin"
         android:layout_marginRight="@dimen/input_margin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:tFontName="@string/condensed_font_name"
         android:background="@color/white"/>
 </LinearLayout>

@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="shared_key_mother">mother_key</string>
-    <string name="shared_key_surname">surname_key</string>
-    <string name="shared_key_district">district_key</string>
-    <string name="shared_key_sex">sex_key</string>
-    <string name="shared_key_timestamp_date">timestamp_date</string>
-    <string name="default_no_date">-1</string>
+    <string name="shared_key_mother" translatable="false">mother_key</string>
+    <string name="shared_key_surname" translatable="false">surname_key</string>
+    <string name="shared_key_district" translatable="false">district_key</string>
+    <string name="shared_key_sex" translatable="false">sex_key</string>
+    <string name="shared_key_timestamp_date" translatable="false">timestamp_date</string>
+    <string name="default_no_date" translatable="false">-1</string>
+    <string name="normal_font" translatable="false">Roboto-Medium.ttf</string>
+    <string name="light_font" translatable="false">Roboto-Light.ttf</string>
+    <string name="bold_font_name" translatable="false">Roboto-Bold.ttf</string>
+    <string name="medium_font_name" translatable="false">Roboto-Medium.ttf</string>
+    <string name="condensed_font_name" translatable="false">Roboto-Condensed.ttf</string>
 </resources>

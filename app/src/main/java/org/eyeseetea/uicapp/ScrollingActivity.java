@@ -318,6 +318,10 @@ public class ScrollingActivity extends AppCompatActivity {
         refreshCode();
     }
 
+    /**
+     *  On click on copy button this method copy the code in the clipboard.
+     * @return
+     */
     public void copyCode(View view) {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText((getApplicationContext().getString(R.string.code_copy)), ((TextView)findViewById(R.id.code_text)).getText());
