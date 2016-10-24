@@ -23,24 +23,24 @@
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
             <RadioButton
                 android:id="@+id/radio_male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
+                android:onClick="onMaleClicked"
                 android:text="@string/sex_male"/>
             <RadioButton
                 android:id="@+id/radio_female"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
+                android:onClick="onFemaleClicked"
                 android:text="@string/sex_female"/>
             <RadioButton
                 android:id="@+id/radio_transgender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
+                android:onClick="onTransgenderClicked"
                 android:text="@string/sex_transgender"/>
         </RadioGroup>
     </LinearLayout>
