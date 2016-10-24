@@ -17,10 +17,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.TextView;
+
+import org.eyeseetea.uicapp.views.EditCard;
+import org.eyeseetea.uicapp.views.TextCard;
 
 import java.util.Calendar;
 
@@ -58,7 +59,7 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     private void refreshCode() {
-        TextView textView = (TextView) findViewById(R.id.code_text);
+        TextCard textView = (TextCard) findViewById(R.id.code_text);
         if(validateAllFields()){
             textView.setText(generateCode());
         }
@@ -176,11 +177,11 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     private void initValues() {
         //Init mother
-        initTextValue((EditText) findViewById(R.id.mother_edit_text), R.string.shared_key_mother, R.string.mother_error);
+        initTextValue((EditCard) findViewById(R.id.mother_edit_text), R.string.shared_key_mother, R.string.mother_error);
         //Init surname
-        initTextValue((EditText) findViewById(R.id.surname_edit_text), R.string.shared_key_surname, R.string.surname_error);
+        initTextValue((EditCard) findViewById(R.id.surname_edit_text), R.string.shared_key_surname, R.string.surname_error);
         //Init district
-        initTextValue((EditText) findViewById(R.id.district_edit_text), R.string.shared_key_district, R.string.district_error);
+        initTextValue((EditCard) findViewById(R.id.district_edit_text), R.string.shared_key_district, R.string.district_error);
 
         //Init district
         initDate();
@@ -226,7 +227,7 @@ public class ScrollingActivity extends AppCompatActivity {
      * Init editText and listeners
      *
      */
-    private void initTextValue(final EditText editText, final int keyId, final int errorId) {
+    private void initTextValue(final EditCard editText, final int keyId, final int errorId) {
         //Has value? show it
         String value= getStringFromSharedPreference(keyId);
         if(!value.equals("")){
@@ -324,7 +325,7 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     public void copyCode(View view) {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText((getApplicationContext().getString(R.string.code_copy)), ((TextView)findViewById(R.id.code_text)).getText());
+        ClipData clip = ClipData.newPlainText((getApplicationContext().getString(R.string.code_copy)), ((TextCard)findViewById(R.id.code_text)).getText());
         clipboard.setPrimaryClip(clip);
     }
 
@@ -365,12 +366,12 @@ public class ScrollingActivity extends AppCompatActivity {
                     putLongInSharedPreferences(newCalendar.getTimeInMillis(), R.string.shared_key_timestamp_date);
                     recoveryAndShowDate();
                     if(!validateDate()){
-                        TextView textView = (TextView)findViewById(R.id.date_header);
+                        TextCard textView = (TextCard)findViewById(R.id.date_header);
                         textView.setError(getApplicationContext().getString(R.string.date_error));
                         textView.callOnClick();
                         textView.requestLayout();
                     }else {
-                        TextView textView = (TextView)findViewById(R.id.date_header);
+                        TextCard textView = (TextCard)findViewById(R.id.date_header);
                         textView.setError(null);
                         //Refresh the generated code
                         refreshCode();
@@ -410,9 +411,9 @@ public class ScrollingActivity extends AppCompatActivity {
      * @return
      */
     private void setDateInViews(String calendarDay, String calendarMonth, String calendarYear) {
-        TextView dayTextView =(TextView) findViewById(R.id.day_value);
-        TextView monthTextView =(TextView) findViewById(R.id.month_value);
-        TextView yearTextView =(TextView) findViewById(R.id.year_value);
+        TextCard dayTextCard =(TextCard) findViewById(R.id.day_value);
+        TextCard monthTextCard =(TextCard) findViewById(R.id.month_value);
+        TextCard yearTextCard =(TextCard) findViewById(R.id.year_value);
         if(calendarDay.length()==1){
             calendarDay="0"+calendarDay;
         }
@@ -424,9 +425,9 @@ public class ScrollingActivity extends AppCompatActivity {
         if(calendarYear.length()==1){
             calendarYear="0"+calendarYear;
         }
-        dayTextView.setText(calendarDay+"");
-        monthTextView.setText(calendarMonth+"");
-        yearTextView.setText(calendarYear+"");
+        dayTextCard.setText(calendarDay+"");
+        monthTextCard.setText(calendarMonth+"");
+        yearTextCard.setText(calendarYear+"");
     }
 
     /**

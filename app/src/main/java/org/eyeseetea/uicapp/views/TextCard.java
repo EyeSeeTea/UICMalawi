@@ -55,7 +55,7 @@ public class TextCard extends TextView{
 
     public void init(AttributeSet attrs, int defStyle) {
         if(isInEditMode() && (getText()==null || getText().toString().isEmpty())){
-            this.setText(" ");
+            this.setText(R.string.app_name);
             return;
         }
         // Load attributes

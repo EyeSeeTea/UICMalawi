@@ -24,7 +24,6 @@ import android.content.res.AssetManager;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.widget.EditText;
 
 import org.eyeseetea.uicapp.R;
