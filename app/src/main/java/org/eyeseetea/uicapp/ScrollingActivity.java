@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -49,9 +50,90 @@ public class ScrollingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scrolling);
         createActionBar();
         initValues();
-
+        setCodeInView();
     }
-    
+
+    private void setCodeInView() {
+        TextView textView = (TextView) findViewById(R.id.code_text);
+        if(validations()){
+            textView.setText(generateCode());
+        }
+        else{
+            textView.setText(getApplicationContext().getString(R.string.code_invalid));
+        }
+    }
+
+    private String generateCode() {
+        String code="";
+        code = addCodeChars(code, R.string.shared_key_mother);
+        code = addCodeChars(code, R.string.shared_key_surname);
+        code = addCodeChars(code, R.string.shared_key_district);
+        code = addCodeChars(code, R.string.shared_key_mother);
+
+        Long defaultNoDate=Long.parseLong(getApplicationContext().getString(R.string.default_no_date));
+        Long timestamp = getLongFromSharedPreference(R.string.shared_key_timestamp_date, defaultNoDate);
+        Calendar newCalendar= Calendar.getInstance();
+        newCalendar.setTimeInMillis(timestamp);
+        String day = String.valueOf(getDay(newCalendar));
+        String month = String.valueOf(getMonth(newCalendar));
+        String year = String.valueOf(getYear(newCalendar));
+        if(day.length()<2){
+            day="0"+day;
+        }
+        code = code + day;
+        if(month.length()<2){
+            month="0"+month;
+        }
+        code = code + month;
+        code = code + year.substring(year.length()-2);
+        code = code + getStringFromSharedPreference(R.string.shared_key_sex).substring(0,1);
+        return code.toUpperCase();
+    }
+
+    @NonNull
+    private String addCodeChars(String code, int keyId) {
+        String temporalValue = getStringFromSharedPreference(keyId);
+        code = code + temporalValue.substring(temporalValue.length()-2);
+        return code;
+    }
+
+    private boolean validations() {
+
+        if(!validateText(R.string.shared_key_mother)) {
+            return false;
+        }
+
+        if(!validateText(R.string.shared_key_surname)) {
+            return false;
+        }
+
+        if(!validateText(R.string.shared_key_district)) {
+            return false;
+        }
+
+        if(!validateText(R.string.shared_key_sex)) {
+            return false;
+        }
+
+        Long defaultNoDate=Long.parseLong(getApplicationContext().getString(R.string.default_no_date));
+        Long timestamp = getLongFromSharedPreference(R.string.shared_key_timestamp_date, defaultNoDate);
+        if(timestamp.equals(defaultNoDate)){
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validateText(int keyId) {
+        String value = getStringFromSharedPreference(keyId);
+
+        if(value.length()>=2){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     /**
      * Creates the menu actionBar
      *
