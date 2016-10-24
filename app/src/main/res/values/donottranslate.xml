@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shared_key_mother">mother_key</string>
+    <string name="shared_key_surname">surname_key</string>
+    <string name="shared_key_district">district_key</string>
+    <string name="shared_key_sex">sex_key</string>
+    <string name="shared_key_day">day_key</string>
+    <string name="shared_key_month">month_key</string>
+    <string name="shared_key_year">year_key</string>
+</resources>
