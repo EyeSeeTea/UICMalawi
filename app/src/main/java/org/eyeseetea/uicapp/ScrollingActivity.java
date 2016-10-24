@@ -10,20 +10,38 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class ScrollingActivity extends AppCompatActivity {
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_scrolling, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_about_us) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +51,7 @@ public class ScrollingActivity extends AppCompatActivity {
         initValues();
 
     }
-
-
+    
     /**
      * Creates the menu actionBar
      *
@@ -72,7 +89,7 @@ public class ScrollingActivity extends AppCompatActivity {
         TextView dayTextView =(TextView) findViewById(R.id.day_value);
         TextView monthTextView =(TextView) findViewById(R.id.month_value);
         TextView yearTextView =(TextView) findViewById(R.id.year_value);
-        showDate();
+        recoveryAndShowDate();
         View.OnClickListener dateOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,8 +103,8 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     private void initSex(final int keyId) {
-        //Has value? show it
         String value= getStringFromSharedPreference(keyId);
+        //Set value if exist in sharedPreferences
         if(!value.equals("")){
             final String male=getApplication().getApplicationContext().getString(R.string.sex_male);
             String female=getApplication().getApplicationContext().getString(R.string.sex_female);
@@ -102,30 +119,9 @@ public class ScrollingActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_scrolling, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_about_us) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
 
     /**
-     * Inits editText and listeners
+     * Init editText and listeners
      *
      */
     private void initTextValue(EditText editText, final int keyId) {
@@ -169,7 +165,7 @@ public class ScrollingActivity extends AppCompatActivity {
         editor.commit();
     }
     /**
-     *  Puts the string value in the given key
+     *  Puts the Long value in the given key
      * @return
      */
     private void putLongInSharedPreferences(Long value, int keyId){
@@ -177,50 +173,64 @@ public class ScrollingActivity extends AppCompatActivity {
         SharedPreferences.Editor editor= sharedPreferences.edit();
         editor.putLong(getApplication().getBaseContext().getString(keyId), value);
         editor.commit();
-    }    /**
-     *  Puts the string value in the given key
+    }
+    /**
+     *  Puts the Long value in the given key
      * @return
      */
     private Long getLongFromSharedPreference(int keyId, Long defaultValue) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         return sharedPreferences.getLong(getApplicationContext().getResources().getString(keyId), Long.parseLong(defaultValue+""));
     }
-    
+
+    /**
+     *  On click on sex male this method save the male value
+     * @return
+     */
     public void onMaleClicked(View view) {
         putStringInSharedPreference(getApplicationContext().getString(R.string.sex_male), R.string.shared_key_sex);
     }
 
+
+    /**
+     *  On click on sex female this method save the female value
+     * @return
+     */
     public void onFemaleClicked(View view) {
         putStringInSharedPreference(getApplicationContext().getString(R.string.sex_female), R.string.shared_key_sex);
     }
 
+    /**
+     *  On click on sex transgender this method save the transgender value
+     * @return
+     */
     public void onTransgenderClicked(View view) {
         putStringInSharedPreference(getApplicationContext().getString(R.string.sex_transgender), R.string.shared_key_sex);
     }
 
 
+    /**
+     * DatepickerListener
+     * @return
+     */
     public class DatePickerListener implements Button.OnClickListener {
-
         int day,month,year;
         public DatePickerListener(View v) {
             Long defaultNoDate=Long.parseLong(getApplicationContext().getString(R.string.default_no_date));
             Long timestamp=getLongFromSharedPreference(R.string.shared_key_timestamp_date,defaultNoDate);
             if(timestamp.equals(defaultNoDate)){
+                //Set new calendar if the timestamp is a default date and set day,month,year.
                 Calendar newCalendar = Calendar.getInstance();
-                day = newCalendar.get(Calendar.DAY_OF_MONTH);
-                month = newCalendar.get(Calendar.MONTH) + 1;
-                year = newCalendar.get(Calendar.YEAR);
+                convertCalendarToLocalVariables(newCalendar);
             }
             else{
+                //Parse the saved date in SharedPreference to calendar and set day,month,year.
                 Calendar newCalendar = Calendar.getInstance();
                 newCalendar.setTimeInMillis(timestamp);
-                day = newCalendar.get(Calendar.DAY_OF_MONTH);
-                month = newCalendar.get(Calendar.MONTH) + 1;
-                year = newCalendar.get(Calendar.YEAR);
+                convertCalendarToLocalVariables(newCalendar);
             }
             onClick(v);
         }
-
 
         @Override
         public void onClick(final View v) {
@@ -233,16 +243,17 @@ public class ScrollingActivity extends AppCompatActivity {
                     newCalendar.set(newYear, newMonthOfYear, newDayOfMonth);
                     Calendar today= Calendar.getInstance();
                     if(newCalendar.before(today)) {
-                        day = newCalendar.get(Calendar.DAY_OF_MONTH);
-                        month = newCalendar.get(Calendar.MONTH) + 1; // Note: zero based!
-                        year = newCalendar.get(Calendar.YEAR);
+                        convertCalendarToLocalVariables(newCalendar);
                         putLongInSharedPreferences(newCalendar.getTimeInMillis(), R.string.shared_key_timestamp_date);
-                        showDate();
+                        recoveryAndShowDate();
                     }
                 }
             };
+
+            //Init a datepicker with the old values if exist, of with new values.
             DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(), datepickerlistener, year, month, day);
             datePickerDialog.show();
+
             //Hide the week numbers on the datepickerdialog
             try {
                 if(datePickerDialog.getDatePicker().getCalendarView()!=null)
@@ -254,9 +265,23 @@ public class ScrollingActivity extends AppCompatActivity {
             }
 
         }
+
+        /**
+         *  Used to set the datepicker local variables of  day/month/year
+         * @return
+         */
+        private void convertCalendarToLocalVariables(Calendar calendar) {
+            day = getDay(calendar);
+            month = getMonth(calendar);
+            year = getYear(calendar);
+        }
     }
 
-    private void putDateInViews(String calendarDay, String calendarMonth, String calendarYear) {
+    /**
+     *  Set date in day/month/year textviews
+     * @return
+     */
+    private void setDateInViews(String calendarDay, String calendarMonth, String calendarYear) {
         TextView dayTextView =(TextView) findViewById(R.id.day_value);
         TextView monthTextView =(TextView) findViewById(R.id.month_value);
         TextView yearTextView =(TextView) findViewById(R.id.year_value);
@@ -276,23 +301,47 @@ public class ScrollingActivity extends AppCompatActivity {
         yearTextView.setText(calendarYear+"");
     }
 
-    private void showDate() {
+    /**
+     *  Recovery date from sharedPreferences and show in textviews
+     * @return
+     */
+    private void recoveryAndShowDate() {
         Long defaultNoDate=Long.parseLong(getApplicationContext().getString(R.string.default_no_date));
         Long timestamp=getLongFromSharedPreference(R.string.shared_key_timestamp_date,defaultNoDate);
-        int day,month,year;
+        Calendar calendar;
         if(timestamp.equals(defaultNoDate)){
-            Calendar newCalendar = Calendar.getInstance();
-            day = newCalendar.get(Calendar.DAY_OF_MONTH);
-            month = newCalendar.get(Calendar.MONTH) + 1;
-            year = newCalendar.get(Calendar.YEAR);
+             calendar = Calendar.getInstance();
         }
         else{
-            Calendar newCalendar = Calendar.getInstance();
-            newCalendar.setTimeInMillis(timestamp);
-            day = newCalendar.get(Calendar.DAY_OF_MONTH);
-            month = newCalendar.get(Calendar.MONTH) + 1;
-            year = newCalendar.get(Calendar.YEAR);
+            calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(timestamp);
         }
-        putDateInViews(day+"", month+"", year+"");
+        int day = getDay(calendar);
+        int month = getMonth(calendar);
+        int year = getYear(calendar);
+        setDateInViews(day+"", month+"", year+"");
+    }
+    /**
+     *  Returns the year in a calendar date
+     * @return
+     */
+    private int getYear(Calendar newCalendar) {
+        return newCalendar.get(Calendar.YEAR);
+    }
+
+    /**
+     *  Returns the month in a calendar date
+     * @return
+     */
+    private int getMonth(Calendar newCalendar) {
+        return newCalendar.get(Calendar.MONTH) + 1;
+    }
+
+    /**
+     *  Returns the day in a calendar date
+     * @return
+     */
+    private int getDay(Calendar newCalendar) {
+        return newCalendar.get(Calendar.DAY_OF_MONTH);
     }
 }
