@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/date_background"
+    android:paddingTop="@dimen/row_padding_top"
+    android:paddingBottom="@dimen/row_padding_bottom">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:textColor="@color/date_text"
+        android:text="@string/date_title" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/input_margin"
+        android:layout_marginRight="@dimen/input_margin"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/day_title"
+            android:layout_weight="0.3"/>
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/month_title"
+            android:layout_weight="0.3" />
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/year_title"
+            android:layout_weight="0.3" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/input_margin"
+        android:layout_marginRight="@dimen/input_margin"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:background="@color/white">
+
+        <Spinner
+            android:id="@+id/day_spinner"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_margin="@dimen/text_margin"
+            android:layout_weight="0.3" />
+
+        <Spinner
+            android:id="@+id/month_spinner"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_margin="@dimen/text_margin"
+            android:layout_weight="0.3"/>
+
+        <Spinner
+            android:id="@+id/year_spinner"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_margin="@dimen/text_margin"
+            android:layout_weight="0.3"/>
+    </LinearLayout>
+</LinearLayout>
