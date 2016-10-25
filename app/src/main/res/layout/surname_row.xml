@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/surname_background"
+    android:layout_marginBottom="@dimen/row_marging_button"
     android:paddingTop="@dimen/row_padding_top"
     android:paddingBottom="@dimen/row_padding_bottom">
 
@@ -20,6 +21,7 @@
         android:id="@+id/surname_edit_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:inputType="text"
         android:layout_marginLeft="@dimen/input_margin"
         android:layout_marginRight="@dimen/input_margin"
         app:tFontName="@string/condensed_font_name"

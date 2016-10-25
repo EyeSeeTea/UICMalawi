@@ -4,14 +4,15 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/code_background"
+    android:layout_marginTop="@dimen/row_marging_top"
     android:paddingTop="@dimen/row_padding_top"
     android:paddingBottom="@dimen/row_padding_bottom">
     <org.eyeseetea.uicapp.views.TextCard
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="@dimen/code_text"
-        android:textColor="@color/code_text"
-        android:background="@drawable/code_header_background"
+        android:textColor="@color/code_header"
         android:gravity="center"
         app:tFontName="@string/condensed_font_name"
         android:text="@string/code_title" />
@@ -20,26 +21,29 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:weightSum="1">
+        <Button
+            android:layout_width="0px"
+            android:layout_weight="0.20"
+            android:layout_height="wrap_content"
+            android:background="@drawable/clear_button_drawable"
+            android:onClick="clearFields"  />
         <org.eyeseetea.uicapp.views.TextCard
             android:id="@+id/code_text"
             android:layout_width="0px"
-            android:layout_weight="0.80"
-            android:layout_height="match_parent"
+            android:layout_weight="0.60"
+            android:layout_height="wrap_content"
             android:text="@string/code_invalid"
-            android:background="@drawable/code_background"
             android:textColor="@color/code_text"
             android:gravity="center"
             app:tFontName="@string/condensed_font_name"
             android:textSize="@dimen/code_text"/>
-        <org.eyeseetea.uicapp.views.CustomButton
+        <Button
+            android:id="@+id/code_button"
             android:layout_width="0px"
             android:layout_weight="0.20"
             android:layout_height="wrap_content"
-            android:text="@string/code_copy"
-            android:textColor="@color/code_text"
-            android:background="@drawable/button_background"
-            android:onClick="copyCode"
-            app:tFontName="@string/condensed_font_name"
-            android:textSize="@dimen/code_text"/>
+            android:visibility="visible"
+            android:background="@drawable/copy_button_drawable"
+            android:onClick="copyCode"  />
     </LinearLayout>
 </LinearLayout>

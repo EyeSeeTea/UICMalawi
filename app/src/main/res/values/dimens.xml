@@ -4,6 +4,8 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="code_text">24dp</dimen>
     <dimen name="input_margin">10dp</dimen>
+    <dimen name="row_marging_top">12dp</dimen>
+    <dimen name="row_marging_button">3dp</dimen>
     <dimen name="row_padding_top">5dp</dimen>
     <dimen name="row_padding_bottom">10dp</dimen>
 
