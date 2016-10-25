@@ -21,4 +21,8 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="action_bar_background">#c0c0c0</color>
+    <color name="bluelight">#94adcf</color>
+    <color name="radio_button_disabled">@color/bluelight</color>
+    <color name="radio_button_focus">@color/bluelight</color>
+    <color name="radio_button_enabled">@color/white</color>
 </resources>

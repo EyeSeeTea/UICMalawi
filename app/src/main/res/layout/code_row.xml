@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/code_background"
-    android:layout_marginTop="@dimen/row_marging_top"
+    android:layout_marginTop="@dimen/row_margin_top"
     android:paddingTop="@dimen/row_padding_top"
     android:paddingBottom="@dimen/row_padding_bottom">
     <org.eyeseetea.uicapp.views.TextCard
