@@ -11,6 +11,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -62,9 +64,11 @@ public class ScrollingActivity extends AppCompatActivity {
         TextCard textView = (TextCard) findViewById(R.id.code_text);
         if(validateAllFields()){
             textView.setText(generateCode());
+            findViewById(R.id.code_button).setEnabled(true);
         }
         else{
             textView.setText(getApplicationContext().getString(R.string.code_invalid));
+            findViewById(R.id.code_button).setEnabled(false);
         }
     }
 
@@ -149,7 +153,7 @@ public class ScrollingActivity extends AppCompatActivity {
     private boolean validateText(int keyId) {
         String value = getStringFromSharedPreference(keyId);
         //At least two characters without numbers and with possible blank spaces
-        String regExp="^[ a-zA-Z]*([a-zA-Z]{1,}[ ]*[a-zA-Z]{1,})[ a-zA-Z]*$";
+        String regExp="^[ A-zÀ-ÿ]*([A-zÀ-ÿ]{1,}[ ]*[A-zÀ-ÿ]{1,})[ A-zÀ-ÿ]*$";
         if(value.matches(regExp)){
             return true;
         }else {
@@ -233,26 +237,42 @@ public class ScrollingActivity extends AppCompatActivity {
         if(!value.equals("")){
             editText.setText(value);
         }
+        editText.setFilters(new InputFilter[] { filter });
         //Editable? add listener
         editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                putStringInSharedPreference(String.valueOf(s),keyId);
-                if(!validateText(keyId)){
-                    editText.setError(getApplicationContext().getString(errorId));
+                //Ignore the clear fields validation.
+                if(!s.toString().equals("") || !getStringFromSharedPreference(keyId).equals(s.toString())){
+                    putStringInSharedPreference(String.valueOf(s),keyId);
+                    if(!validateText(keyId)){
+                        editText.setError(getApplicationContext().getString(errorId));
+                    }
+                    //Refresh the generated code
+                    refreshCode();
                 }
-                //Refresh the generated code
-                refreshCode();
             }
         });
 
     }
+    public static InputFilter filter = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            String blockCharacterSet = "~#^|$%*!@/()-'\":;,?{}=!$^';,?×÷<>{}€£¥₩%~`¤♡♥_|《》¡¿°•○●□■◇◆♧♣▲▼▶◀↑↓←→☆★▪:-);-):-D:-(:'(:O1234567890+.&";
+            if (source != null && blockCharacterSet.contains(("" + source))) {
+                return "";
+            }
+            return null;
+        }
+    };
 
     /**
      * Gets the string value for the given key
@@ -327,6 +347,29 @@ public class ScrollingActivity extends AppCompatActivity {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText((getApplicationContext().getString(R.string.code_copy)), ((TextCard)findViewById(R.id.code_text)).getText());
         clipboard.setPrimaryClip(clip);
+    }
+
+    /**
+     *  Clear shared preferences and reInit values and refresh generated code.
+     * @return
+     */
+    public void clearFields(View view) {
+
+        ((EditCard) findViewById(R.id.mother_edit_text)).setText("");
+        putStringInSharedPreference("", R.string.shared_key_mother);
+        ((EditCard) findViewById(R.id.surname_edit_text)).setText("");
+        putStringInSharedPreference("", R.string.shared_key_surname);
+        ((EditCard) findViewById(R.id.district_edit_text)).setText("");
+        putStringInSharedPreference("", R.string.shared_key_district);
+
+        ((RadioButton)findViewById(R.id.radio_male)).setChecked(false);
+        ((RadioButton)findViewById(R.id.radio_female)).setChecked(false);
+        ((RadioButton)findViewById(R.id.radio_transgender)).setChecked(false);
+        putStringInSharedPreference("", R.string.shared_key_sex);
+        Long defaultNoDate = Long.parseLong(getApplicationContext().getString(R.string.default_no_date));
+        putLongInSharedPreferences(defaultNoDate, R.string.shared_key_timestamp_date);
+
+        refreshCode();
     }
 
 
