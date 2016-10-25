@@ -6,7 +6,6 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -16,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
-import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,10 +28,8 @@ import android.widget.ScrollView;
 import org.eyeseetea.uicapp.views.EditCard;
 import org.eyeseetea.uicapp.views.TextCard;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class ScrollingActivity extends AppCompatActivity {
 
@@ -111,9 +107,9 @@ public class ScrollingActivity extends AppCompatActivity {
         Long timestamp = getLongFromSharedPreference(R.string.shared_key_timestamp_date, defaultNoDate);
         Calendar newCalendar= Calendar.getInstance();
         newCalendar.setTimeInMillis(timestamp);
-        String day = String.valueOf(getDay(newCalendar));
-        String month = String.valueOf(getMonth(newCalendar));
-        String year = String.valueOf(getYear(newCalendar));
+        String day = String.valueOf(Utils.getDay(newCalendar));
+        String month = String.valueOf(Utils.getMonth(newCalendar));
+        String year = String.valueOf(Utils.getYear(newCalendar));
         if(day.length()<2){
             day="0"+day;
         }
@@ -169,11 +165,8 @@ public class ScrollingActivity extends AppCompatActivity {
         }
         Calendar savedDate = Calendar.getInstance();
         savedDate.setTimeInMillis(timestamp);
-        Calendar today = Calendar.getInstance();
-        //Not pass the validation the dates after today or equals to today.
-        if(savedDate.after(today) || (getDay(today) == getDay(savedDate)
-                && getMonth(today) == getMonth(savedDate)
-                && getYear(today) == getYear(savedDate))){
+        //Not pass the validation if the saved data is bigger than today.
+        if(savedDate.getTimeInMillis()>= Utils.getTodayFirstTimestamp().getTime()){
             return false;
         }
         return true;
@@ -223,7 +216,23 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     private void initDate() {
-        ((EditCard)findViewById(R.id.date_value)).setInputType(0);
+        EditCard dateEditCard= (EditCard)findViewById(R.id.date_value);
+        dateEditCard.setInputType(0);
+        dateEditCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                (findViewById(R.id.date_value)).requestFocus();
+                showDatePicker(v);
+            }
+        });
+        //This listener solve a problem when the user click on dateEditText but other editText has the focus.
+        dateEditCard.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                (findViewById(R.id.date_value)).requestFocus();
+                return false;
+            }
+        });
         recoveryAndShowDate();
     }
 
@@ -262,7 +271,7 @@ public class ScrollingActivity extends AppCompatActivity {
         if(!value.equals("")){
             editText.setText(value);
         }
-        editText.setFilters(new InputFilter[] { filter });
+        editText.setFilters(new InputFilter[] { Utils.filter });
         //Editable? add listener
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -299,16 +308,6 @@ public class ScrollingActivity extends AppCompatActivity {
         });
 
     }
-    public static InputFilter filter = new InputFilter() {
-        @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-            String blockCharacterSet = "~#^|$%*!@/()-'\":;,?{}=!$^';,?×÷<>{}€£¥₩%~`¤♡♥_|《》¡¿°•○●□■◇◆♧♣▲▼▶◀↑↓←→☆★▪:-);-):-D:-(:'(:O1234567890+.&";
-            if (source != null && blockCharacterSet.contains(("" + source))) {
-                return "";
-            }
-            return null;
-        }
-    };
 
     /**
      * Gets the string value for the given key
@@ -426,6 +425,10 @@ public class ScrollingActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     *  Date editText listener
+     * @return
+     */
     public void showDatePicker(View view) {
         new DatePickerListener(view);
     }
@@ -499,9 +502,9 @@ public class ScrollingActivity extends AppCompatActivity {
          * @return
          */
         private void convertCalendarToLocalVariables(Calendar calendar) {
-            day = getDay(calendar);
-            month = getMonth(calendar);
-            year = getYear(calendar);
+            day = Utils.getDay(calendar);
+            month = Utils.getMonth(calendar);
+            year = Utils.getYear(calendar);
         }
     }
 
@@ -531,46 +534,7 @@ public class ScrollingActivity extends AppCompatActivity {
             calendar = Calendar.getInstance();
             calendar.setTimeInMillis(timestamp);
         }
-
         showDate(calendar);
     }
-    /**
-     *  Returns the year in a calendar date
-     * @return
-     */
-    private int getYear(Calendar newCalendar) {
-        return newCalendar.get(Calendar.YEAR);
-    }
 
-    /**
-     *  Returns the month in a calendar date
-     * @return
-     */
-    private int getMonth(Calendar newCalendar) {
-        return newCalendar.get(Calendar.MONTH) + 1;
-    }
-
-    /**
-     *  Returns the day in a calendar date
-     * @return
-     */
-    private int getDay(Calendar newCalendar) {
-        return newCalendar.get(Calendar.DAY_OF_MONTH);
-    }
-
-    /**
-     * Get today date with the correct year month and day but: 00:00:00 00:00:00
-     *
-     * @return
-     */
-    public static Date getTodayFirstTimestamp() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        calendar.set(Calendar.MILLISECOND, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.HOUR, 0);
-
-        return calendar.getTime();
-    }
 }
