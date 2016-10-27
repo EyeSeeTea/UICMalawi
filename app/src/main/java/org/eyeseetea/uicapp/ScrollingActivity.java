@@ -24,6 +24,8 @@ import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import org.eyeseetea.uicapp.views.CustomButton;
 import org.eyeseetea.uicapp.views.EditCard;
 import org.eyeseetea.uicapp.views.TextCard;
@@ -67,6 +69,7 @@ public class ScrollingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_scrolling);
         initViews();
         createActionBar();
