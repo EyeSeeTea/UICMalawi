@@ -16,16 +16,15 @@
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_weight="0.20"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical">
-        <ImageButton
-            android:layout_width="wrap_content"
+            android:layout_weight="0.21" >
+        <ImageView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/clear_button_drawable"
+            android:src="@drawable/clear_button_drawable"
+            android:onClick="clearFields"
+            android:layout_centerHorizontal="true"
             android:adjustViewBounds="true"
-            android:scaleType="centerInside"
-            android:onClick="clearFields"  />
+            android:scaleType="centerInside"   />
         </LinearLayout>
         <LinearLayout
             android:layout_width="0px"
@@ -56,17 +55,16 @@
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_weight="0.20"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical">
-            <ImageButton
+            android:layout_weight="0.19" >
+            <ImageView
                 android:id="@+id/code_button"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/copy_button_drawable"
+                android:src="@drawable/copy_button_drawable"
+                android:onClick="copyCode"
+                android:layout_centerHorizontal="true"
                 android:adjustViewBounds="true"
-                android:scaleType="centerInside"
-                android:onClick="copyCode"  />
+                android:scaleType="centerInside"  />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
