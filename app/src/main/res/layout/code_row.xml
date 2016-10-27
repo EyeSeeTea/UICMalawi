@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="@dimen/row_padding_top"
     android:paddingBottom="@dimen/row_padding_bottom">
-    <TextView
+    <org.eyeseetea.uicapp.views.TextCard
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="@dimen/code_text"
         android:textColor="@color/code_text"
         android:background="@drawable/code_header_background"
         android:gravity="center"
+        app:tFontName="@string/condensed_font_name"
         android:text="@string/code_title" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:weightSum="1">
-        <TextView
+        <org.eyeseetea.uicapp.views.TextCard
             android:id="@+id/code_text"
             android:layout_width="0px"
             android:layout_weight="0.80"
@@ -26,8 +29,9 @@
             android:background="@drawable/code_background"
             android:textColor="@color/code_text"
             android:gravity="center"
+            app:tFontName="@string/condensed_font_name"
             android:textSize="@dimen/code_text"/>
-        <Button
+        <org.eyeseetea.uicapp.views.CustomButton
             android:layout_width="0px"
             android:layout_weight="0.20"
             android:layout_height="wrap_content"
@@ -35,6 +39,7 @@
             android:textColor="@color/code_text"
             android:background="@drawable/button_background"
             android:onClick="copyCode"
+            app:tFontName="@string/condensed_font_name"
             android:textSize="@dimen/code_text"/>
     </LinearLayout>
 </LinearLayout>

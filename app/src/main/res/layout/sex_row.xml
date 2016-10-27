@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/sex_background"
     android:paddingTop="@dimen/row_padding_top"
     android:paddingBottom="@dimen/row_padding_bottom">
 
-    <TextView
+    <org.eyeseetea.uicapp.views.TextCard
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:textColor="@color/sex_text"
+        app:tFontName="@string/condensed_font_name"
         android:text="@string/sex_title" />
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,23 +27,26 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <RadioButton
+            <org.eyeseetea.uicapp.views.CustomRadioButton
                 android:id="@+id/radio_male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onMaleClicked"
+                app:tFontName="@string/light_font"
                 android:text="@string/sex_male"/>
-            <RadioButton
+            <org.eyeseetea.uicapp.views.CustomRadioButton
                 android:id="@+id/radio_female"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onFemaleClicked"
+                app:tFontName="@string/light_font"
                 android:text="@string/sex_female"/>
-            <RadioButton
+            <org.eyeseetea.uicapp.views.CustomRadioButton
                 android:id="@+id/radio_transgender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onTransgenderClicked"
+                app:tFontName="@string/bold_font_name"
                 android:text="@string/sex_transgender"/>
         </RadioGroup>
     </LinearLayout>
