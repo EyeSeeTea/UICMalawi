@@ -296,6 +296,9 @@ public class ScrollingActivity extends AppCompatActivity {
                 if(!validateText(keyId) && isValidationErrorActive){
                     editText.setError(getApplicationContext().getString(errorId));
                 }
+                else{
+                    editText.setError(null);
+                }
                 //Refresh the generated code
                 refreshCode();
             }
