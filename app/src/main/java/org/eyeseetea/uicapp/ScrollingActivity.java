@@ -1,9 +1,13 @@
 package org.eyeseetea.uicapp;
 
 import android.app.DatePickerDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -14,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -49,9 +54,107 @@ public class ScrollingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scrolling);
         createActionBar();
         initValues();
-
+        refreshCode();
     }
-    
+
+    private void refreshCode() {
+        TextView textView = (TextView) findViewById(R.id.code_text);
+        if(validateAllFields()){
+            textView.setText(generateCode());
+        } else {
+            textView.setText(getApplicationContext().getString(R.string.code_invalid));
+        }
+    }
+
+    private String generateCode() {
+        String code="";
+        code += getLast2CharsFromPreference(R.string.shared_key_mother);
+        code += getLast2CharsFromPreference(R.string.shared_key_surname);
+        code += getLast2CharsFromPreference(R.string.shared_key_district);
+
+        Long defaultNoDate=Long.parseLong(getApplicationContext().getString(R.string.default_no_date));
+        Long timestamp = getLongFromSharedPreference(R.string.shared_key_timestamp_date, defaultNoDate);
+        Calendar newCalendar= Calendar.getInstance();
+        newCalendar.setTimeInMillis(timestamp);
+
+        String day = String.format("%02d", getDay(newCalendar));
+        String month = String.format("%02d", getMonth(newCalendar));
+        String year = String.valueOf(getYear(newCalendar));
+
+        code += day;
+        code += month;
+        code += year.substring(year.length()-2);
+        code += getStringFromSharedPreference(R.string.shared_key_sex).substring(0,1);
+
+        return code.toUpperCase();
+    }
+
+    /**
+     * Given a String key ID, this method looks for it in the preferences and return the last 2 chars
+     * @param keyId String key to look for in preferences
+     * @return String containing the last 2 characters
+     */
+    @NonNull
+    private String getLast2CharsFromPreference(int keyId) {
+        String temporalValue = getStringFromSharedPreference(keyId);
+        temporalValue = temporalValue.replace(" ", "");
+        return temporalValue.substring(temporalValue.length()-2);
+    }
+
+    private boolean validateAllFields() {
+
+        if(!validateText(R.string.shared_key_mother)) {
+            return false;
+        }
+
+        if(!validateText(R.string.shared_key_surname)) {
+            return false;
+        }
+
+        if(!validateText(R.string.shared_key_district)) {
+            return false;
+        }
+
+        if(getStringFromSharedPreference(R.string.shared_key_sex).equals("")) {
+            return false;
+        }
+
+        if(!validateDate()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validateDate() {
+        Long defaultNoDate=Long.parseLong(getApplicationContext().getString(R.string.default_no_date));
+        Long timestamp = getLongFromSharedPreference(R.string.shared_key_timestamp_date, defaultNoDate);
+        if(timestamp.equals(defaultNoDate)){
+            return false;
+        }
+        Calendar savedDate = Calendar.getInstance();
+        savedDate.setTimeInMillis(timestamp);
+        Calendar today = Calendar.getInstance();
+        //Not pass the validation the dates after today or equals to today.
+        if(savedDate.after(today) || (getDay(today) == getDay(savedDate)
+                && getMonth(today) == getMonth(savedDate)
+                && getYear(today) == getYear(savedDate))){
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateText(int keyId) {
+        String value = getStringFromSharedPreference(keyId);
+        //At least two characters without numbers and with possible blank spaces
+        String regExp="^[ a-zA-Z]*([a-zA-Z]{1,}[ ]*[a-zA-Z]{1,})[ a-zA-Z]*$";
+        if(value.matches(regExp)){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     /**
      * Creates the menu actionBar
      *
@@ -72,11 +175,11 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     private void initValues() {
         //Init mother
-        initTextValue((EditText) findViewById(R.id.mother_edit_text), R.string.shared_key_mother);
+        initTextValue((EditText) findViewById(R.id.mother_edit_text), R.string.shared_key_mother, R.string.mother_error);
         //Init surname
-        initTextValue((EditText) findViewById(R.id.surname_edit_text), R.string.shared_key_surname);
+        initTextValue((EditText) findViewById(R.id.surname_edit_text), R.string.shared_key_surname, R.string.surname_error);
         //Init district
-        initTextValue((EditText) findViewById(R.id.district_edit_text), R.string.shared_key_district);
+        initTextValue((EditText) findViewById(R.id.district_edit_text), R.string.shared_key_district, R.string.district_error);
 
         //Init district
         initDate();
@@ -86,9 +189,7 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     private void initDate() {
-        TextView dayTextView =(TextView) findViewById(R.id.day_value);
-        TextView monthTextView =(TextView) findViewById(R.id.month_value);
-        TextView yearTextView =(TextView) findViewById(R.id.year_value);
+        LinearLayout dateFields =(LinearLayout) findViewById(R.id.day_date);
         recoveryAndShowDate();
         View.OnClickListener dateOnClickListener = new View.OnClickListener() {
             @Override
@@ -97,9 +198,7 @@ public class ScrollingActivity extends AppCompatActivity {
             }
         };
 
-        yearTextView.setOnClickListener(dateOnClickListener);
-        monthTextView.setOnClickListener(dateOnClickListener);
-        dayTextView.setOnClickListener(dateOnClickListener);
+        dateFields.setOnClickListener(dateOnClickListener);
     }
 
     private void initSex(final int keyId) {
@@ -116,6 +215,8 @@ public class ScrollingActivity extends AppCompatActivity {
             }else if (value.equals(trasngender)){
                 ((RadioButton)findViewById(R.id.radio_transgender)).setChecked(true);
             }
+            //Refresh the generated code
+            refreshCode();
         }
     }
 
@@ -124,7 +225,7 @@ public class ScrollingActivity extends AppCompatActivity {
      * Init editText and listeners
      *
      */
-    private void initTextValue(EditText editText, final int keyId) {
+    private void initTextValue(final EditText editText, final int keyId, final int errorId) {
         //Has value? show it
         String value= getStringFromSharedPreference(keyId);
         if(!value.equals("")){
@@ -141,6 +242,11 @@ public class ScrollingActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 putStringInSharedPreference(String.valueOf(s),keyId);
+                if(!validateText(keyId)){
+                    editText.setError(getApplicationContext().getString(errorId));
+                }
+                //Refresh the generated code
+                refreshCode();
             }
         });
 
@@ -189,6 +295,7 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     public void onMaleClicked(View view) {
         putStringInSharedPreference(getApplicationContext().getString(R.string.sex_male), R.string.shared_key_sex);
+        refreshCode();
     }
 
 
@@ -198,6 +305,7 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     public void onFemaleClicked(View view) {
         putStringInSharedPreference(getApplicationContext().getString(R.string.sex_female), R.string.shared_key_sex);
+        refreshCode();
     }
 
     /**
@@ -206,6 +314,13 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     public void onTransgenderClicked(View view) {
         putStringInSharedPreference(getApplicationContext().getString(R.string.sex_transgender), R.string.shared_key_sex);
+        refreshCode();
+    }
+
+    public void copyCode(View view) {
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText((getApplicationContext().getString(R.string.code_copy)), ((TextView)findViewById(R.id.code_text)).getText());
+        clipboard.setPrimaryClip(clip);
     }
 
 
@@ -241,17 +356,25 @@ public class ScrollingActivity extends AppCompatActivity {
                 public void onDateSet(DatePicker view, int newYear, int newMonthOfYear, int newDayOfMonth) {
                     Calendar newCalendar = Calendar.getInstance();
                     newCalendar.set(newYear, newMonthOfYear, newDayOfMonth);
-                    Calendar today= Calendar.getInstance();
-                    if(newCalendar.before(today)) {
-                        convertCalendarToLocalVariables(newCalendar);
-                        putLongInSharedPreferences(newCalendar.getTimeInMillis(), R.string.shared_key_timestamp_date);
-                        recoveryAndShowDate();
+                    convertCalendarToLocalVariables(newCalendar);
+                    putLongInSharedPreferences(newCalendar.getTimeInMillis(), R.string.shared_key_timestamp_date);
+                    recoveryAndShowDate();
+                    if(!validateDate()){
+                        TextView textView = (TextView)findViewById(R.id.date_header);
+                        textView.setError(getApplicationContext().getString(R.string.date_error));
+                        textView.callOnClick();
+                        textView.requestLayout();
+                    }else {
+                        TextView textView = (TextView)findViewById(R.id.date_header);
+                        textView.setError(null);
+                        //Refresh the generated code
+                        refreshCode();
                     }
                 }
             };
 
             //Init a datepicker with the old values if exist, of with new values.
-            DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(), datepickerlistener, year, month, day);
+            DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(), datepickerlistener, year, month-1, day);
             datePickerDialog.show();
 
             //Hide the week numbers on the datepickerdialog

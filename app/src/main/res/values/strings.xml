@@ -15,4 +15,12 @@
     <string name="code_copy">Copy</string>
     <string name="code_invalid">Invalid</string>
     <string name="action_about_us">About us</string>
+
+    <string name="mother_error">"The field needs at least two characters"</string>
+    <string name="surname_error">"The field needs at least two characters"</string>
+    <string name="district_error">"The field needs at least two characters"</string>
+    <string name="sex_error">"The sex needs be selected"</string>
+    <string name="date_error">"The field needs a valid date"</string>
+
+
 </resources>
