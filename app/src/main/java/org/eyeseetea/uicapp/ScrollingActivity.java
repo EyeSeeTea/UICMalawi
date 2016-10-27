@@ -54,10 +54,12 @@ public class ScrollingActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_about_us) {
+            Utils.showAlertWithHtmlMessageAndLastCommit(R.string.action_about_us, R.raw.about, this);
             return true;
         }
         if(id == android.R.id.home) {
             onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

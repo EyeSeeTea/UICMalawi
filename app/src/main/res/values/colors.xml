@@ -31,4 +31,6 @@
     <color name="radio_button_focus">@color/bluelight</color>
     <color name="radio_button_enabled">@color/white</color>
     <color name="hint_color">#c2c2c2</color>
+    <color name="transparent">#00000000</color>
+    <color name="dialog_button_text">#06988a</color>
 </resources>
