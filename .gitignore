@@ -44,3 +44,6 @@ captures/
 
 # Last commit file
 app/src/main/res/raw/lastcommit.txt
+
+# Crashlytics
+app/fabric.properties
