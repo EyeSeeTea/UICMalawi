@@ -16,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -25,7 +24,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 import org.eyeseetea.uicapp.views.EditCard;
 import org.eyeseetea.uicapp.views.TextCard;
