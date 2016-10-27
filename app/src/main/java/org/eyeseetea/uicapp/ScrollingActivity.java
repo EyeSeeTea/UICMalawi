@@ -61,8 +61,7 @@ public class ScrollingActivity extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.code_text);
         if(validateAllFields()){
             textView.setText(generateCode());
-        }
-        else{
+        } else {
             textView.setText(getApplicationContext().getString(R.string.code_invalid));
         }
     }
