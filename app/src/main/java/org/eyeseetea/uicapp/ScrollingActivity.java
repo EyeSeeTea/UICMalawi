@@ -69,9 +69,9 @@ public class ScrollingActivity extends AppCompatActivity {
 
     private String generateCode() {
         String code="";
-        code = addCodeChars(code, R.string.shared_key_mother);
-        code = addCodeChars(code, R.string.shared_key_surname);
-        code = addCodeChars(code, R.string.shared_key_district);
+        code += getLast2CharsFromPreference(R.string.shared_key_mother);
+        code += getLast2CharsFromPreference(R.string.shared_key_surname);
+        code += getLast2CharsFromPreference(R.string.shared_key_district);
 
         Long defaultNoDate=Long.parseLong(getApplicationContext().getString(R.string.default_no_date));
         Long timestamp = getLongFromSharedPreference(R.string.shared_key_timestamp_date, defaultNoDate);
@@ -90,12 +90,16 @@ public class ScrollingActivity extends AppCompatActivity {
         return code.toUpperCase();
     }
 
+    /**
+     * Given a String key ID, this method looks for it in the preferences and return the last 2 chars
+     * @param keyId String key to look for in preferences
+     * @return String containing the last 2 characters
+     */
     @NonNull
-    private String addCodeChars(String code, int keyId) {
+    private String getLast2CharsFromPreference(int keyId) {
         String temporalValue = getStringFromSharedPreference(keyId);
         temporalValue = temporalValue.replace(" ", "");
-        code = code + temporalValue.substring(temporalValue.length()-2);
-        return code;
+        return temporalValue.substring(temporalValue.length()-2);
     }
 
     private boolean validateAllFields() {
