@@ -62,45 +62,44 @@ public class ScrollingActivity extends AppCompatActivity {
         TextCard textView = (TextCard) findViewById(R.id.code_text);
         if(validateAllFields()){
             textView.setText(generateCode());
-        }
-        else{
+        } else {
             textView.setText(getApplicationContext().getString(R.string.code_invalid));
         }
     }
 
     private String generateCode() {
         String code="";
-        code = addCodeChars(code, R.string.shared_key_mother);
-        code = addCodeChars(code, R.string.shared_key_surname);
-        code = addCodeChars(code, R.string.shared_key_district);
+        code += getLast2CharsFromPreference(R.string.shared_key_mother);
+        code += getLast2CharsFromPreference(R.string.shared_key_surname);
+        code += getLast2CharsFromPreference(R.string.shared_key_district);
 
         Long defaultNoDate=Long.parseLong(getApplicationContext().getString(R.string.default_no_date));
         Long timestamp = getLongFromSharedPreference(R.string.shared_key_timestamp_date, defaultNoDate);
         Calendar newCalendar= Calendar.getInstance();
         newCalendar.setTimeInMillis(timestamp);
-        String day = String.valueOf(getDay(newCalendar));
-        String month = String.valueOf(getMonth(newCalendar));
-        String year = String.valueOf(getYear(newCalendar));
-        if(day.length()<2){
-            day="0"+day;
-        }
-        code = code + day;
-        if(month.length()<2){
-            month="0"+month;
-        }
-        code = code + month;
-        code = code + year.substring(year.length()-2);
 
-        code = code + getStringFromSharedPreference(R.string.shared_key_sex).substring(0,1);
+        String day = String.format("%02d", getDay(newCalendar));
+        String month = String.format("%02d", getMonth(newCalendar));
+        String year = String.valueOf(getYear(newCalendar));
+
+        code += day;
+        code += month;
+        code += year.substring(year.length()-2);
+        code += getStringFromSharedPreference(R.string.shared_key_sex).substring(0,1);
+
         return code.toUpperCase();
     }
 
+    /**
+     * Given a String key ID, this method looks for it in the preferences and return the last 2 chars
+     * @param keyId String key to look for in preferences
+     * @return String containing the last 2 characters
+     */
     @NonNull
-    private String addCodeChars(String code, int keyId) {
+    private String getLast2CharsFromPreference(int keyId) {
         String temporalValue = getStringFromSharedPreference(keyId);
         temporalValue = temporalValue.replace(" ", "");
-        code = code + temporalValue.substring(temporalValue.length()-2);
-        return code;
+        return temporalValue.substring(temporalValue.length()-2);
     }
 
     private boolean validateAllFields() {
