@@ -1,12 +1,10 @@
 package org.eyeseetea.uicapp;
 
-import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -23,8 +21,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.ScrollView;
 
+import org.eyeseetea.uicapp.views.CustomButton;
 import org.eyeseetea.uicapp.views.EditCard;
 import org.eyeseetea.uicapp.views.TextCard;
 
@@ -32,6 +32,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class ScrollingActivity extends AppCompatActivity {
+
+    ViewHolders viewHolders;
 
     //Flag to prevent the bad positive errors in the validation when the user clear all the fields
     public static boolean isValidationErrorActive =true;
@@ -66,6 +68,7 @@ public class ScrollingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolling);
+        initViews();
         createActionBar();
         initValues();
         refreshCode();
@@ -90,13 +93,13 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     private void refreshCode() {
-        TextCard textView = (TextCard) findViewById(R.id.code_text);
+        TextCard textView = viewHolders.code;
         if(validateAllFields()){
             textView.setText(generateCode());
-            findViewById(R.id.code_button).setEnabled(true);
+            viewHolders.codeButton.setEnabled(true);
         } else {
             textView.setText(getApplicationContext().getString(R.string.code_invalid));
-            findViewById(R.id.code_button).setEnabled(false);
+            viewHolders.codeButton.setEnabled(false);
         }
     }
 
@@ -206,11 +209,11 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     private void initValues() {
         //Init mother
-        initTextValue((EditCard) findViewById(R.id.mother_edit_text), R.string.shared_key_mother, R.string.mother_error);
+        initTextValue(viewHolders.motherName, R.string.shared_key_mother, R.string.mother_error);
         //Init surname
-        initTextValue((EditCard) findViewById(R.id.surname_edit_text), R.string.shared_key_surname, R.string.surname_error);
+        initTextValue(viewHolders.surname, R.string.shared_key_surname, R.string.surname_error);
         //Init district
-        initTextValue((EditCard) findViewById(R.id.district_edit_text), R.string.shared_key_district, R.string.district_error);
+        initTextValue(viewHolders.district, R.string.shared_key_district, R.string.district_error);
 
         //Init district
         initDate();
@@ -220,12 +223,12 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     private void initDate() {
-        EditCard dateEditCard= (EditCard)findViewById(R.id.date_value);
+        EditCard dateEditCard= viewHolders.date;
         dateEditCard.setInputType(0);
         dateEditCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                (findViewById(R.id.date_value)).requestFocus();
+                viewHolders.date.requestFocus();
                 showDatePicker(v);
             }
         });
@@ -233,7 +236,7 @@ public class ScrollingActivity extends AppCompatActivity {
         dateEditCard.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                (findViewById(R.id.date_value)).requestFocus();
+                viewHolders.date.requestFocus();
                 return false;
             }
         });
@@ -255,9 +258,9 @@ public class ScrollingActivity extends AppCompatActivity {
                 onTransgenderClicked(null);
             }
             else{
-                (findViewById(R.id.radio_male)).setEnabled(false);
-                (findViewById(R.id.radio_female)).setEnabled(false);
-                (findViewById(R.id.radio_transgender)).setEnabled(false);
+                viewHolders.male.setEnabled(false);
+                viewHolders.female.setEnabled(false);
+                viewHolders.transgender.setEnabled(false);
             }
             //Refresh the generated code
             refreshCode();
@@ -359,9 +362,9 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     public void onMaleClicked(View view) {
         putStringInSharedPreference(getApplicationContext().getString(R.string.sex_male), R.string.shared_key_sex);
-        (findViewById(R.id.radio_male)).setActivated(true);
-        (findViewById(R.id.radio_female)).setActivated(false);
-        (findViewById(R.id.radio_transgender)).setActivated(false);
+        viewHolders.male.setActivated(true);
+        viewHolders.female.setActivated(false);
+        viewHolders.transgender.setActivated(false);
         refreshCode();
     }
 
@@ -372,9 +375,9 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     public void onFemaleClicked(View view) {
         putStringInSharedPreference(getApplicationContext().getString(R.string.sex_female), R.string.shared_key_sex);
-        (findViewById(R.id.radio_male)).setActivated(false);
-        (findViewById(R.id.radio_female)).setActivated(true);
-        (findViewById(R.id.radio_transgender)).setActivated(false);
+        viewHolders.male.setActivated(false);
+        viewHolders.female.setActivated(true);
+        viewHolders.transgender.setActivated(false);
         refreshCode();
     }
 
@@ -384,9 +387,9 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     public void onTransgenderClicked(View view) {
         putStringInSharedPreference(getApplicationContext().getString(R.string.sex_transgender), R.string.shared_key_sex);
-        (findViewById(R.id.radio_male)).setActivated(false);
-        (findViewById(R.id.radio_female)).setActivated(false);
-        (findViewById(R.id.radio_transgender)).setActivated(true);
+        viewHolders.male.setActivated(false);
+        viewHolders.female.setActivated(false);
+        viewHolders.transgender.setActivated(true);
         refreshCode();
     }
 
@@ -396,7 +399,7 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     public void copyCode(View view) {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText((getApplicationContext().getString(R.string.code_copy)), ((TextCard)findViewById(R.id.code_text)).getText());
+        ClipData clip = ClipData.newPlainText((getApplicationContext().getString(R.string.code_copy)), viewHolders.code.getText());
         clipboard.setPrimaryClip(clip);
     }
 
@@ -406,16 +409,16 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     public void clearFields(View view) {
         isValidationErrorActive=false;
-        ((EditCard) findViewById(R.id.mother_edit_text)).setText("");
+        viewHolders.motherName.setText("");
         putStringInSharedPreference("", R.string.shared_key_mother);
-        ((EditCard) findViewById(R.id.surname_edit_text)).setText("");
+        viewHolders.surname.setText("");
         putStringInSharedPreference("", R.string.shared_key_surname);
-        ((EditCard) findViewById(R.id.district_edit_text)).setText("");
+        viewHolders.district.setText("");
         putStringInSharedPreference("", R.string.shared_key_district);
 
-        (findViewById(R.id.radio_male)).setActivated(false);
-        (findViewById(R.id.radio_female)).setActivated(false);
-        (findViewById(R.id.radio_transgender)).setActivated(false);
+        viewHolders.male.setActivated(false);
+        viewHolders.female.setActivated(false);
+        viewHolders.transgender.setActivated(false);
 
         putStringInSharedPreference("", R.string.shared_key_sex);
         Long defaultNoDate = Long.parseLong(getApplicationContext().getString(R.string.default_no_date));
@@ -477,10 +480,10 @@ public class ScrollingActivity extends AppCompatActivity {
                     putLongInSharedPreferences(newCalendar.getTimeInMillis(), R.string.shared_key_timestamp_date);
                     recoveryAndShowDate();
                     if(!validateDate()){
-                        EditCard editCard = (EditCard)findViewById(R.id.date_value);
+                        EditCard editCard = viewHolders.date;
                         editCard.setError(getApplicationContext().getString(R.string.date_error));
                     }else {
-                        EditCard editCard = (EditCard)findViewById(R.id.date_value);
+                        EditCard editCard = viewHolders.date;
                         editCard.setError(null);
                         //Refresh the generated code
                     }
@@ -522,8 +525,7 @@ public class ScrollingActivity extends AppCompatActivity {
     private void showDate(Calendar calendar) {
         SimpleDateFormat simpleDateFormat= new SimpleDateFormat("d MMM yyyy");
         String calendarDay= simpleDateFormat.format(calendar.getTime());
-        EditCard dateEditCard =(EditCard) findViewById(R.id.date_value);
-        dateEditCard.setText(calendarDay);
+        viewHolders.date.setText(calendarDay);
     }
 
     /**
@@ -542,5 +544,56 @@ public class ScrollingActivity extends AppCompatActivity {
             calendar.setTimeInMillis(timestamp);
         }
         showDate(calendar);
+    }
+
+    /**
+     * Init holders on holders class
+     */
+    public void initViews(){
+        if (viewHolders == null) {
+            viewHolders = new ViewHolders();
+        }
+        if (viewHolders.motherName==null){
+            viewHolders.motherName = (EditCard) findViewById(R.id.mother_edit_text);
+        }
+        if (viewHolders.surname==null){
+            viewHolders.surname = (EditCard) findViewById(R.id.surname_edit_text);
+        }
+        if (viewHolders.district==null){
+            viewHolders.district = (EditCard) findViewById(R.id.district_edit_text);
+        }
+        if (viewHolders.date==null){
+            viewHolders.date = (EditCard) findViewById(R.id.date_value);
+        }
+        if (viewHolders.male==null){
+            viewHolders.male = (CustomButton) (findViewById(R.id.radio_male));
+        }
+        if (viewHolders.female==null){
+            viewHolders.female = (CustomButton) (findViewById(R.id.radio_female));
+        }
+        if (viewHolders.transgender==null){
+            viewHolders.transgender = (CustomButton) (findViewById(R.id.radio_transgender));
+        }
+        if (viewHolders.code==null){
+            viewHolders.code = (TextCard) findViewById(R.id.code_text);
+        }
+        if (viewHolders.codeButton==null) {
+            viewHolders.codeButton = (ImageButton)findViewById(R.id.code_button);
+        }
+    }
+
+    /**
+     * Holders to boost views access avoiding to findById so often
+     */
+    static class ViewHolders{
+        EditCard motherName;
+        EditCard surname;
+        EditCard district;
+        EditCard date;
+        CustomButton male;
+        CustomButton female;
+        CustomButton transgender;
+        TextCard code;
+        ImageButton codeButton;
     }
 }
