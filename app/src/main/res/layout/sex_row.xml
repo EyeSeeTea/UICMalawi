@@ -11,7 +11,8 @@
     <org.eyeseetea.uicapp.views.TextCard
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:textSize="@dimen/title_text_size"
         android:textColor="@color/sex_text"
         app:tFontName="@string/condensed_font_name"
         android:text="@string/sex_title" />
@@ -21,31 +22,42 @@
         android:layout_marginLeft="@dimen/input_margin"
         android:layout_marginRight="@dimen/input_margin"
         android:orientation="horizontal"
-        android:background="@color/white"
         >
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical">
-            <org.eyeseetea.uicapp.views.CustomRadioButton
+            <org.eyeseetea.uicapp.views.CustomButton
                 android:id="@+id/radio_male"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="onMaleClicked"
+                android:background="@drawable/sex_button_drawable"
+                android:layout_marginBottom="@dimen/sex_margin_button"
+                android:textSize="@dimen/sex_text_size"
+                android:padding="@dimen/sex_padding"
                 app:tFontName="@string/light_font"
                 android:text="@string/sex_male"/>
-            <org.eyeseetea.uicapp.views.CustomRadioButton
+            <org.eyeseetea.uicapp.views.CustomButton
                 android:id="@+id/radio_female"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="onFemaleClicked"
+                android:background="@drawable/sex_button_drawable"
+                android:layout_marginBottom="@dimen/sex_margin_button"
+                android:textSize="@dimen/sex_text_size"
+                android:padding="@dimen/sex_padding"
                 app:tFontName="@string/light_font"
                 android:text="@string/sex_female"/>
-            <org.eyeseetea.uicapp.views.CustomRadioButton
+            <org.eyeseetea.uicapp.views.CustomButton
                 android:id="@+id/radio_transgender"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="onTransgenderClicked"
+                android:background="@drawable/sex_button_drawable"
+                android:padding="@dimen/sex_padding"
+                android:textSize="@dimen/sex_text_size"
                 app:tFontName="@string/bold_font_name"
                 android:text="@string/sex_transgender"/>
         </RadioGroup>

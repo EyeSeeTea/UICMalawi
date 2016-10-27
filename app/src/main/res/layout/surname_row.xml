@@ -5,23 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/surname_background"
+    android:layout_marginBottom="@dimen/row_margin_button"
     android:paddingTop="@dimen/row_padding_top"
     android:paddingBottom="@dimen/row_padding_bottom">
 
     <org.eyeseetea.uicapp.views.TextCard
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
+        android:layout_marginLeft="@dimen/text_margin"
         android:textColor="@color/surname_text"
+        android:textSize="@dimen/title_text_size"
         app:tFontName="@string/condensed_font_name"
         android:text="@string/surname_title" />
 
     <org.eyeseetea.uicapp.views.EditCard
         android:id="@+id/surname_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/edit_text_height"
+        android:inputType="text"
+        android:textSize="@dimen/title_text_size"
+        android:textColor="@color/surname_text"
+        android:textColorHint="@color/hint_color"
         android:layout_marginLeft="@dimen/input_margin"
         android:layout_marginRight="@dimen/input_margin"
+        android:paddingLeft="@dimen/edit_text_left_padding"
+        android:minHeight="@dimen/edit_text_height"
+        android:drawableRight="@drawable/pen_orange"
         app:tFontName="@string/condensed_font_name"
+        android:hint="@string/surname_hint"
         android:background="@color/white"/>
 </LinearLayout>

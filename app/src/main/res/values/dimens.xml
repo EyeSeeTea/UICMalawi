@@ -2,9 +2,21 @@
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
-    <dimen name="code_text">24dp</dimen>
+    <dimen name="code_text_title">24dp</dimen>
+    <dimen name="code_text">28dp</dimen>
+    <dimen name="title_text_size">20dp</dimen>
+    <dimen name="sex_text_size">14dp</dimen>
     <dimen name="input_margin">10dp</dimen>
+    <dimen name="row_margin_top">12dp</dimen>
+    <dimen name="row_margin_button">3dp</dimen>
     <dimen name="row_padding_top">5dp</dimen>
     <dimen name="row_padding_bottom">10dp</dimen>
+    <dimen name="sex_margin_button">3dp</dimen>
+    <dimen name="sex_padding">15dp</dimen>
+    <dimen name="edit_text_top_padding">20dp</dimen>
+    <dimen name="edit_text_bottom_padding">20dp</dimen>
+    <dimen name="edit_text_left_padding">15dp</dimen>
+    <dimen name="action_bar_text_size">30dp</dimen>
+    <dimen name="edit_text_height">40dp</dimen>
 
 </resources>

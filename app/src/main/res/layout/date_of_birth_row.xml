@@ -5,55 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/date_background"
+    android:layout_marginBottom="@dimen/row_margin_button"
     android:paddingTop="@dimen/row_padding_top"
     android:paddingBottom="@dimen/row_padding_bottom">
 
     <org.eyeseetea.uicapp.views.TextCard
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
+        android:layout_marginLeft="@dimen/text_margin"
         android:id="@+id/date_header"
-        android:focusable="true"
-        android:clickable="true"
-        android:focusableInTouchMode="true"
+        android:textSize="@dimen/title_text_size"
         android:textColor="@color/date_text"
         app:tFontName="@string/condensed_font_name"
         android:text="@string/date_title" />
-    <LinearLayout
+    <org.eyeseetea.uicapp.views.EditCard
+        android:id="@+id/date_value"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/day_date"
+        android:layout_height="@dimen/edit_text_height"
+        android:inputType="none"
+        android:textSize="@dimen/title_text_size"
+        android:digits=""
+        android:cursorVisible="false"
         android:layout_marginLeft="@dimen/input_margin"
+        android:textColor="@color/date_text"
+        android:textColorHint="@color/hint_color"
+        android:drawableRight="@drawable/calendar"
+        android:gravity="center"
+        android:minHeight="@dimen/edit_text_height"
+        android:paddingLeft="@dimen/edit_text_left_padding"
         android:layout_marginRight="@dimen/input_margin"
-        android:orientation="horizontal"
-        android:weightSum="1"
-        android:background="@color/white">
-
-        <org.eyeseetea.uicapp.views.TextCard
-            android:id="@+id/day_value"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_margin="@dimen/text_margin"
-            app:tFontName="@string/condensed_font_name"
-            android:layout_weight="0.3" />
-
-        <org.eyeseetea.uicapp.views.TextCard
-            android:id="@+id/month_value"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_margin="@dimen/text_margin"
-            app:tFontName="@string/condensed_font_name"
-            android:layout_weight="0.3"/>
-
-        <org.eyeseetea.uicapp.views.TextCard
-            android:id="@+id/year_value"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_margin="@dimen/text_margin"
-            app:tFontName="@string/condensed_font_name"
-            android:layout_weight="0.3"/>
-    </LinearLayout>
+        app:tFontName="@string/condensed_font_name"
+        android:background="@color/white"/>
 </LinearLayout>

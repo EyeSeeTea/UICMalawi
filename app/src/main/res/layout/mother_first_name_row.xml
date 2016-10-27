@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mother_background"
+    android:layout_marginTop="@dimen/row_margin_top"
+    android:layout_marginBottom="@dimen/row_margin_button"
     android:paddingTop="@dimen/row_padding_top"
     android:paddingBottom="@dimen/row_padding_bottom">
 
@@ -12,16 +14,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/mother_text"
-        android:layout_margin="@dimen/text_margin"
+        android:textSize="@dimen/title_text_size"
+        android:layout_marginLeft="@dimen/text_margin"
         app:tFontName="@string/condensed_font_name"
         android:text="@string/mother_title" />
 
     <org.eyeseetea.uicapp.views.EditCard
         android:id="@+id/mother_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/edit_text_height"
+        android:inputType="text"
+        android:textColor="@color/mother_text"
+        android:textSize="@dimen/title_text_size"
+        android:hint="@string/mother_hint"
+        android:textColorHint="@color/hint_color"
         android:layout_marginLeft="@dimen/input_margin"
         android:layout_marginRight="@dimen/input_margin"
+        android:paddingLeft="@dimen/edit_text_left_padding"
+        android:minHeight="@dimen/edit_text_height"
+        android:drawableRight="@drawable/pen_yellow"
         app:tFontName="@string/condensed_font_name"
         android:background="@color/white"/>
 </LinearLayout>

@@ -8,25 +8,35 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
+import android.widget.ImageButton;
+import android.widget.ScrollView;
 
+import org.eyeseetea.uicapp.views.CustomButton;
 import org.eyeseetea.uicapp.views.EditCard;
 import org.eyeseetea.uicapp.views.TextCard;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class ScrollingActivity extends AppCompatActivity {
 
+    ViewHolders viewHolders;
+
+    //Flag to prevent the bad positive errors in the validation when the user clear all the fields
+    public static boolean isValidationErrorActive =true;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -46,6 +56,9 @@ public class ScrollingActivity extends AppCompatActivity {
         if (id == R.id.action_about_us) {
             return true;
         }
+        if(id == android.R.id.home) {
+            onBackPressed();
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -53,17 +66,38 @@ public class ScrollingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolling);
+        initViews();
         createActionBar();
         initValues();
         refreshCode();
+        hideKeyboardEvent();
+    }
+
+
+
+    private void hideKeyboardEvent() {
+        (findViewById(R.id.container_scrolled)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideSoftKeyboard(v);
+                return true;
+            }
+        });
+
+    }
+    public void hideSoftKeyboard(View view){
+        InputMethodManager imm =(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     private void refreshCode() {
-        TextCard textView = (TextCard) findViewById(R.id.code_text);
+        TextCard textView = viewHolders.code;
         if(validateAllFields()){
             textView.setText(generateCode());
+            viewHolders.codeButton.setEnabled(true);
         } else {
             textView.setText(getApplicationContext().getString(R.string.code_invalid));
+            viewHolders.codeButton.setEnabled(false);
         }
     }
 
@@ -78,9 +112,9 @@ public class ScrollingActivity extends AppCompatActivity {
         Calendar newCalendar= Calendar.getInstance();
         newCalendar.setTimeInMillis(timestamp);
 
-        String day = String.format("%02d", getDay(newCalendar));
-        String month = String.format("%02d", getMonth(newCalendar));
-        String year = String.valueOf(getYear(newCalendar));
+        String day = String.format("%02d", Utils.getDay(newCalendar));
+        String month = String.format("%02d", Utils.getMonth(newCalendar));
+        String year = String.valueOf(Utils.getYear(newCalendar));
 
         code += day;
         code += month;
@@ -135,11 +169,8 @@ public class ScrollingActivity extends AppCompatActivity {
         }
         Calendar savedDate = Calendar.getInstance();
         savedDate.setTimeInMillis(timestamp);
-        Calendar today = Calendar.getInstance();
-        //Not pass the validation the dates after today or equals to today.
-        if(savedDate.after(today) || (getDay(today) == getDay(savedDate)
-                && getMonth(today) == getMonth(savedDate)
-                && getYear(today) == getYear(savedDate))){
+        //Not pass the validation if the saved data is bigger than today.
+        if(savedDate.getTimeInMillis()>= Utils.getTodayFirstTimestamp().getTime()){
             return false;
         }
         return true;
@@ -148,14 +179,13 @@ public class ScrollingActivity extends AppCompatActivity {
     private boolean validateText(int keyId) {
         String value = getStringFromSharedPreference(keyId);
         //At least two characters without numbers and with possible blank spaces
-        String regExp="^[ a-zA-Z]*([a-zA-Z]{1,}[ ]*[a-zA-Z]{1,})[ a-zA-Z]*$";
+        String regExp="^[ A-zÀ-ÿ]*([A-zÀ-ÿ]{1,}[ ]*[A-zÀ-ÿ]{1,})[ A-zÀ-ÿ]*$";
         if(value.matches(regExp)){
             return true;
         }else {
             return false;
         }
     }
-
     /**
      * Creates the menu actionBar
      *
@@ -165,6 +195,7 @@ public class ScrollingActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setLogo(R.drawable.logo);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.action_bar_arrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
@@ -176,11 +207,11 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     private void initValues() {
         //Init mother
-        initTextValue((EditCard) findViewById(R.id.mother_edit_text), R.string.shared_key_mother, R.string.mother_error);
+        initTextValue(viewHolders.motherName, R.string.shared_key_mother, R.string.mother_error);
         //Init surname
-        initTextValue((EditCard) findViewById(R.id.surname_edit_text), R.string.shared_key_surname, R.string.surname_error);
+        initTextValue(viewHolders.surname, R.string.shared_key_surname, R.string.surname_error);
         //Init district
-        initTextValue((EditCard) findViewById(R.id.district_edit_text), R.string.shared_key_district, R.string.district_error);
+        initTextValue(viewHolders.district, R.string.shared_key_district, R.string.district_error);
 
         //Init district
         initDate();
@@ -190,16 +221,24 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     private void initDate() {
-        LinearLayout dateFields =(LinearLayout) findViewById(R.id.day_date);
-        recoveryAndShowDate();
-        View.OnClickListener dateOnClickListener = new View.OnClickListener() {
+        EditCard dateEditCard= viewHolders.date;
+        dateEditCard.setInputType(0);
+        dateEditCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerListener(v);
+                viewHolders.date.requestFocus();
+                showDatePicker(v);
             }
-        };
-
-        dateFields.setOnClickListener(dateOnClickListener);
+        });
+        //This listener solve a problem when the user click on dateEditText but other editText has the focus.
+        dateEditCard.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                viewHolders.date.requestFocus();
+                return false;
+            }
+        });
+        recoveryAndShowDate();
     }
 
     private void initSex(final int keyId) {
@@ -210,11 +249,16 @@ public class ScrollingActivity extends AppCompatActivity {
             String female=getApplication().getApplicationContext().getString(R.string.sex_female);
             String trasngender=getApplication().getApplicationContext().getString(R.string.sex_transgender);
             if(value.equals(male)){
-                ((RadioButton)findViewById(R.id.radio_male)).setChecked(true);
+                onMaleClicked(null);
             }else if( value.equals(female)){
-                ((RadioButton)findViewById(R.id.radio_female)).setChecked(true);
+                onFemaleClicked(null);
             }else if (value.equals(trasngender)){
-                ((RadioButton)findViewById(R.id.radio_transgender)).setChecked(true);
+                onTransgenderClicked(null);
+            }
+            else{
+                viewHolders.male.setEnabled(false);
+                viewHolders.female.setEnabled(false);
+                viewHolders.transgender.setEnabled(false);
             }
             //Refresh the generated code
             refreshCode();
@@ -232,22 +276,42 @@ public class ScrollingActivity extends AppCompatActivity {
         if(!value.equals("")){
             editText.setText(value);
         }
+        editText.setFilters(new InputFilter[] { Utils.filter });
         //Editable? add listener
         editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //Ignore the clear fields validation.
+                String oldValue=getStringFromSharedPreference(keyId);
                 putStringInSharedPreference(String.valueOf(s),keyId);
-                if(!validateText(keyId)){
+                if(!validateText(keyId) && isValidationErrorActive){
                     editText.setError(getApplicationContext().getString(errorId));
+                }
+                else{
+                    editText.setError(null);
                 }
                 //Refresh the generated code
                 refreshCode();
+            }
+        });
+
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(v.getId() == editText.getId() && !hasFocus) {
+
+                    InputMethodManager imm =  (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
+                }
             }
         });
 
@@ -296,6 +360,9 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     public void onMaleClicked(View view) {
         putStringInSharedPreference(getApplicationContext().getString(R.string.sex_male), R.string.shared_key_sex);
+        viewHolders.male.setActivated(true);
+        viewHolders.female.setActivated(false);
+        viewHolders.transgender.setActivated(false);
         refreshCode();
     }
 
@@ -306,6 +373,9 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     public void onFemaleClicked(View view) {
         putStringInSharedPreference(getApplicationContext().getString(R.string.sex_female), R.string.shared_key_sex);
+        viewHolders.male.setActivated(false);
+        viewHolders.female.setActivated(true);
+        viewHolders.transgender.setActivated(false);
         refreshCode();
     }
 
@@ -315,6 +385,9 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     public void onTransgenderClicked(View view) {
         putStringInSharedPreference(getApplicationContext().getString(R.string.sex_transgender), R.string.shared_key_sex);
+        viewHolders.male.setActivated(false);
+        viewHolders.female.setActivated(false);
+        viewHolders.transgender.setActivated(true);
         refreshCode();
     }
 
@@ -324,8 +397,48 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     public void copyCode(View view) {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText((getApplicationContext().getString(R.string.code_copy)), ((TextCard)findViewById(R.id.code_text)).getText());
+        ClipData clip = ClipData.newPlainText((getApplicationContext().getString(R.string.code_copy)), viewHolders.code.getText());
         clipboard.setPrimaryClip(clip);
+    }
+
+    /**
+     *  Clear shared preferences and reInit values and refresh generated code.
+     * @return
+     */
+    public void clearFields(View view) {
+        isValidationErrorActive=false;
+        viewHolders.motherName.setText("");
+        putStringInSharedPreference("", R.string.shared_key_mother);
+        viewHolders.surname.setText("");
+        putStringInSharedPreference("", R.string.shared_key_surname);
+        viewHolders.district.setText("");
+        putStringInSharedPreference("", R.string.shared_key_district);
+
+        viewHolders.male.setActivated(false);
+        viewHolders.female.setActivated(false);
+        viewHolders.transgender.setActivated(false);
+
+        putStringInSharedPreference("", R.string.shared_key_sex);
+        Long defaultNoDate = Long.parseLong(getApplicationContext().getString(R.string.default_no_date));
+        putLongInSharedPreferences(defaultNoDate, R.string.shared_key_timestamp_date);
+
+        refreshCode();
+        isValidationErrorActive=true;
+        //move to up
+        runOnUiThread( new Runnable(){
+            @Override
+            public void run(){
+                ((NestedScrollView)findViewById(R.id.nested_scroll_view)).fullScroll(ScrollView.FOCUS_UP);
+            }
+        });
+    }
+
+    /**
+     *  Date editText listener
+     * @return
+     */
+    public void showDatePicker(View view) {
+        new DatePickerListener(view);
     }
 
 
@@ -365,16 +478,14 @@ public class ScrollingActivity extends AppCompatActivity {
                     putLongInSharedPreferences(newCalendar.getTimeInMillis(), R.string.shared_key_timestamp_date);
                     recoveryAndShowDate();
                     if(!validateDate()){
-                        TextCard textView = (TextCard)findViewById(R.id.date_header);
-                        textView.setError(getApplicationContext().getString(R.string.date_error));
-                        textView.callOnClick();
-                        textView.requestLayout();
+                        EditCard editCard = viewHolders.date;
+                        editCard.setError(getApplicationContext().getString(R.string.date_error));
                     }else {
-                        TextCard textView = (TextCard)findViewById(R.id.date_header);
-                        textView.setError(null);
+                        EditCard editCard = viewHolders.date;
+                        editCard.setError(null);
                         //Refresh the generated code
-                        refreshCode();
                     }
+                    refreshCode();
                 }
             };
 
@@ -399,9 +510,9 @@ public class ScrollingActivity extends AppCompatActivity {
          * @return
          */
         private void convertCalendarToLocalVariables(Calendar calendar) {
-            day = getDay(calendar);
-            month = getMonth(calendar);
-            year = getYear(calendar);
+            day = Utils.getDay(calendar);
+            month = Utils.getMonth(calendar);
+            year = Utils.getYear(calendar);
         }
     }
 
@@ -409,24 +520,10 @@ public class ScrollingActivity extends AppCompatActivity {
      *  Set date in day/month/year textviews
      * @return
      */
-    private void setDateInViews(String calendarDay, String calendarMonth, String calendarYear) {
-        TextCard dayTextCard =(TextCard) findViewById(R.id.day_value);
-        TextCard monthTextCard =(TextCard) findViewById(R.id.month_value);
-        TextCard yearTextCard =(TextCard) findViewById(R.id.year_value);
-        if(calendarDay.length()==1){
-            calendarDay="0"+calendarDay;
-        }
-
-        if(calendarMonth.length()==1){
-            calendarMonth="0"+calendarMonth;
-        }
-
-        if(calendarYear.length()==1){
-            calendarYear="0"+calendarYear;
-        }
-        dayTextCard.setText(calendarDay+"");
-        monthTextCard.setText(calendarMonth+"");
-        yearTextCard.setText(calendarYear+"");
+    private void showDate(Calendar calendar) {
+        SimpleDateFormat simpleDateFormat= new SimpleDateFormat("d MMM yyyy");
+        String calendarDay= simpleDateFormat.format(calendar.getTime());
+        viewHolders.date.setText(calendarDay);
     }
 
     /**
@@ -444,32 +541,57 @@ public class ScrollingActivity extends AppCompatActivity {
             calendar = Calendar.getInstance();
             calendar.setTimeInMillis(timestamp);
         }
-        int day = getDay(calendar);
-        int month = getMonth(calendar);
-        int year = getYear(calendar);
-        setDateInViews(day+"", month+"", year+"");
-    }
-    /**
-     *  Returns the year in a calendar date
-     * @return
-     */
-    private int getYear(Calendar newCalendar) {
-        return newCalendar.get(Calendar.YEAR);
+        showDate(calendar);
     }
 
     /**
-     *  Returns the month in a calendar date
-     * @return
+     * Init holders on holders class
      */
-    private int getMonth(Calendar newCalendar) {
-        return newCalendar.get(Calendar.MONTH) + 1;
+    public void initViews(){
+        if (viewHolders == null) {
+            viewHolders = new ViewHolders();
+        }
+        if (viewHolders.motherName==null){
+            viewHolders.motherName = (EditCard) findViewById(R.id.mother_edit_text);
+        }
+        if (viewHolders.surname==null){
+            viewHolders.surname = (EditCard) findViewById(R.id.surname_edit_text);
+        }
+        if (viewHolders.district==null){
+            viewHolders.district = (EditCard) findViewById(R.id.district_edit_text);
+        }
+        if (viewHolders.date==null){
+            viewHolders.date = (EditCard) findViewById(R.id.date_value);
+        }
+        if (viewHolders.male==null){
+            viewHolders.male = (CustomButton) (findViewById(R.id.radio_male));
+        }
+        if (viewHolders.female==null){
+            viewHolders.female = (CustomButton) (findViewById(R.id.radio_female));
+        }
+        if (viewHolders.transgender==null){
+            viewHolders.transgender = (CustomButton) (findViewById(R.id.radio_transgender));
+        }
+        if (viewHolders.code==null){
+            viewHolders.code = (TextCard) findViewById(R.id.code_text);
+        }
+        if (viewHolders.codeButton==null) {
+            viewHolders.codeButton = (ImageButton)findViewById(R.id.code_button);
+        }
     }
 
     /**
-     *  Returns the day in a calendar date
-     * @return
+     * Holders to boost views access avoiding to findById so often
      */
-    private int getDay(Calendar newCalendar) {
-        return newCalendar.get(Calendar.DAY_OF_MONTH);
+    static class ViewHolders{
+        EditCard motherName;
+        EditCard surname;
+        EditCard district;
+        EditCard date;
+        CustomButton male;
+        CustomButton female;
+        CustomButton transgender;
+        TextCard code;
+        ImageButton codeButton;
     }
 }
