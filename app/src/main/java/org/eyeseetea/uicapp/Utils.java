@@ -23,8 +23,7 @@ public class Utils {
         @Override
         public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
             String blockCharacterSet = "~#^|$%*!@/()-'\":;,?{}=!$^';,?×÷<>{}€£¥₩%~`¤♡♥_|《》¡¿°•○●□■◇◆♧♣▲▼▶◀↑↓←→☆★▪:-);-):-D:-(:'(:O1234567890+.&";
-            String regExp="^[ A-zÀ-ÿ]*$";
-            if (source != null && blockCharacterSet.contains(("" + source)) || !Pattern.matches(regExp,source)) {
+            if (source != null && blockCharacterSet.contains(("" + source))) {
                     return "";
             }
             return null;
