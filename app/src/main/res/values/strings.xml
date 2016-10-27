@@ -11,9 +11,9 @@
     <string name="sex_male">Male</string>
     <string name="sex_female">Female</string>
     <string name="sex_transgender">Transgender</string>
-    <string name="code_title">Your code:</string>
+    <string name="code_title">YOUR CODE</string>
     <string name="code_copy">Copy</string>
-    <string name="code_invalid">Invalid</string>
+    <string name="code_invalid">INVALID</string>
     <string name="action_about_us">About us</string>
 
     <string name="mother_error">"The field needs at least two characters"</string>
@@ -21,6 +21,9 @@
     <string name="district_error">"The field needs at least two characters"</string>
     <string name="sex_error">"The sex needs be selected"</string>
     <string name="date_error">"The field needs a valid date"</string>
+    <string name="surname_hint">e.g. James</string>
+    <string name="district_hint">e.g. Makonde</string>
+    <string name="mother_hint">e. g. Sarah</string>
 
 
 </resources>
