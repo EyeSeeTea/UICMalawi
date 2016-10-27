@@ -3,4 +3,18 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="code">#999999</color>
+    <color name="code_button">#efac43</color>
+    <color name="code_text">@color/white</color>
+    <color name="date_background">#ccccff</color>
+    <color name="date_text">#404eff</color>
+    <color name="district_background">#ffcccc</color>
+    <color name="district_text">#ff4d57</color>
+    <color name="sex_background">#ffcccc</color>
+    <color name="sex_text">#ff4d57</color>
+    <color name="surname_background">#cce5ff</color>
+    <color name="surname_text">#6bb9ff</color>
+    <color name="mother_background">#deefd4</color>
+    <color name="mother_text">#62c079</color>
+    <color name="white">#FFFFFF</color>
 </resources>
