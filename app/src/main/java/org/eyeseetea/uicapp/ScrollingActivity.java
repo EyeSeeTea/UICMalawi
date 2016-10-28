@@ -22,6 +22,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 
 import com.crashlytics.android.Crashlytics;
@@ -581,7 +582,7 @@ public class ScrollingActivity extends AppCompatActivity {
             viewHolders.code = (TextCard) findViewById(R.id.code_text);
         }
         if (viewHolders.codeButton==null) {
-            viewHolders.codeButton = (ImageButton)findViewById(R.id.code_button);
+            viewHolders.codeButton = (ImageView) findViewById(R.id.code_button);
         }
     }
 
@@ -597,6 +598,6 @@ public class ScrollingActivity extends AppCompatActivity {
         CustomButton female;
         CustomButton transgender;
         TextCard code;
-        ImageButton codeButton;
+        ImageView codeButton;
     }
 }
