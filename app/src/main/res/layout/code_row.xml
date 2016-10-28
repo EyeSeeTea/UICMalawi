@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/code_background"
+    android:layout_marginTop="@dimen/row_margin_top"
+    android:paddingTop="@dimen/row_padding_top" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2" >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/clear_button_drawable"
+            android:onClick="clearFields"
+            android:layout_centerHorizontal="true"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"   />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_weight="0.60"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+            <org.eyeseetea.uicapp.views.TextCard
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/code_text_title"
+                android:textColor="@color/code_header"
+                android:gravity="center"
+                android:layout_gravity="top"
+                app:tFontName="@string/condensed_font_name"
+                android:text="@string/code_title" />
+            <org.eyeseetea.uicapp.views.TextCard
+                android:id="@+id/code_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/code_invalid"
+                android:textColor="@color/code_text"
+                android:gravity="center"
+                app:tFontName="@string/condensed_font_name"
+                android:textSize="@dimen/code_text"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2" >
+            <ImageView
+                android:id="@+id/code_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/copy_button_drawable"
+                android:onClick="copyCode"
+                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"  />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

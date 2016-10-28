@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="code_background">#102c5b</color>
+    <color name="code">#999999</color>
+    <color name="code_header">#4c6c97</color>
+    <color name="code_button">#4c6c97</color>
+    <color name="code_text">@color/white</color>
+    <color name="date_background">#b0a4b6</color>
+    <color name="date_text">#37233e</color>
+
+    <color name="district_background">#dfadb0</color>
+    <color name="district_text">#4b2526</color>
+
+    <color name="sex_background">#869bb7</color>
+    <color name="sex_text">#0e1d33</color>
+
+    <color name="surname_background">#fcbbb1</color>
+    <color name="surname_text">#562219</color>
+
+    <color name="mother_background">#ffe0c2</color>
+    <color name="mother_text">#45270b</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="action_bar_background">#c0c0c0</color>
+    <color name="bluelight">#94adcf</color>
+    <color name="radio_button_disabled">@color/bluelight</color>
+    <color name="radio_button_focus">@color/bluelight</color>
+    <color name="radio_button_enabled">@color/white</color>
+    <color name="hint_color">#c2c2c2</color>
+    <color name="transparent">#00000000</color>
+    <color name="dialog_button_text">#06988a</color>
+</resources>
