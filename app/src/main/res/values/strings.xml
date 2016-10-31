@@ -28,4 +28,8 @@
     <string name="lastcommit">"Version %s"</string>
     <string name="unavailable">"Unavailable"</string>
 
+    <string-array name="district_list">
+        <item>""</item>
+        <item>Example</item>
+    </string-array>
 </resources>

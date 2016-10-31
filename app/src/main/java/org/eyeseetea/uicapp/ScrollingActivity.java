@@ -19,11 +19,13 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
@@ -152,7 +154,7 @@ public class ScrollingActivity extends AppCompatActivity {
             return false;
         }
 
-        if(!validateText(R.string.shared_key_district)) {
+        if(getStringFromSharedPreference(R.string.shared_key_district).equals("")) {
             return false;
         }
 
@@ -217,13 +219,39 @@ public class ScrollingActivity extends AppCompatActivity {
         //Init surname
         initTextValue(viewHolders.surname, R.string.shared_key_surname, R.string.surname_error);
         //Init district
-        initTextValue(viewHolders.district, R.string.shared_key_district, R.string.district_error);
+        initDropDown(viewHolders.district, R.string.shared_key_district, R.array.district_list);
 
         //Init district
         initDate();
 
         //Init sex
         initSex(R.string.shared_key_sex);
+    }
+
+    private void initDropDown(final Spinner district, int keyId, int district_list_key) {
+        String value= getStringFromSharedPreference(keyId);
+        ArrayAdapter<String> districtsList = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(district_list_key));
+        district.setAdapter(districtsList);
+        if(!value.equals("")){
+            for(int i=0; i < district.getCount(); i++) {
+                if(value.equals(district.getAdapter().getItem(i).toString())){
+                    district.setSelection(i);
+                    break;
+                }
+            }
+        }
+        district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int arg2, long arg3) {
+                putStringInSharedPreference(district.getSelectedItem().toString(), R.string.shared_key_district);
+                refreshCode();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {}
+        });
+
     }
 
     private void initDate() {
@@ -417,7 +445,7 @@ public class ScrollingActivity extends AppCompatActivity {
         putStringInSharedPreference("", R.string.shared_key_mother);
         viewHolders.surname.setText("");
         putStringInSharedPreference("", R.string.shared_key_surname);
-        viewHolders.district.setText("");
+        viewHolders.district.setSelection(0);
         putStringInSharedPreference("", R.string.shared_key_district);
 
         viewHolders.male.setActivated(false);
@@ -564,7 +592,7 @@ public class ScrollingActivity extends AppCompatActivity {
             viewHolders.surname = (EditCard) findViewById(R.id.surname_edit_text);
         }
         if (viewHolders.district==null){
-            viewHolders.district = (EditCard) findViewById(R.id.district_edit_text);
+            viewHolders.district = (Spinner) findViewById(R.id.district_dropdown);
         }
         if (viewHolders.date==null){
             viewHolders.date = (EditCard) findViewById(R.id.date_value);
@@ -592,8 +620,8 @@ public class ScrollingActivity extends AppCompatActivity {
     static class ViewHolders{
         EditCard motherName;
         EditCard surname;
-        EditCard district;
         EditCard date;
+        Spinner district;
         CustomButton male;
         CustomButton female;
         CustomButton transgender;
