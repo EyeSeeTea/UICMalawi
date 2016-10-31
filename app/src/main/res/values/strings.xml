@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">    UIC</string>
+    <string name="app_name">UIC</string>
     <string name="mother_title">"Mother's first name"</string>
     <string name="surname_title">Surname</string>
     <string name="district_title">District of birth</string>
