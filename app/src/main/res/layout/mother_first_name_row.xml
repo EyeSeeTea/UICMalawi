@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_text_height"
         android:inputType="text"
+        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſç"
         android:textColor="@color/mother_text"
         android:textSize="@dimen/title_text_size"
         android:hint="@string/mother_hint"
