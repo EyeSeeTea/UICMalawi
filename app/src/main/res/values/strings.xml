@@ -27,9 +27,10 @@
     <string name="ok">ok</string>
     <string name="lastcommit">"Version %s"</string>
     <string name="unavailable">"Unavailable"</string>
+    <string name="default_district">Select district</string>
 
     <string-array name="district_list">
-        <item>""</item>
+        <item>@string/default_district</item>
         <item>Example</item>
     </string-array>
 </resources>

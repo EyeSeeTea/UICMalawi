@@ -39,7 +39,7 @@ import java.util.Calendar;
 public class ScrollingActivity extends AppCompatActivity {
 
     ViewHolders viewHolders;
-
+    public static final String DEFAULT_VALUE="";
     //Flag to prevent the bad positive errors in the validation when the user clear all the fields
     public static boolean isValidationErrorActive =true;
 
@@ -127,7 +127,7 @@ public class ScrollingActivity extends AppCompatActivity {
         code += day;
         code += month;
         code += year.substring(year.length()-2);
-        code += getStringFromSharedPreference(R.string.shared_key_sex).substring(0,1);
+        code += getStringFromSharedPreference(R.string.shared_key_sex, DEFAULT_VALUE).substring(0,1);
 
         return code.toUpperCase();
     }
@@ -139,7 +139,7 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     @NonNull
     private String getLast2CharsFromPreference(int keyId) {
-        String temporalValue = getStringFromSharedPreference(keyId);
+        String temporalValue = getStringFromSharedPreference(keyId, DEFAULT_VALUE);
         temporalValue = temporalValue.replace(" ", "");
         return temporalValue.substring(temporalValue.length()-2);
     }
@@ -154,11 +154,13 @@ public class ScrollingActivity extends AppCompatActivity {
             return false;
         }
 
-        if(getStringFromSharedPreference(R.string.shared_key_district).equals("")) {
+        if(getStringFromSharedPreference(R.string.shared_key_district, getString(R.string.default_district)).equals(getString(R.string.default_district)) ||
+                getStringFromSharedPreference(R.string.shared_key_district, getString(R.string.default_district)).length()<2) {
             return false;
         }
 
-        if(getStringFromSharedPreference(R.string.shared_key_sex).equals("")) {
+        if(getStringFromSharedPreference(R.string.shared_key_sex, DEFAULT_VALUE).equals(DEFAULT_VALUE) ||
+                getStringFromSharedPreference(R.string.shared_key_sex, DEFAULT_VALUE).length()<2) {
             return false;
         }
 
@@ -185,7 +187,7 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     private boolean validateText(int keyId) {
-        String value = getStringFromSharedPreference(keyId);
+        String value = getStringFromSharedPreference(keyId, DEFAULT_VALUE);
         //At least two characters without numbers and with possible blank spaces
         String regExp="^[ A-zÀ-ÿ]*([A-zÀ-ÿ]{1,}[ ]*[A-zÀ-ÿ]{1,})[ A-zÀ-ÿ]*$";
         if(value.matches(regExp)){
@@ -229,7 +231,7 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     private void initDropDown(final Spinner district, int keyId, int district_list_key) {
-        String value= getStringFromSharedPreference(keyId);
+        String value= getStringFromSharedPreference(keyId, getString(R.string.default_district));
         ArrayAdapter<String> districtsList = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(district_list_key));
         district.setAdapter(districtsList);
         if(!value.equals("")){
@@ -276,9 +278,9 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     private void initSex(final int keyId) {
-        String value= getStringFromSharedPreference(keyId);
+        String value= getStringFromSharedPreference(keyId, DEFAULT_VALUE);
         //Set value if exist in sharedPreferences
-        if(!value.equals("")){
+        if(!value.equals(DEFAULT_VALUE)){
             final String male=getApplication().getApplicationContext().getString(R.string.sex_male);
             String female=getApplication().getApplicationContext().getString(R.string.sex_female);
             String trasngender=getApplication().getApplicationContext().getString(R.string.sex_transgender);
@@ -306,8 +308,8 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     private void initTextValue(final EditCard editText, final int keyId, final int errorId) {
         //Has value? show it
-        String value= getStringFromSharedPreference(keyId);
-        if(!value.equals("")){
+        String value= getStringFromSharedPreference(keyId, DEFAULT_VALUE);
+        if(!value.equals(DEFAULT_VALUE)){
             editText.setText(value);
         }
         editText.setFilters(new InputFilter[] { Utils.filter });
@@ -324,7 +326,7 @@ public class ScrollingActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //Ignore the clear fields validation.
-                String oldValue=getStringFromSharedPreference(keyId);
+                String oldValue=getStringFromSharedPreference(keyId, DEFAULT_VALUE);
                 putStringInSharedPreference(String.valueOf(s),keyId);
                 if(!validateText(keyId) && isValidationErrorActive){
                     editText.setError(getApplicationContext().getString(errorId));
@@ -355,9 +357,9 @@ public class ScrollingActivity extends AppCompatActivity {
      * Gets the string value for the given key
      * @return
      */
-    private String getStringFromSharedPreference(int keyId){
+    private String getStringFromSharedPreference(int keyId, String defaultValue){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        return sharedPreferences.getString(getApplicationContext().getResources().getString(keyId), "");
+        return sharedPreferences.getString(getApplicationContext().getResources().getString(keyId), defaultValue);
     }
     /**
      *  Puts the string value in the given key
@@ -441,18 +443,18 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     public void clearFields(View view) {
         isValidationErrorActive=false;
-        viewHolders.motherName.setText("");
-        putStringInSharedPreference("", R.string.shared_key_mother);
-        viewHolders.surname.setText("");
-        putStringInSharedPreference("", R.string.shared_key_surname);
+        viewHolders.motherName.setText(DEFAULT_VALUE);
+        putStringInSharedPreference(DEFAULT_VALUE, R.string.shared_key_mother);
+        viewHolders.surname.setText(DEFAULT_VALUE);
+        putStringInSharedPreference(DEFAULT_VALUE, R.string.shared_key_surname);
         viewHolders.district.setSelection(0);
-        putStringInSharedPreference("", R.string.shared_key_district);
+        putStringInSharedPreference(DEFAULT_VALUE, R.string.shared_key_district);
 
         viewHolders.male.setActivated(false);
         viewHolders.female.setActivated(false);
         viewHolders.transgender.setActivated(false);
 
-        putStringInSharedPreference("", R.string.shared_key_sex);
+        putStringInSharedPreference(DEFAULT_VALUE, R.string.shared_key_sex);
         Long defaultNoDate = Long.parseLong(getApplicationContext().getString(R.string.default_no_date));
         putLongInSharedPreferences(defaultNoDate, R.string.shared_key_timestamp_date);
 
