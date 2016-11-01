@@ -22,7 +22,7 @@
         android:id="@+id/surname_edit_text"
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_text_height"
-        android:inputType="text"
+        android:inputType="textNoSuggestions"
         android:textSize="@dimen/title_text_size"
         android:textColor="@color/surname_text"
         android:textColorHint="@color/hint_color"
