@@ -28,23 +28,6 @@ import java.util.regex.Pattern;
 
 public class Utils {
 
-
-    /**
-     * Is the filter to prevent the input of characters
-     *
-     * @return
-     */
-    public static InputFilter filter = new InputFilter() {
-        @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-            String blockCharacterSet = "~#^|$%*!@/()-'\":;,?{}=!$^';,?×÷<>{}€£¥₩%~`¤♡♥_|《》¡¿°•○●□■◇◆♧♣▲▼▶◀↑↓←→☆★▪:-);-):-D:-(:'(:O1234567890+.&";
-            if (source != null && blockCharacterSet.contains(("" + source))) {
-                    return "";
-            }
-            return null;
-        }
-    };
-
     /**
      * Get today date with the correct year month and day but: 00:00:00 00:00:00
      *

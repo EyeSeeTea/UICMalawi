@@ -312,8 +312,6 @@ public class ScrollingActivity extends AppCompatActivity {
         if(!value.equals(DEFAULT_VALUE)){
             editText.setText(value);
         }
-        editText.setFilters(new InputFilter[] { Utils.filter });
-        //Editable? add listener
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
@@ -326,7 +324,6 @@ public class ScrollingActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //Ignore the clear fields validation.
-                String oldValue=getStringFromSharedPreference(keyId, DEFAULT_VALUE);
                 putStringInSharedPreference(String.valueOf(s),keyId);
                 if(!validateText(keyId) && isValidationErrorActive){
                     editText.setError(getApplicationContext().getString(errorId));
