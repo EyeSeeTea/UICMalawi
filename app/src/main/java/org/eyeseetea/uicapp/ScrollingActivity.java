@@ -22,7 +22,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 
@@ -78,7 +77,7 @@ public class ScrollingActivity extends AppCompatActivity {
         initValues();
         refreshCode();
         hideKeyboardEvent();
-        hideCollapsinBar();
+        hideCollapsingBar();
     }
 
 
@@ -444,7 +443,7 @@ public class ScrollingActivity extends AppCompatActivity {
             }
         });
     }
-    private void hideCollapsinBar() {
+    private void hideCollapsingBar() {
         ((AppBarLayout) findViewById(R.id.app_bar_layout)).setExpanded(false,false);
 
     }
