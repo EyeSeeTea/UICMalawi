@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,7 +22,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 
@@ -77,6 +77,7 @@ public class ScrollingActivity extends AppCompatActivity {
         initValues();
         refreshCode();
         hideKeyboardEvent();
+        hideCollapsingBar();
     }
 
 
@@ -428,6 +429,10 @@ public class ScrollingActivity extends AppCompatActivity {
         refreshCode();
         isValidationErrorActive=true;
         //move to up
+        scrollUp();
+    }
+
+    private void scrollUp() {
         runOnUiThread( new Runnable(){
             @Override
             public void run(){
@@ -435,7 +440,10 @@ public class ScrollingActivity extends AppCompatActivity {
             }
         });
     }
+    private void hideCollapsingBar() {
+        ((AppBarLayout) findViewById(R.id.app_bar_layout)).setExpanded(false,false);
 
+    }
     /**
      *  Date editText listener
      * @return
