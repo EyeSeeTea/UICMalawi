@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">UIC</string>
     <string name="mother_title">"Mother's first name"</string>
-    <string name="surname_title">Surname</string>
+    <string name="surname_title">"Client's surname"</string>
     <string name="district_title">District of birth</string>
     <string name="date_title">Date of birth</string>
     <string name="day_title">Day</string>
@@ -21,7 +21,7 @@
     <string name="district_error">"The field needs at least two characters"</string>
     <string name="sex_error">"The sex needs be selected"</string>
     <string name="date_error">"The field needs a valid date"</string>
-    <string name="surname_hint">e.g. James</string>
+    <string name="surname_hint">e.g. Smith</string>
     <string name="district_hint">e.g. Makonde</string>
     <string name="mother_hint">e. g. Sarah</string>
     <string name="ok">ok</string>
@@ -91,5 +91,6 @@
         <item>Zaka</item>
         <item>Zvimba</item>
         <item>Zvishavane</item>
+        <item>Outside Zimbabwe</item>
     </string-array>
 </resources>
