@@ -9,11 +9,12 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +28,7 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-
+import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 import org.eyeseetea.uicapp.views.CustomButton;
@@ -483,6 +484,22 @@ public class ScrollingActivity extends AppCompatActivity {
         new DatePickerListener(view);
     }
 
+    public void showMotherInfo(View view) {
+        final Snackbar sb = Snackbar
+                .make(viewHolders.coordinator, R.string.mother_info, Snackbar.LENGTH_INDEFINITE);
+        View sbView = sb.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        //increase max lines of text in snackbar. default is 2.
+        textView.setMaxLines(20);
+        sb.setAction(R.string.ok, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sb.dismiss();
+            }
+        });
+        sb.show();
+    }
+
 
     /**
      * DatepickerListener
@@ -593,6 +610,9 @@ public class ScrollingActivity extends AppCompatActivity {
         if (viewHolders == null) {
             viewHolders = new ViewHolders();
         }
+        if (viewHolders.coordinator==null){
+            viewHolders.coordinator = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+        }
         if (viewHolders.motherName==null){
             viewHolders.motherName = (EditCard) findViewById(R.id.mother_edit_text);
         }
@@ -635,5 +655,6 @@ public class ScrollingActivity extends AppCompatActivity {
         CustomButton transgender;
         TextCard code;
         ImageView codeButton;
+        CoordinatorLayout coordinator;
     }
 }
