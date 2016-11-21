@@ -13,7 +13,6 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,19 +22,22 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 
 import com.crashlytics.android.Crashlytics;
-import io.fabric.sdk.android.Fabric;
+
 import org.eyeseetea.uicapp.views.CustomButton;
 import org.eyeseetea.uicapp.views.EditCard;
 import org.eyeseetea.uicapp.views.TextCard;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import io.fabric.sdk.android.Fabric;
 
 public class ScrollingActivity extends AppCompatActivity {
 
@@ -223,7 +225,9 @@ public class ScrollingActivity extends AppCompatActivity {
         //Init surname
         initTextValue(viewHolders.surname, R.string.shared_key_surname, R.string.surname_error);
         //Init district
-        initDropDown(viewHolders.district, R.string.shared_key_district, R.array.district_list);
+        initDropDown(viewHolders.district, R.string.shared_key_district, R.array.district_list, R.string.default_district);
+        //Init twin
+        initDropDown(viewHolders.twins, R.string.shared_key_twin, R.array.twin_list, R.string.default_twin);
 
         //Init district
         initDate();
@@ -232,24 +236,24 @@ public class ScrollingActivity extends AppCompatActivity {
         initSex(R.string.shared_key_sex);
     }
 
-    private void initDropDown(final Spinner district, int keyId, int district_list_key) {
-        String value= getStringFromSharedPreference(keyId, getString(R.string.default_district));
-        ArrayAdapter<String> districtsList = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(district_list_key));
-        district.setAdapter(districtsList);
+    private void initDropDown(final Spinner spinner, final int keyId, int list_key, int id_default) {
+        String value= getStringFromSharedPreference(keyId, getString(id_default));
+        ArrayAdapter<String> districtsList = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(list_key));
+        spinner.setAdapter(districtsList);
         if(!value.equals("")){
-            for(int i=0; i < district.getCount(); i++) {
-                if(value.equals(district.getAdapter().getItem(i).toString())){
-                    district.setSelection(i);
+            for(int i=0; i < spinner.getCount(); i++) {
+                if(value.equals(spinner.getAdapter().getItem(i).toString())){
+                    spinner.setSelection(i);
                     break;
                 }
             }
         }
-        district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                                        int arg2, long arg3) {
-                putStringInSharedPreference(district.getSelectedItem().toString(), R.string.shared_key_district);
+                putStringInSharedPreference(spinner.getSelectedItem().toString(), keyId);
                 refreshCode();
             }
             @Override
@@ -483,6 +487,15 @@ public class ScrollingActivity extends AppCompatActivity {
         new DatePickerListener(view);
     }
 
+    public void twinChange(View view) {
+        if(viewHolders.checktwin.isChecked()){
+            viewHolders.twins.setVisibility(View.VISIBLE);
+        }
+        else{
+            viewHolders.twins.setVisibility(View.GONE);
+        }
+    }
+
 
     /**
      * DatepickerListener
@@ -620,6 +633,12 @@ public class ScrollingActivity extends AppCompatActivity {
         if (viewHolders.codeButton==null) {
             viewHolders.codeButton = (ImageView) findViewById(R.id.code_button);
         }
+        if (viewHolders.checktwin==null) {
+            viewHolders.checktwin = (CheckBox) findViewById(R.id.chk_twin);
+        }
+        if (viewHolders.twins==null) {
+            viewHolders.twins = (Spinner) findViewById(R.id.twin_dropdown);
+        }
     }
 
     /**
@@ -635,5 +654,7 @@ public class ScrollingActivity extends AppCompatActivity {
         CustomButton transgender;
         TextCard code;
         ImageView codeButton;
+        CheckBox checktwin;
+        Spinner twins;
     }
 }

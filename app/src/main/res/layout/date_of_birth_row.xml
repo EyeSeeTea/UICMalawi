@@ -54,6 +54,7 @@
         android:layout_marginLeft="@dimen/text_margin"
         android:textSize="@dimen/title_text_size"
         android:textColor="@color/date_text"
+        android:onClick="twinChange"
         app:tFontName="@string/condensed_font_name"
         android:textAlignment="center" />
 
