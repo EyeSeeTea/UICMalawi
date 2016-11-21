@@ -28,6 +28,7 @@
     <string name="lastcommit">"Version %s"</string>
     <string name="unavailable">"Unavailable"</string>
     <string name="default_district">Select district</string>
+    <string name="chk_twin">"Twin?"</string>
 
     <string-array name="district_list">
         <item>@string/default_district</item>
