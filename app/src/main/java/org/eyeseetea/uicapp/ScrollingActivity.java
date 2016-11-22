@@ -245,11 +245,22 @@ public class ScrollingActivity extends AppCompatActivity {
         //Init sex
         initSex(R.string.shared_key_sex);
         //Init twin
-        intTwin(R.string.shared_key_chk_twin);
+        intTwin();
     }
 
-    private void intTwin(int shared_key_chk_twin) {
-        twinChange(null);
+    private void intTwin() {
+
+        if(getBooleanFromSharedPreference(R.string.shared_key_chk_twin, false)){
+            viewHolders.checktwin.setChecked(true);
+            viewHolders.twins.setVisibility(View.VISIBLE);
+            String spinnerValue=getStringFromSharedPreference(R.string.shared_key_twin, getString(R.string.default_twin));
+            for (int i = 0; i < viewHolders.twins.getCount(); i++) {
+                if (viewHolders.twins.getItemAtPosition(i).toString().equals(spinnerValue)) {
+                    viewHolders.twins.setSelection(i);
+                    break;
+                }
+            }
+        }
     }
 
     private void initDropDown(final Spinner spinner, final int keyId, int list_key, int id_default) {
@@ -496,7 +507,7 @@ public class ScrollingActivity extends AppCompatActivity {
 
         viewHolders.checktwin.setChecked(false);
         putBooleanInSharedPreference(R.string.shared_key_chk_twin, false);
-        
+
         refreshCode();
         isValidationErrorActive=true;
         //move to up
