@@ -133,6 +133,10 @@ public class ScrollingActivity extends AppCompatActivity {
         code += year.substring(year.length()-2);
         code += getStringFromSharedPreference(R.string.shared_key_sex, DEFAULT_VALUE).substring(0,1);
 
+        if(getBooleanFromSharedPreference(R.string.shared_key_chk_twin, false)) {
+            code += "T" + getStringFromSharedPreference(R.string.shared_key_twin, "");
+        }
+
         return code.toUpperCase();
     }
 
@@ -168,12 +172,18 @@ public class ScrollingActivity extends AppCompatActivity {
             return false;
         }
 
+        if(getBooleanFromSharedPreference(R.string.shared_key_chk_twin, false)
+                && getStringFromSharedPreference(R.string.shared_key_twin, getString(R.string.default_twin)).equals(getString(R.string.default_twin))){
+            return false;
+        }
+
         if(!validateDate()) {
             return false;
         }
 
         return true;
     }
+
 
     private boolean validateDate() {
         Long defaultNoDate=Long.parseLong(getApplicationContext().getString(R.string.default_no_date));
@@ -234,6 +244,12 @@ public class ScrollingActivity extends AppCompatActivity {
 
         //Init sex
         initSex(R.string.shared_key_sex);
+        //Init twin
+        intTwin(R.string.shared_key_chk_twin);
+    }
+
+    private void intTwin(int shared_key_chk_twin) {
+        twinChange(null);
     }
 
     private void initDropDown(final Spinner spinner, final int keyId, int list_key, int id_default) {
@@ -259,7 +275,6 @@ public class ScrollingActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {}
         });
-
     }
 
     private void initDate() {
@@ -356,6 +371,21 @@ public class ScrollingActivity extends AppCompatActivity {
 
     }
 
+
+    private boolean getBooleanFromSharedPreference(int keyId, boolean defaultValue) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        return sharedPreferences.getBoolean(getApplicationContext().getResources().getString(keyId), defaultValue);
+    }
+    /**
+     *  Puts the string value in the given key
+     * @return
+     */
+    private void putBooleanInSharedPreference(int keyId, boolean value){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putBoolean(getApplication().getBaseContext().getString(keyId), value);
+        editor.commit();
+    }
     /**
      * Gets the string value for the given key
      * @return
@@ -461,6 +491,12 @@ public class ScrollingActivity extends AppCompatActivity {
         Long defaultNoDate = Long.parseLong(getApplicationContext().getString(R.string.default_no_date));
         putLongInSharedPreferences(defaultNoDate, R.string.shared_key_timestamp_date);
 
+        putStringInSharedPreference(getString(R.string.default_twin), R.string.shared_key_twin);
+        viewHolders.twins.setVisibility(View.GONE);
+
+        viewHolders.checktwin.setChecked(false);
+        putBooleanInSharedPreference(R.string.shared_key_chk_twin, false);
+        
         refreshCode();
         isValidationErrorActive=true;
         //move to up
@@ -488,12 +524,18 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     public void twinChange(View view) {
-        if(viewHolders.checktwin.isChecked()){
+        boolean isChecked=viewHolders.checktwin.isChecked();
+        putBooleanInSharedPreference(R.string.shared_key_chk_twin, isChecked);
+        if(isChecked){
             viewHolders.twins.setVisibility(View.VISIBLE);
+            ((Spinner) viewHolders.twins.findViewById(R.id.twin_dropdown)).setSelection(0);
         }
         else{
+            //Removes the spinner saved values
+            putStringInSharedPreference(getString(R.string.default_twin), R.string.shared_key_twin);
             viewHolders.twins.setVisibility(View.GONE);
         }
+        refreshCode();
     }
 
 
