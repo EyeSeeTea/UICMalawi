@@ -133,8 +133,8 @@ public class ScrollingActivity extends AppCompatActivity {
         code += year.substring(year.length()-2);
         code += getStringFromSharedPreference(R.string.shared_key_sex, DEFAULT_VALUE).substring(0,1);
 
-        if(getBooleanFromSharedPreference(R.string.shared_key_chk_twin, false)) {
-            code += "T" + getStringFromSharedPreference(R.string.shared_key_twin, "");
+        if(getBooleanFromSharedPreference(R.string.shared_key_twin_checkbox, false)) {
+            code += "T" + getStringFromSharedPreference(R.string.shared_key_twin_dropdown, "");
         }
 
         return code.toUpperCase();
@@ -172,8 +172,8 @@ public class ScrollingActivity extends AppCompatActivity {
             return false;
         }
 
-        if(getBooleanFromSharedPreference(R.string.shared_key_chk_twin, false)
-                && getStringFromSharedPreference(R.string.shared_key_twin, getString(R.string.default_twin)).equals(getString(R.string.default_twin))){
+        if(getBooleanFromSharedPreference(R.string.shared_key_twin_checkbox, false)
+                && getStringFromSharedPreference(R.string.shared_key_twin_dropdown, getString(R.string.default_twin)).equals(getString(R.string.default_twin))){
             return false;
         }
 
@@ -237,7 +237,7 @@ public class ScrollingActivity extends AppCompatActivity {
         //Init district
         initDropDown(viewHolders.district, R.string.shared_key_district, R.array.district_list, R.string.default_district);
         //Init twin
-        initDropDown(viewHolders.twins, R.string.shared_key_twin, R.array.twin_list, R.string.default_twin);
+        initDropDown(viewHolders.twinDropdown, R.string.shared_key_twin_dropdown, R.array.twin_list, R.string.default_twin);
 
         //Init district
         initDate();
@@ -250,13 +250,13 @@ public class ScrollingActivity extends AppCompatActivity {
 
     private void intTwin() {
 
-        if(getBooleanFromSharedPreference(R.string.shared_key_chk_twin, false)){
-            viewHolders.checktwin.setChecked(true);
-            viewHolders.twins.setVisibility(View.VISIBLE);
-            String spinnerValue=getStringFromSharedPreference(R.string.shared_key_twin, getString(R.string.default_twin));
-            for (int i = 0; i < viewHolders.twins.getCount(); i++) {
-                if (viewHolders.twins.getItemAtPosition(i).toString().equals(spinnerValue)) {
-                    viewHolders.twins.setSelection(i);
+        if(getBooleanFromSharedPreference(R.string.shared_key_twin_checkbox, false)){
+            viewHolders.twinCheckBox.setChecked(true);
+            viewHolders.twinDropdown.setVisibility(View.VISIBLE);
+            String spinnerValue=getStringFromSharedPreference(R.string.shared_key_twin_dropdown, getString(R.string.default_twin));
+            for (int i = 0; i < viewHolders.twinDropdown.getCount(); i++) {
+                if (viewHolders.twinDropdown.getItemAtPosition(i).toString().equals(spinnerValue)) {
+                    viewHolders.twinDropdown.setSelection(i);
                     break;
                 }
             }
@@ -502,11 +502,11 @@ public class ScrollingActivity extends AppCompatActivity {
         Long defaultNoDate = Long.parseLong(getApplicationContext().getString(R.string.default_no_date));
         putLongInSharedPreferences(defaultNoDate, R.string.shared_key_timestamp_date);
 
-        putStringInSharedPreference(getString(R.string.default_twin), R.string.shared_key_twin);
-        viewHolders.twins.setVisibility(View.GONE);
+        putStringInSharedPreference(getString(R.string.default_twin), R.string.shared_key_twin_dropdown);
+        viewHolders.twinDropdown.setVisibility(View.GONE);
 
-        viewHolders.checktwin.setChecked(false);
-        putBooleanInSharedPreference(R.string.shared_key_chk_twin, false);
+        viewHolders.twinCheckBox.setChecked(false);
+        putBooleanInSharedPreference(R.string.shared_key_twin_checkbox, false);
 
         refreshCode();
         isValidationErrorActive=true;
@@ -535,16 +535,16 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     public void twinChange(View view) {
-        boolean isChecked=viewHolders.checktwin.isChecked();
-        putBooleanInSharedPreference(R.string.shared_key_chk_twin, isChecked);
+        boolean isChecked=viewHolders.twinCheckBox.isChecked();
+        putBooleanInSharedPreference(R.string.shared_key_twin_checkbox, isChecked);
         if(isChecked){
-            viewHolders.twins.setVisibility(View.VISIBLE);
-            ((Spinner) viewHolders.twins.findViewById(R.id.twin_dropdown)).setSelection(0);
+            viewHolders.twinDropdown.setVisibility(View.VISIBLE);
+            ((Spinner) viewHolders.twinDropdown.findViewById(R.id.twin_dropdown)).setSelection(0);
         }
         else{
             //Removes the spinner saved values
-            putStringInSharedPreference(getString(R.string.default_twin), R.string.shared_key_twin);
-            viewHolders.twins.setVisibility(View.GONE);
+            putStringInSharedPreference(getString(R.string.default_twin), R.string.shared_key_twin_dropdown);
+            viewHolders.twinDropdown.setVisibility(View.GONE);
         }
         refreshCode();
     }
@@ -686,11 +686,11 @@ public class ScrollingActivity extends AppCompatActivity {
         if (viewHolders.codeButton==null) {
             viewHolders.codeButton = (ImageView) findViewById(R.id.code_button);
         }
-        if (viewHolders.checktwin==null) {
-            viewHolders.checktwin = (CheckBox) findViewById(R.id.chk_twin);
+        if (viewHolders.twinCheckBox ==null) {
+            viewHolders.twinCheckBox = (CheckBox) findViewById(R.id.twin_checkbox);
         }
-        if (viewHolders.twins==null) {
-            viewHolders.twins = (Spinner) findViewById(R.id.twin_dropdown);
+        if (viewHolders.twinDropdown ==null) {
+            viewHolders.twinDropdown = (Spinner) findViewById(R.id.twin_dropdown);
         }
     }
 
@@ -707,7 +707,7 @@ public class ScrollingActivity extends AppCompatActivity {
         CustomButton transgender;
         TextCard code;
         ImageView codeButton;
-        CheckBox checktwin;
-        Spinner twins;
+        CheckBox twinCheckBox;
+        Spinner twinDropdown;
     }
 }
