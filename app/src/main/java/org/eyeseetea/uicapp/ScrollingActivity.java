@@ -230,26 +230,16 @@ public class ScrollingActivity extends AppCompatActivity {
      * @return
      */
     private void initValues() {
-        //Init mother
         initTextValue(viewHolders.motherName, R.string.shared_key_mother, R.string.mother_error);
-        //Init surname
         initTextValue(viewHolders.surname, R.string.shared_key_surname, R.string.surname_error);
-        //Init district
         initDropDown(viewHolders.district, R.string.shared_key_district, R.array.district_list, R.string.default_district);
-        //Init twin
         initDropDown(viewHolders.twinDropdown, R.string.shared_key_twin_dropdown, R.array.twin_list, R.string.default_twin);
-
-        //Init district
         initDate();
-
-        //Init sex
         initSex(R.string.shared_key_sex);
-        //Init twin
-        intTwin();
+        initTwin();
     }
 
-    private void intTwin() {
-
+    private void initTwin() {
         if(getBooleanFromSharedPreference(R.string.shared_key_twin_checkbox, false)){
             viewHolders.twinCheckBox.setChecked(true);
             viewHolders.twinDropdown.setVisibility(View.VISIBLE);
@@ -534,14 +524,13 @@ public class ScrollingActivity extends AppCompatActivity {
         new DatePickerListener(view);
     }
 
-    public void twinChange(View view) {
+    public void changeTwinValues(View view) {
         boolean isChecked=viewHolders.twinCheckBox.isChecked();
         putBooleanInSharedPreference(R.string.shared_key_twin_checkbox, isChecked);
         if(isChecked){
             viewHolders.twinDropdown.setVisibility(View.VISIBLE);
             ((Spinner) viewHolders.twinDropdown.findViewById(R.id.twin_dropdown)).setSelection(0);
-        }
-        else{
+        } else {
             //Removes the spinner saved values
             putStringInSharedPreference(getString(R.string.default_twin), R.string.shared_key_twin_dropdown);
             viewHolders.twinDropdown.setVisibility(View.GONE);
