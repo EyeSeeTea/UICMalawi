@@ -28,7 +28,16 @@
     <string name="lastcommit">"Version %s"</string>
     <string name="unavailable">"Unavailable"</string>
     <string name="default_district">Select district</string>
+    <string name="chk_twin">"Twin?"</string>
+    <string name="default_twin">Please select the twin number</string>
 
+    <string-array name="twin_list">
+        <item>@string/default_twin</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
     <string-array name="district_list">
         <item>@string/default_district</item>
         <item>Beitbridge</item>

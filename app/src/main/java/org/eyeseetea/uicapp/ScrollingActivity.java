@@ -13,7 +13,6 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,19 +22,22 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 
 import com.crashlytics.android.Crashlytics;
-import io.fabric.sdk.android.Fabric;
+
 import org.eyeseetea.uicapp.views.CustomButton;
 import org.eyeseetea.uicapp.views.EditCard;
 import org.eyeseetea.uicapp.views.TextCard;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import io.fabric.sdk.android.Fabric;
 
 public class ScrollingActivity extends AppCompatActivity {
 
@@ -131,6 +133,10 @@ public class ScrollingActivity extends AppCompatActivity {
         code += year.substring(year.length()-2);
         code += getStringFromSharedPreference(R.string.shared_key_sex, DEFAULT_VALUE).substring(0,1);
 
+        if(getBooleanFromSharedPreference(R.string.shared_key_twin_checkbox, false)) {
+            code += "T" + getStringFromSharedPreference(R.string.shared_key_twin_dropdown, "");
+        }
+
         return code.toUpperCase();
     }
 
@@ -166,12 +172,18 @@ public class ScrollingActivity extends AppCompatActivity {
             return false;
         }
 
+        if(getBooleanFromSharedPreference(R.string.shared_key_twin_checkbox, false)
+                && getStringFromSharedPreference(R.string.shared_key_twin_dropdown, getString(R.string.default_twin)).equals(getString(R.string.default_twin))){
+            return false;
+        }
+
         if(!validateDate()) {
             return false;
         }
 
         return true;
     }
+
 
     private boolean validateDate() {
         Long defaultNoDate=Long.parseLong(getApplicationContext().getString(R.string.default_no_date));
@@ -218,44 +230,52 @@ public class ScrollingActivity extends AppCompatActivity {
      * @return
      */
     private void initValues() {
-        //Init mother
         initTextValue(viewHolders.motherName, R.string.shared_key_mother, R.string.mother_error);
-        //Init surname
         initTextValue(viewHolders.surname, R.string.shared_key_surname, R.string.surname_error);
-        //Init district
-        initDropDown(viewHolders.district, R.string.shared_key_district, R.array.district_list);
-
-        //Init district
+        initDropDown(viewHolders.district, R.string.shared_key_district, R.array.district_list, R.string.default_district);
+        initDropDown(viewHolders.twinDropdown, R.string.shared_key_twin_dropdown, R.array.twin_list, R.string.default_twin);
         initDate();
-
-        //Init sex
         initSex(R.string.shared_key_sex);
+        initTwin();
     }
 
-    private void initDropDown(final Spinner district, int keyId, int district_list_key) {
-        String value= getStringFromSharedPreference(keyId, getString(R.string.default_district));
-        ArrayAdapter<String> districtsList = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(district_list_key));
-        district.setAdapter(districtsList);
-        if(!value.equals("")){
-            for(int i=0; i < district.getCount(); i++) {
-                if(value.equals(district.getAdapter().getItem(i).toString())){
-                    district.setSelection(i);
+    private void initTwin() {
+        if(getBooleanFromSharedPreference(R.string.shared_key_twin_checkbox, false)){
+            viewHolders.twinCheckBox.setChecked(true);
+            viewHolders.twinDropdown.setVisibility(View.VISIBLE);
+            String spinnerValue=getStringFromSharedPreference(R.string.shared_key_twin_dropdown, getString(R.string.default_twin));
+            for (int i = 0; i < viewHolders.twinDropdown.getCount(); i++) {
+                if (viewHolders.twinDropdown.getItemAtPosition(i).toString().equals(spinnerValue)) {
+                    viewHolders.twinDropdown.setSelection(i);
                     break;
                 }
             }
         }
-        district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    }
+
+    private void initDropDown(final Spinner spinner, final int keyId, int list_key, int id_default) {
+        String value= getStringFromSharedPreference(keyId, getString(id_default));
+        ArrayAdapter<String> districtsList = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(list_key));
+        spinner.setAdapter(districtsList);
+        if(!value.equals("")){
+            for(int i=0; i < spinner.getCount(); i++) {
+                if(value.equals(spinner.getAdapter().getItem(i).toString())){
+                    spinner.setSelection(i);
+                    break;
+                }
+            }
+        }
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                                        int arg2, long arg3) {
-                putStringInSharedPreference(district.getSelectedItem().toString(), R.string.shared_key_district);
+                putStringInSharedPreference(spinner.getSelectedItem().toString(), keyId);
                 refreshCode();
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {}
         });
-
     }
 
     private void initDate() {
@@ -352,6 +372,21 @@ public class ScrollingActivity extends AppCompatActivity {
 
     }
 
+
+    private boolean getBooleanFromSharedPreference(int keyId, boolean defaultValue) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        return sharedPreferences.getBoolean(getApplicationContext().getResources().getString(keyId), defaultValue);
+    }
+    /**
+     *  Puts the string value in the given key
+     * @return
+     */
+    private void putBooleanInSharedPreference(int keyId, boolean value){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putBoolean(getApplication().getBaseContext().getString(keyId), value);
+        editor.commit();
+    }
     /**
      * Gets the string value for the given key
      * @return
@@ -457,6 +492,12 @@ public class ScrollingActivity extends AppCompatActivity {
         Long defaultNoDate = Long.parseLong(getApplicationContext().getString(R.string.default_no_date));
         putLongInSharedPreferences(defaultNoDate, R.string.shared_key_timestamp_date);
 
+        putStringInSharedPreference(getString(R.string.default_twin), R.string.shared_key_twin_dropdown);
+        viewHolders.twinDropdown.setVisibility(View.GONE);
+
+        viewHolders.twinCheckBox.setChecked(false);
+        putBooleanInSharedPreference(R.string.shared_key_twin_checkbox, false);
+
         refreshCode();
         isValidationErrorActive=true;
         //move to up
@@ -481,6 +522,20 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     public void showDatePicker(View view) {
         new DatePickerListener(view);
+    }
+
+    public void changeTwinValues(View view) {
+        boolean isChecked=viewHolders.twinCheckBox.isChecked();
+        putBooleanInSharedPreference(R.string.shared_key_twin_checkbox, isChecked);
+        if(isChecked){
+            viewHolders.twinDropdown.setVisibility(View.VISIBLE);
+            ((Spinner) viewHolders.twinDropdown.findViewById(R.id.twin_dropdown)).setSelection(0);
+        } else {
+            //Removes the spinner saved values
+            putStringInSharedPreference(getString(R.string.default_twin), R.string.shared_key_twin_dropdown);
+            viewHolders.twinDropdown.setVisibility(View.GONE);
+        }
+        refreshCode();
     }
 
 
@@ -620,6 +675,12 @@ public class ScrollingActivity extends AppCompatActivity {
         if (viewHolders.codeButton==null) {
             viewHolders.codeButton = (ImageView) findViewById(R.id.code_button);
         }
+        if (viewHolders.twinCheckBox ==null) {
+            viewHolders.twinCheckBox = (CheckBox) findViewById(R.id.twin_checkbox);
+        }
+        if (viewHolders.twinDropdown ==null) {
+            viewHolders.twinDropdown = (Spinner) findViewById(R.id.twin_dropdown);
+        }
     }
 
     /**
@@ -635,5 +696,7 @@ public class ScrollingActivity extends AppCompatActivity {
         CustomButton transgender;
         TextCard code;
         ImageView codeButton;
+        CheckBox twinCheckBox;
+        Spinner twinDropdown;
     }
 }
