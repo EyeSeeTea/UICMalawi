@@ -28,8 +28,17 @@
     <string name="lastcommit">"Version %s"</string>
     <string name="unavailable">"Unavailable"</string>
     <string name="default_district">Select district</string>
+    <string name="chk_twin">"Twin?"</string>
+    <string name="default_twin">Please select the twin number</string>
     <string name="mother_info">"There's a user convention for certain situations for filling in this field (mother's name):\n  \n If mother's name is still unknown please write XX \n  \n If client refuses to provide mother's name, then please introduce ZZ \n \n If there's no mother known, then please introduce JANEDOE"    </string>
 
+    <string-array name="twin_list">
+        <item>@string/default_twin</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
     <string-array name="district_list">
         <item>@string/default_district</item>
         <item>Beitbridge</item>
