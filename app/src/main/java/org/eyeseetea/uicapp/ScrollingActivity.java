@@ -541,8 +541,16 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     public void showMotherInfo(View view) {
+        showSnackBar(R.string.mother_info);
+    }
+
+    public void showDateInfo(View view) {
+        showSnackBar(R.string.date_of_birth_info);
+    }
+
+    private void showSnackBar(int messageId) {
         final Snackbar sb = Snackbar
-                .make(viewHolders.coordinator, R.string.mother_info, Snackbar.LENGTH_INDEFINITE);
+                .make(viewHolders.coordinator, messageId, Snackbar.LENGTH_INDEFINITE);
         View sbView = sb.getView();
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         //increase max lines of text in snackbar. default is 2.
