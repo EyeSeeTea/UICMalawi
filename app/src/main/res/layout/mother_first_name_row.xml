@@ -34,7 +34,7 @@
         android:layout_marginTop="@dimen/info_margin"
         android:layout_gravity="center"
         android:onClick="showMotherInfo"
-        android:src="@drawable/mother_info_button"
+        android:src="@drawable/info_button"
         />
         </LinearLayout>
 

@@ -8,16 +8,32 @@
     android:layout_marginBottom="@dimen/row_margin_button"
     android:paddingTop="@dimen/row_padding_top"
     android:paddingBottom="@dimen/row_padding_bottom">
-
-    <org.eyeseetea.uicapp.views.TextCard
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/date_background" >
+    <org.eyeseetea.uicapp.views.TextCard
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title_text_size"
         android:layout_marginLeft="@dimen/text_margin"
         android:id="@+id/date_header"
-        android:textSize="@dimen/title_text_size"
         android:textColor="@color/date_text"
         app:tFontName="@string/condensed_font_name"
         android:text="@string/date_title" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/input_margin"
+            android:layout_marginBottom="@dimen/info_margin_bottom"
+            android:layout_marginTop="@dimen/info_margin"
+            android:layout_gravity="center"
+            android:onClick="showDateInfo"
+            android:src="@drawable/info_button"
+            />
+    </LinearLayout>
+
     <org.eyeseetea.uicapp.views.EditCard
         android:id="@+id/date_value"
         android:layout_width="match_parent"
