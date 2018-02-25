@@ -116,30 +116,8 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     private String generateCode() {
-        String code="";
-        code += getLast2CharsFromPreference(R.string.shared_key_mother);
-        code += getLast2CharsFromPreference(R.string.shared_key_surname);
-        code += getLast2CharsFromPreference(R.string.shared_key_district);
-
-        Long defaultNoDate=Long.parseLong(getApplicationContext().getString(R.string.default_no_date));
-        Long timestamp = getLongFromSharedPreference(R.string.shared_key_timestamp_date, defaultNoDate);
-        Calendar newCalendar= Calendar.getInstance();
-        newCalendar.setTimeInMillis(timestamp);
-
-        String day = String.format("%02d", Utils.getDay(newCalendar));
-        String month = String.format("%02d", Utils.getMonth(newCalendar));
-        String year = String.valueOf(Utils.getYear(newCalendar));
-
-        code += day;
-        code += month;
-        code += year.substring(year.length()-2);
-        code += getStringFromSharedPreference(R.string.shared_key_sex, DEFAULT_VALUE).substring(0,1);
-
-        if(getBooleanFromSharedPreference(R.string.shared_key_twin_checkbox, false)) {
-            code += "T" + getStringFromSharedPreference(R.string.shared_key_twin_dropdown, "");
-        }
-
-        return code.toUpperCase();
+        CodeGenerator codeGenerator = new CodeGenerator(this);
+        return codeGenerator.generateCode();
     }
 
     /**
