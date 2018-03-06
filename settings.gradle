@@ -1,1 +1,2 @@
-include ':app'
+include ':app', 'bugshaker'
+project(':bugshaker').projectDir = new File(settingsDir, 'bugshaker-android/bugshaker')
