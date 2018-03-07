@@ -23,6 +23,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+        zambia {
+            applicationId "org.eyeseetea.uicapp.zambia"
+        }
+        zimbabwe {
+            applicationId "org.eyeseetea.uicapp.zimbabwe"
+        }
+    }
 }
 
 dependencies {

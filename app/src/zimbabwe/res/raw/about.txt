@@ -1,0 +1,5 @@
+<p><b>Developed by EyeSeeTea Ltd for PSI ZW</b></p>
+
+<p><b>Build %s</b></p>
+
+<p>This app was developed with technical support and funding from the <b>U.S. President’s Emergency Plan for AIDS Relief (PEPFAR)</b> through <b>USAID</b></p>
