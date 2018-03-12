@@ -3,9 +3,7 @@ package org.eyeseetea.uicapp;
 import android.app.Dialog;
 import android.content.Context;
 import android.text.Html;
-import android.text.InputFilter;
 import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.util.Log;
@@ -20,7 +18,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.regex.Pattern;
 
 /**
  * Created by idelcano on 25/10/2016.
@@ -122,7 +119,7 @@ public class Utils {
 
         //set up text title
         TextView textTile = (TextView) dialog.findViewById(R.id.aboutTitle);
-        textTile.setText(BuildConfig.FLAVOR.toUpperCase() + "(bb) " + BuildConfig.VERSION_NAME);
+        textTile.setText(BuildConfig.FLAVOR.toUpperCase() + "(dev) " + BuildConfig.VERSION_NAME);
         textTile.setGravity(Gravity.RIGHT);
 
         //set up text title
