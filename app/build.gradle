@@ -11,13 +11,13 @@ android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
     defaultConfig {
-        applicationId "org.eyeseetea.uicapp_dev"
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 6
         versionName "1.0.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "GIT_HUB_BOT_TOKEN", "\"$gitHubBotToken\""
+        flavorDimensions "default"
     }
     buildTypes {
         release {
@@ -27,10 +27,10 @@ android {
     }
     productFlavors {
         zambia {
-            applicationId "org.eyeseetea.uicapp.zambia"
+            applicationId "org.eyeseetea.uicapp.zambia_dev"
         }
         zimbabwe {
-            applicationId "org.eyeseetea.uicapp.zimbabwe"
+            applicationId "org.eyeseetea.uicapp.zimbabwe_dev"
         }
     }
 }
