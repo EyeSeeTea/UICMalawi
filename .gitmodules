@@ -1,0 +1,3 @@
+[submodule "bugshaker-android"]
+	path = bugshaker-android
+	url = https://github.com/EyeSeeTea/bugshaker-android.git
