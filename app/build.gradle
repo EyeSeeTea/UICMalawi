@@ -13,8 +13,6 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 6
-        versionName "1.0.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "GIT_HUB_BOT_TOKEN", "\"$gitHubBotToken\""
         flavorDimensions "default"
@@ -28,9 +26,13 @@ android {
     productFlavors {
         zambia {
             applicationId "org.eyeseetea.uicapp.zambia_dev"
+            versionCode 1
+            versionName "1.0.0"
         }
         zimbabwe {
             applicationId "org.eyeseetea.uicapp.zimbabwe_dev"
+            versionCode 6
+            versionName "1.0.6"
         }
     }
 }
