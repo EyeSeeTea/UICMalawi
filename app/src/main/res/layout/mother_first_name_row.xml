@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:background="@color/mother_background" >
 
-    <org.eyeseetea.uicapp.views.TextCard
+    <org.eyeseetea.uicapp.presentation.views.TextCard
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/mother_text"
@@ -38,7 +38,7 @@
         />
         </LinearLayout>
 
-    <org.eyeseetea.uicapp.views.EditCard
+    <org.eyeseetea.uicapp.presentation.views.EditCard
         android:id="@+id/mother_edit_text"
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_text_height"

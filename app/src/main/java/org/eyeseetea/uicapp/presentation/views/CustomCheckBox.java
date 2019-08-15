@@ -17,7 +17,7 @@
  *  along with QIS Surveillance App.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.eyeseetea.uicapp.views;
+package org.eyeseetea.uicapp.presentation.views;
 
 import android.content.Context;
 import android.content.res.AssetManager;

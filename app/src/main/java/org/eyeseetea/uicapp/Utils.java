@@ -45,7 +45,7 @@ public class Utils {
      *  Returns the year in a calendar date
      * @return
      */
-    static int getYear(Calendar newCalendar) {
+    public static int getYear(Calendar newCalendar) {
         return newCalendar.get(Calendar.YEAR);
     }
 
@@ -53,7 +53,7 @@ public class Utils {
      *  Returns the day in a calendar date
      * @return
      */
-    static int getDay(Calendar newCalendar) {
+    public static int getDay(Calendar newCalendar) {
         return newCalendar.get(Calendar.DAY_OF_MONTH);
     }
 
@@ -61,7 +61,7 @@ public class Utils {
      *  Returns the month in a calendar date
      * @return
      */
-    static int getMonth(Calendar newCalendar) {
+    public static int getMonth(Calendar newCalendar) {
         return newCalendar.get(Calendar.MONTH) + 1;
     }
 

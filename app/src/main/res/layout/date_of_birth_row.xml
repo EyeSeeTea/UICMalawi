@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/date_background" >
-    <org.eyeseetea.uicapp.views.TextCard
+    <org.eyeseetea.uicapp.presentation.views.TextCard
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/title_text_size"
@@ -34,7 +34,7 @@
             />
     </LinearLayout>
 
-    <org.eyeseetea.uicapp.views.EditCard
+    <org.eyeseetea.uicapp.presentation.views.EditCard
         android:id="@+id/date_value"
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_text_height"
@@ -61,7 +61,7 @@
         android:layout_marginBottom="@dimen/row_margin_button"
         android:paddingTop="@dimen/row_padding_top"
         android:paddingBottom="@dimen/row_padding_bottom">
-    <org.eyeseetea.uicapp.views.CustomCheckBox
+    <org.eyeseetea.uicapp.presentation.views.CustomCheckBox
         android:id="@+id/twin_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

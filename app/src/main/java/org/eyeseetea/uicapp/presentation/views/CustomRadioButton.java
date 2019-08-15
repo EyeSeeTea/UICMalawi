@@ -17,58 +17,54 @@
  *  along with QIS Surveillance App.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.eyeseetea.uicapp.views;
+package org.eyeseetea.uicapp.presentation.views;
 
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.widget.EditText;
+import android.widget.RadioButton;
 
 import org.eyeseetea.uicapp.R;
 
 /**
- * TODO: document your custom view class.
+ * Created by adrian on 30/05/15.
  */
-public class EditCard extends EditText{
+public class CustomRadioButton extends RadioButton {
     private Context context = getContext();
     private String mfontName = context.getString(R.string.normal_font);
     private AssetManager assetManager = context.getAssets();
     private TypedArray a;
     private Typeface font;
 
-    public EditCard(Context context) {
+    public CustomRadioButton(Context context) {
         super(context);
-        init(null, 0);
     }
 
-    public EditCard(Context context, AttributeSet attrs) {
+    public CustomRadioButton(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(attrs, 0);
     }
 
-    public EditCard(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init(attrs, defStyle);
+    public CustomRadioButton(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
     }
 
-
-
+    /**
+     * Initializing method. Sets font name and font size depending on the styled attributes selected
+     * @param attrs
+     * @param defStyle
+     */
     public void init(AttributeSet attrs, int defStyle) {
-        if(isInEditMode()){
-            return;
-        }
         // Load attributes
         if (attrs != null) {
-            a = getContext().obtainStyledAttributes(attrs, R.styleable.TextCard, defStyle, 0);
+            a = getContext().obtainStyledAttributes(attrs, R.styleable.CustomRadioButton, defStyle, 0);
             try {
-                mfontName = a.getString(R.styleable.EditCard_eFontName);
+                mfontName = a.getString(R.styleable.CustomRadioButton_rFontName);
                 if (mfontName != null) {
                     font = Typeface.createFromAsset(assetManager, "fonts/" + mfontName);
                     setTypeface(font);
                 }
-
             } finally {
                 a.recycle();
             }
@@ -76,13 +72,15 @@ public class EditCard extends EditText{
     }
 
     /**
-     * Gets the mDimension attribute value.
-     *
-     * @return The mDimension attribute value.
+     * Set the Object font name. This must be a valid font placed in fonts subfolder, inside the resources of the app
+     * @param fontName
      */
-    public String getmFontName() {
-        return mfontName;
+    public void updateFontName(String fontName){
+        if (fontName != null){
+            Typeface font = Typeface.createFromAsset(getContext().getAssets(), "fonts/" + fontName);
+            setTypeface(font);
+            mfontName = fontName;
+        }
     }
 
 }
-
