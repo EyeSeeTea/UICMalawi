@@ -2,6 +2,8 @@
 <resources>
     <string name="mother_title">"Your first name"</string>
     <string name="surname_title">"Your surname"</string>
+    <string name="mother_error">"The field needs at least three characters"</string>
+    <string name="surname_error">"The field needs at least three characters"</string>
     <string-array name="district_list">
         <item>@string/default_district</item>
         <item>Beitbridge</item>
