@@ -11,18 +11,22 @@ public class CodeGeneratorShould {
     public void return_valid_code_if_is_not_twin() {
         Client noTwinClient = givenAClient(0);
 
-        String code = new CodeGenerator().generateCode(noTwinClient);
+        CodeResult codeResult = new CodeGenerator().generateCode(noTwinClient);
 
-        Assert.assertEquals("AHESBA020275F0", code);
+        Assert.assertTrue(codeResult instanceof CodeResult.Success);
+        Assert.assertTrue(codeResult.isValid());
+        Assert.assertEquals("AHESBA020275F0", ((CodeResult.Success)codeResult).getCode());
     }
 
     @Test
     public void return_valid_code_if_is_twin() {
         Client twinClient = givenAClient(1);
 
-        String code = new CodeGenerator().generateCode(twinClient);
+        CodeResult codeResult = new CodeGenerator().generateCode(twinClient);
 
-        Assert.assertEquals("AHESBA020275F1", code);
+        Assert.assertTrue(codeResult instanceof  CodeResult.Success);
+        Assert.assertTrue(codeResult.isValid());
+        Assert.assertEquals("AHESBA020275F1", ((CodeResult.Success)codeResult).getCode());
     }
 
     private Client givenAClient(int twinNumber) {
@@ -34,7 +38,7 @@ public class CodeGeneratorShould {
 
         String sex = "FEMALE";
 
-        boolean isTwin = (twinNumber == 0);
+        boolean isTwin = (twinNumber > 0);
 
         return new Client(mother, surname, district, dateOfBirth, sex, isTwin, twinNumber);
     }

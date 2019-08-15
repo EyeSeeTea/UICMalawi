@@ -1,8 +1,8 @@
 package org.eyeseetea.uicapp.domain;
 
-public class CodeGenerator {
-    public String generateCode(Client client) {
-
+public class CodeGenerator extends CodeGeneratorBase{
+    @Override
+    protected String generateCodeValue(Client client) {
         String code = "";
 
         code += GeneratorUtils.extractLetters(client.getMother(), 1,3);
@@ -19,6 +19,16 @@ public class CodeGenerator {
             code += "T" + client.getTwinNumber();
         }
 
-        return code.toUpperCase();
+        return code;
+    }
+
+    @Override
+    public boolean isValidMotherName(String value) {
+        return isValidText(value,3);
+    }
+
+    @Override
+    public boolean isValidSurname(String value) {
+        return isValidText(value,3);
     }
 }

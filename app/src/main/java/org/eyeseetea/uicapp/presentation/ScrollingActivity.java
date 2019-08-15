@@ -36,6 +36,7 @@ import org.eyeseetea.uicapp.domain.CodeGenerator;
 import org.eyeseetea.uicapp.R;
 import org.eyeseetea.uicapp.Utils;
 import org.eyeseetea.uicapp.domain.Client;
+import org.eyeseetea.uicapp.domain.CodeResult;
 import org.eyeseetea.uicapp.presentation.views.CustomButton;
 import org.eyeseetea.uicapp.presentation.views.EditCard;
 import org.eyeseetea.uicapp.presentation.views.TextCard;
@@ -51,6 +52,8 @@ public class ScrollingActivity extends AppCompatActivity {
     public static final String DEFAULT_VALUE = "";
     //Flag to prevent the bad positive errors in the validation when the user clear all the fields
     public static boolean isValidationErrorActive = true;
+
+    private CodeGenerator codeGenerator = new CodeGenerator();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -92,7 +95,6 @@ public class ScrollingActivity extends AppCompatActivity {
         hideCollapsingBar();
     }
 
-
     private void hideKeyboardEvent() {
         (findViewById(R.id.container_scrolled)).setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -112,8 +114,13 @@ public class ScrollingActivity extends AppCompatActivity {
 
     private void refreshCode() {
         TextCard textView = viewHolders.code;
-        if (validateAllFields()) {
-            textView.setText(generateCode());
+
+        Client client =  getClient();
+
+        CodeResult codeResult = codeGenerator.generateCode(client);
+
+        if (codeResult.isValid()) {
+            textView.setText(((CodeResult.Success)codeResult).getCode());
             viewHolders.codeButton.setEnabled(true);
         } else {
             textView.setText(getApplicationContext().getString(R.string.code_invalid));
@@ -121,26 +128,21 @@ public class ScrollingActivity extends AppCompatActivity {
         }
     }
 
-    private String generateCode() {
-        Client client =  getClient();
-
-        CodeGenerator codeGenerator = new CodeGenerator();
-
-        return codeGenerator.generateCode(client);
-    }
-
     private Client getClient() {
         String mother = getStringFromSharedPreference(R.string.shared_key_mother, DEFAULT_VALUE);
         String surname = getStringFromSharedPreference(R.string.shared_key_surname, DEFAULT_VALUE);
+
         String district = getStringFromSharedPreference(R.string.shared_key_district, DEFAULT_VALUE);
+
+        if (district.equals(getString(R.string.default_district))){
+            district = DEFAULT_VALUE;
+        }
 
         Long defaultNoDate = Long.parseLong(getString(R.string.default_no_date));
         Long dateOfBirth = getLongFromSharedPreference(R.string.shared_key_timestamp_date,
                 defaultNoDate);
 
-        String sex = getStringFromSharedPreference(R.string.shared_key_sex,
-                DEFAULT_VALUE).substring(0,
-                1);
+        String sex = getStringFromSharedPreference(R.string.shared_key_sex, DEFAULT_VALUE);
 
         boolean isTwin = getBooleanFromSharedPreference(R.string.shared_key_twin_checkbox, false);
 
@@ -159,73 +161,6 @@ public class ScrollingActivity extends AppCompatActivity {
         }
     }
 
-
-    private boolean validateAllFields() {
-
-        if (!validateText(R.string.shared_key_mother)) {
-            return false;
-        }
-
-        if (!validateText(R.string.shared_key_surname)) {
-            return false;
-        }
-
-        if (getStringFromSharedPreference(R.string.shared_key_district,
-                getString(R.string.default_district)).equals(getString(R.string.default_district))
-                ||
-                getStringFromSharedPreference(R.string.shared_key_district,
-                        getString(R.string.default_district)).length() < 2) {
-            return false;
-        }
-
-        if (getStringFromSharedPreference(R.string.shared_key_sex, DEFAULT_VALUE).equals(
-                DEFAULT_VALUE) ||
-                getStringFromSharedPreference(R.string.shared_key_sex, DEFAULT_VALUE).length()
-                        < 2) {
-            return false;
-        }
-
-        if (getBooleanFromSharedPreference(R.string.shared_key_twin_checkbox, false)
-                && getStringFromSharedPreference(R.string.shared_key_twin_dropdown,
-                getString(R.string.default_twin)).equals(getString(R.string.default_twin))) {
-            return false;
-        }
-
-        if (!validateDate()) {
-            return false;
-        }
-
-        return true;
-    }
-
-
-    private boolean validateDate() {
-        Long defaultNoDate = Long.parseLong(
-                getApplicationContext().getString(R.string.default_no_date));
-        Long timestamp = getLongFromSharedPreference(R.string.shared_key_timestamp_date,
-                defaultNoDate);
-        if (timestamp.equals(defaultNoDate)) {
-            return false;
-        }
-        Calendar savedDate = Calendar.getInstance();
-        savedDate.setTimeInMillis(timestamp);
-        //Not pass the validation if the saved data is bigger than today.
-        if (savedDate.getTimeInMillis() >= Utils.getTodayFirstTimestamp().getTime()) {
-            return false;
-        }
-        return true;
-    }
-
-    private boolean validateText(int keyId) {
-        String value = getStringFromSharedPreference(keyId, DEFAULT_VALUE);
-        //At least two characters without numbers and with possible blank spaces
-        String regExp = "^[ A-zÀ-ÿ]*([A-zÀ-ÿ]{1,}[ ]*[A-zÀ-ÿ]{1,})[ A-zÀ-ÿ]*$";
-        if (value.matches(regExp)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     /**
      * Creates the menu actionBar
@@ -369,7 +304,7 @@ public class ScrollingActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //Ignore the clear fields validation.
                 putStringInSharedPreference(String.valueOf(s), keyId);
-                if (!validateText(keyId) && isValidationErrorActive) {
+                if (!codeGenerator.isValidMotherName(String.valueOf(s)) && isValidationErrorActive) {
                     editText.setError(getApplicationContext().getString(errorId));
                 } else {
                     editText.setError(null);
@@ -641,7 +576,7 @@ public class ScrollingActivity extends AppCompatActivity {
                             putLongInSharedPreferences(newCalendar.getTimeInMillis(),
                                     R.string.shared_key_timestamp_date);
                             recoveryAndShowDate();
-                            if (!validateDate()) {
+                            if (!codeGenerator.isValidDateOfBirth(newCalendar.getTimeInMillis())) {
                                 EditCard editCard = viewHolders.date;
                                 editCard.setError(
                                         getApplicationContext().getString(R.string.date_error));
