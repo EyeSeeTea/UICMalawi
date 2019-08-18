@@ -8,7 +8,7 @@
     android:paddingTop="@dimen/row_padding_top"
     android:paddingBottom="@dimen/row_padding_bottom">
 
-    <org.eyeseetea.uicapp.views.TextCard
+    <org.eyeseetea.uicapp.presentation.views.TextCard
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/text_margin"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
-            <org.eyeseetea.uicapp.views.CustomButton
+            <org.eyeseetea.uicapp.presentation.views.CustomButton
                 android:id="@+id/radio_male"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
                 android:padding="@dimen/sex_padding"
                 app:tFontName="@string/light_font"
                 android:text="@string/sex_male"/>
-            <org.eyeseetea.uicapp.views.CustomButton
+            <org.eyeseetea.uicapp.presentation.views.CustomButton
                 android:id="@+id/radio_female"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
                 android:padding="@dimen/sex_padding"
                 app:tFontName="@string/light_font"
                 android:text="@string/sex_female"/>
-            <org.eyeseetea.uicapp.views.CustomButton
+            <org.eyeseetea.uicapp.presentation.views.CustomButton
                 android:id="@+id/radio_transgender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

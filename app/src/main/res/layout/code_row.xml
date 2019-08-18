@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="vertical">
-            <org.eyeseetea.uicapp.views.TextCard
+            <org.eyeseetea.uicapp.presentation.views.TextCard
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="@dimen/code_text_title"
@@ -41,7 +41,7 @@
                 android:layout_gravity="top"
                 app:tFontName="@string/condensed_font_name"
                 android:text="@string/code_title" />
-            <org.eyeseetea.uicapp.views.TextCard
+            <org.eyeseetea.uicapp.presentation.views.TextCard
                 android:id="@+id/code_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
