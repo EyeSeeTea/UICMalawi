@@ -1,8 +1,9 @@
 package org.eyeseetea.uicapp.domain;
 
-public class CodeGenerator {
+public class CodeGenerator extends CodeGeneratorBase{
 
-    public String generateCode(Client client) {
+    @Override
+    public String generateCodeValue(Client client) {
 
         String code = "";
 
@@ -22,6 +23,6 @@ public class CodeGenerator {
             code += "T" + client.getTwinNumber();
         }
 
-        return code.toUpperCase();
+        return code;
     }
 }
