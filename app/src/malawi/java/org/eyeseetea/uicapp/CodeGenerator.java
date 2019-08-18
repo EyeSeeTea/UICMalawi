@@ -38,7 +38,9 @@ public class CodeGenerator {
                 1);
 
         if (getBooleanFromSharedPreference(R.string.shared_key_twin_checkbox, false)) {
-            code += "T" + getStringFromSharedPreference(R.string.shared_key_twin_dropdown, "");
+            code += getStringFromSharedPreference(R.string.shared_key_twin_dropdown, "0");
+        } else {
+            code += "0";
         }
 
         return code.toUpperCase();
