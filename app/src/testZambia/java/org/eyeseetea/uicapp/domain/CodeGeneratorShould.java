@@ -100,6 +100,17 @@ public class CodeGeneratorShould {
         Assert.assertEquals("ARAMBA020275FT1", ((CodeResult.Success)codeResult).getCode());
     }
 
+    @Test
+    public void return_valid_code_if_surname_is_multiple() {
+        Client twinClient = givenAValidClientWithMultipleSurnames();
+
+        CodeResult codeResult = codeGenerator.generateCode(twinClient);
+
+        Assert.assertTrue(codeResult instanceof CodeResult.Success);
+        Assert.assertTrue(codeResult.isValid());
+        Assert.assertEquals("ARAMBA020275FT1", ((CodeResult.Success) codeResult).getCode());
+    }
+
     private Client givenAInvalidClientByMotherName() {
         Client validClient = givenAValidClient(0);
 
@@ -160,9 +171,19 @@ public class CodeGeneratorShould {
         return invalidClient;
     }
 
+    private Client givenAValidClientWithMultipleSurnames() {
+        String surname = "James Ruohi";
+
+        return givenAValidClient(1, surname);
+    }
+
     private Client givenAValidClient(int twinNumber) {
-        String mother = "Sarah";
         String surname = "James";
+        return givenAValidClient(twinNumber, surname);
+    }
+
+    private Client givenAValidClient(int twinNumber, String surname) {
+        String mother = "Sarah";
         String district = "Zomba";
 
         Long dateOfBirth = new GregorianCalendar(1975, Calendar.FEBRUARY, 2).getTime().getTime();
