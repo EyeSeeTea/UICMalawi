@@ -1,0 +1,107 @@
+<resources>
+    <string name="app_name">UIC</string>
+    <string name="mother_title">"Mother's first name"</string>
+    <string name="surname_title">"Client's surname"</string>
+    <string name="district_title">District of birth</string>
+    <string name="date_title">Date of birth</string>
+    <string name="day_title">Day</string>
+    <string name="month_title">Month</string>
+    <string name="year_title">Year</string>
+    <string name="sex_title">Sex</string>
+    <string name="sex_male">Male</string>
+    <string name="sex_female">Female</string>
+    <string name="sex_transgender">Transgender</string>
+    <string name="code_title">YOUR CODE</string>
+    <string name="code_copy">Copy</string>
+    <string name="code_invalid">INVALID</string>
+    <string name="action_about_us">About us</string>
+
+    <string name="mother_error">"The field needs at least two characters"</string>
+    <string name="surname_error">"The field needs at least two characters"</string>
+    <string name="district_error">"The field needs at least two characters"</string>
+    <string name="sex_error">"The sex needs be selected"</string>
+    <string name="date_error">"The field needs a valid date"</string>
+    <string name="surname_hint">e.g. Smith</string>
+    <string name="district_hint">e.g. Makonde</string>
+    <string name="mother_hint">e. g. Sarah</string>
+    <string name="ok">ok</string>
+    <string name="lastcommit">"Version %s"</string>
+    <string name="unavailable">"Unavailable"</string>
+    <string name="default_district">Select district</string>
+    <string name="chk_twin">"Twin?"</string>
+    <string name="default_twin">Please select the twin number</string>
+    <string name="mother_info">"There's a user convention for certain situations for filling in this field (mother's name):\n  \n If mother's name is still unknown please write XX \n  \n If client refuses to provide mother's name, then please introduce ZZ"    </string>
+    <string name="date_of_birth_info">"There's a user convention for certain situations for filling in this field (date of birth): \n  \n If client knows age/year of birth/school year, then date of birth is 15 June, estimated year. \n  \n If client knows year and month, then date of birth is 15 of the given month and given year."    </string>
+    <string-array name="twin_list">
+        <item>@string/default_twin</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="district_list">
+        <item>@string/default_district</item>
+        <item>Beitbridge</item>
+        <item>Bikita</item>
+        <item>Bindura</item>
+        <item>Binga</item>
+        <item>Bubi</item>
+        <item>Buhera</item>
+        <item>Bulawayo</item>
+        <item>Bulilima</item>
+        <item>Centenary</item>
+        <item>Chegutu</item>
+        <item>Chikomba</item>
+        <item>Chimanimani</item>
+        <item>Chipinge</item>
+        <item>Chiredzi</item>
+        <item>Chirumanzi</item>
+        <item>Chivi</item>
+        <item>Gokwe North</item>
+        <item>Gokwe South</item>
+        <item>Goromonzi</item>
+        <item>Guruve</item>
+        <item>Gutu</item>
+        <item>Gwanda</item>
+        <item>Gweru</item>
+        <item>Harare</item>
+        <item>Hurungwe</item>
+        <item>Hwange</item>
+        <item>Hwedza</item>
+        <item>Insiza</item>
+        <item>Kadoma</item>
+        <item>Kariba</item>
+        <item>Kwekwe</item>
+        <item>Lupane</item>
+        <item>Makonde</item>
+        <item>Makoni</item>
+        <item>Mangwe</item>
+        <item>Marondera</item>
+        <item>Masvingo</item>
+        <item>Matobo</item>
+        <item>Mazowe</item>
+        <item>Mberengwa</item>
+        <item>Mt Darwin</item>
+        <item>Mudzi</item>
+        <item>Murehwa</item>
+        <item>Mutare</item>
+        <item>Mutasa</item>
+        <item>Mutoko</item>
+        <item>Mwenezi</item>
+        <item>Nkayi</item>
+        <item>Nyanga</item>
+        <item>Rusape</item>
+        <item>Rushinga</item>
+        <item>Seke</item>
+        <item>Shamva</item>
+        <item>Shurugwi</item>
+        <item>Tsholotsho</item>
+        <item>Umguza</item>
+        <item>Umzingwane</item>
+        <item>UMP WE</item>
+        <item>Zaka</item>
+        <item>Zvimba</item>
+        <item>Zvishavane</item>
+        <item>Out</item>
+    </string-array>
+</resources>

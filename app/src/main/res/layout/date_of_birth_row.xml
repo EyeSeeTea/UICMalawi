@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/date_background"
+    android:layout_marginBottom="@dimen/row_margin_button"
+    android:paddingTop="@dimen/row_padding_top"
+    android:paddingBottom="@dimen/row_padding_bottom">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/date_background" >
+    <org.eyeseetea.uicapp.presentation.views.TextCard
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title_text_size"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:id="@+id/date_header"
+        android:textColor="@color/date_text"
+        app:tFontName="@string/condensed_font_name"
+        android:text="@string/date_title" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/input_margin"
+            android:layout_marginBottom="@dimen/info_margin_bottom"
+            android:layout_marginTop="@dimen/info_margin"
+            android:layout_gravity="center"
+            android:onClick="showDateInfo"
+            android:src="@drawable/info_button"
+            />
+    </LinearLayout>
+
+    <org.eyeseetea.uicapp.presentation.views.EditCard
+        android:id="@+id/date_value"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_text_height"
+        android:inputType="none"
+        android:textSize="@dimen/title_text_size"
+        android:digits=""
+        android:cursorVisible="false"
+        android:layout_marginLeft="@dimen/input_margin"
+        android:textColor="@color/date_text"
+        android:textColorHint="@color/hint_color"
+        android:drawableRight="@drawable/calendar"
+        android:gravity="center"
+        android:minHeight="@dimen/edit_text_height"
+        android:paddingLeft="@dimen/edit_text_left_padding"
+        android:layout_marginRight="@dimen/input_margin"
+        app:tFontName="@string/condensed_font_name"
+        android:background="@color/white"/>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/date_background"
+        android:layout_marginBottom="@dimen/row_margin_button"
+        android:paddingTop="@dimen/row_padding_top"
+        android:paddingBottom="@dimen/row_padding_bottom">
+    <org.eyeseetea.uicapp.presentation.views.CustomCheckBox
+        android:id="@+id/twin_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:text="@string/chk_twin"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:textSize="@dimen/title_text_size"
+        android:textColor="@color/date_text"
+        android:onClick="changeTwinValues"
+        app:tFontName="@string/condensed_font_name"
+        android:textAlignment="center" />
+
+        <Spinner
+            android:visibility="gone"
+            android:id="@+id/twin_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:inputType="textNoSuggestions"
+            android:textSize="@dimen/spinner_text_size"
+            android:textColor="@color/date_text"
+            android:textColorHint="@color/hint_color"
+            android:layout_marginLeft="@dimen/twin_spinner_margin"
+            android:layout_marginRight="@dimen/input_margin"
+            android:paddingLeft="@dimen/twin_spinner_margin"
+            android:minHeight="@dimen/edit_text_height"
+            android:background="@drawable/twin_dropdown_item"
+            android:spinnerMode="dropdown"/>
+        </LinearLayout>
+</LinearLayout>

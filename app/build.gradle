@@ -1,0 +1,73 @@
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+    google()
+}
+
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 27
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "GIT_HUB_BOT_TOKEN", "\"$gitHubBotToken\""
+        flavorDimensions "default"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    testOptions {
+        unitTests.all {
+            // All the usual Gradle options.
+            testLogging {
+                events "passed", "skipped", "failed", "standardOut", "standardError"
+                outputs.upToDateWhen {false}
+                showStandardStreams = true
+            }
+        }
+    }
+
+    productFlavors {
+        zambia {
+            applicationId "org.eyeseetea.uicapp.zambia_dev"
+            versionCode 1
+            versionName "1.0.0"
+        }
+        zimbabwe {
+            applicationId "org.eyeseetea.uicapp.zimbabwe_dev"
+            versionCode 6
+            versionName "1.0.6"
+        }
+        malawi {
+            applicationId "org.eyeseetea.uicapp.malawi_dev"
+            versionCode 1
+            versionName "1.0.0"
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Support Libraries
+    implementation "com.android.support:appcompat-v7:${versions.support_library}"
+    implementation "com.android.support:design:${versions.support_library}"
+
+    //Testing
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testImplementation 'junit:junit:4.12'
+    implementation('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+        transitive = true;
+    }
+    implementation project(path: ':bugshaker')
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Malawi UIC</string>
+    <string name="mother_title">"Mother's first name"</string>
+    <string name="surname_title">"Client's surname"</string>
+    <string-array name="district_list">
+        <item>@string/default_district</item>
+        <item>Chitipa</item>
+        <item>Karonga</item>
+        <item>Rumphi</item>
+        <item>Mzimba</item>
+        <item>Nkhatabay</item>
+        <item>Nkhotakota</item>
+        <item>Kasungu</item>
+        <item>Dowa</item>
+        <item>Lilongwe</item>
+        <item>Nchisi</item>
+        <item>Mchinji</item>
+        <item>Salima</item>
+        <item>Dedza</item>
+        <item>Mangochi</item>
+        <item>Ntcheu</item>
+        <item>Balaka</item>
+        <item>Mwanza</item>
+        <item>Neno</item>
+        <item>Machinga</item>
+        <item>Zomba</item>
+        <item>Chiradzulu</item>
+        <item>Blantyre</item>
+        <item>Thyolo</item>
+        <item>Mulanje</item>
+        <item>Phalombe</item>
+        <item>Chikwawa</item>
+        <item>Nsanje</item>
+        <item>Likoma</item>
+        <item>Out</item>
+    </string-array>
+</resources>
