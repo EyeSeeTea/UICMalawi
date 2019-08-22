@@ -7,17 +7,14 @@ public class CodeGenerator extends CodeGeneratorBase{
 
         String code = "";
 
-        code += GeneratorUtils.extractLetters(client.getMother(),
-                client.getMother().length() - 2);
+        code += GeneratorUtils.extractLastLetters(client.getMother(), 2);
 
-        code += GeneratorUtils.extractLetters(client.getSurname(),
-                client.getSurname().length() - 2);
+        code += GeneratorUtils.extractLastLetters(client.getSurname(), 2);
 
-        code += GeneratorUtils.extractLetters(client.getDistrict(),
-                client.getDistrict().length() - 2);
+        code += GeneratorUtils.extractLastLetters(client.getDistrict(),  2);
 
         code += GeneratorUtils.formatDate(client.getDateOfBirth());
-        code += GeneratorUtils.extractLetters(client.getSex(), 0, 1);
+        code += GeneratorUtils.extractFirstLetters(client.getSex(), 1);
 
         if (client.isTwin()) {
             code += "T" + client.getTwinNumber();
