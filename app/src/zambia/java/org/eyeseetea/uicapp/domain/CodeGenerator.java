@@ -5,15 +5,14 @@ public class CodeGenerator extends CodeGeneratorBase{
     protected String generateCodeValue(Client client) {
         String code = "";
 
-        code += GeneratorUtils.extractLetters(client.getMother(), 1,3);
+        code += GeneratorUtils.extratcSecondAndThirdtLetters(client.getMother());
 
-        code += GeneratorUtils.extractLetters(client.getSurname(),1,3);
+        code += GeneratorUtils.extratcSecondAndThirdtLetters(client.getSurname());
 
-        code += GeneratorUtils.extractLetters(client.getDistrict(),
-                client.getDistrict().length() - 2);
+        code += GeneratorUtils.extractLastLetters(client.getDistrict(),2);
 
         code += GeneratorUtils.formatDate(client.getDateOfBirth());
-        code += GeneratorUtils.extractLetters(client.getSex(), 0, 1);
+        code += GeneratorUtils.extractFirstLetters(client.getSex(), 1);
 
         if (client.isTwin()) {
             code += "T" + client.getTwinNumber();
