@@ -79,6 +79,18 @@ public class CodeGeneratorShould {
     }
 
     @Test
+    public void return_invalid_code_if_mother_name_and_surname_contains_numbers() {
+        Client invalidClient = givenAInvalidClientWithNumbers();
+
+        CodeResult codeResult = codeGenerator.generateCode(invalidClient);
+
+        Assert.assertTrue(codeResult instanceof CodeResult.Fail);
+        Assert.assertFalse(codeResult.isValid());
+        Assert.assertFalse(codeGenerator.isValidMotherName(invalidClient.getMother()));
+        Assert.assertFalse(codeGenerator.isValidSurname(invalidClient.getMother()));
+    }
+
+    @Test
     public void return_valid_code_if_is_not_twin() {
         Client noTwinClient = givenAValidClient(0);
 
@@ -98,6 +110,17 @@ public class CodeGeneratorShould {
         Assert.assertTrue(codeResult instanceof CodeResult.Success);
         Assert.assertTrue(codeResult.isValid());
         Assert.assertEquals("AHESBA020275F1", ((CodeResult.Success) codeResult).getCode());
+    }
+
+    @Test
+    public void return_valid_code_if_surname_is_multiple() {
+        Client twinClient = givenAValidClientWithMultipleSurnames();
+
+        CodeResult codeResult = codeGenerator.generateCode(twinClient);
+
+        Assert.assertTrue(codeResult instanceof CodeResult.Success);
+        Assert.assertTrue(codeResult.isValid());
+        Assert.assertEquals("AHESBA020275F0", ((CodeResult.Success) codeResult).getCode());
     }
 
     private Client givenAInvalidClientByMotherName() {
@@ -158,6 +181,27 @@ public class CodeGeneratorShould {
                 true, validClient.getTwinNumber());
 
         return invalidClient;
+    }
+
+    private Client givenAInvalidClientWithNumbers() {
+        Client validClient = givenAValidClient(0);
+
+        Client invalidClient = new Client(validClient.getMother() + "88",
+                validClient.getSurname()+ "88", validClient.getDistrict(),
+                validClient.getDateOfBirth(), validClient.getSex(), validClient.isTwin(),
+                validClient.getTwinNumber());
+
+        return invalidClient;
+    }
+
+    private Client givenAValidClientWithMultipleSurnames() {
+        Client validClient = givenAValidClient(0);
+
+        Client client = new Client(validClient.getMother(),"Ruohi James",
+                validClient.getDistrict(), validClient.getDateOfBirth(), validClient.getSex(),
+                validClient.isTwin(), validClient.getTwinNumber());
+
+        return client;
     }
 
     private Client givenAValidClient(int twinNumber) {

@@ -5,14 +5,19 @@ import org.eyeseetea.uicapp.Utils;
 import java.util.Calendar;
 
 public class GeneratorUtils {
-    public static String extractLetters(String text, int beginIndex) {
+    public static String extractLastLetters(String text, int count) {
         text = text.replace(" ", "");
-        return text.substring(beginIndex);
+        return text.substring(text.length() - count);
     }
 
-    public static String extractLetters(String text, int beginIndex, int endIndex) {
+    public static String extractFirstLetters(String text, int count) {
         text = text.replace(" ", "");
-        return text.substring(beginIndex, endIndex);
+        return text.substring(0,count);
+    }
+
+    public static String extratcSecondAndThirdtLetters(String text) {
+        text = text.replace(" ", "");
+        return text.substring(1, 3);
     }
 
     public static String formatDate (long timestamp){

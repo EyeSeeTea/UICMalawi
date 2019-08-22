@@ -167,7 +167,7 @@ public class ScrollingActivity extends AppCompatActivity {
      */
     private void createActionBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setLogo(R.drawable.logo);
+        toolbar.setLogo(R.mipmap.ic_launcher);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.action_bar_arrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
