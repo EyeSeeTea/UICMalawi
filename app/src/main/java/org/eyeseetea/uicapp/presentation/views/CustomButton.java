@@ -24,14 +24,15 @@ import android.content.res.AssetManager;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.widget.Button;
+
+import androidx.appcompat.widget.AppCompatButton;
 
 import org.eyeseetea.uicapp.R;
 
 /**
  * TODO: document your custom view class.
  */
-public class CustomButton extends Button{
+public class CustomButton extends AppCompatButton {
     private Context context = getContext();
     private String mfontName = context.getString(R.string.normal_font);
     private AssetManager assetManager = context.getAssets();

@@ -24,14 +24,16 @@ import android.content.res.AssetManager;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.widget.CheckBox;
+
 
 import org.eyeseetea.uicapp.R;
+
+import androidx.appcompat.widget.AppCompatCheckBox;
 
 /**
  * TODO: document your custom view class.
  */
-public class CustomCheckBox extends CheckBox {
+public class CustomCheckBox extends AppCompatCheckBox {
     private Context context = getContext();
     private String mfontName = context.getString(R.string.normal_font);
     private AssetManager assetManager = context.getAssets();

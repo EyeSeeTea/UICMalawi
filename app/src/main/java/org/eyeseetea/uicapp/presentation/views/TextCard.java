@@ -24,14 +24,15 @@ import android.content.res.AssetManager;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
 import org.eyeseetea.uicapp.R;
+
+import androidx.appcompat.widget.AppCompatTextView;
 
 /**
  * TODO: document your custom view class.
  */
-public class TextCard extends TextView{
+public class TextCard extends AppCompatTextView {
     private Context context = getContext();
     private String mfontName = context.getString(R.string.normal_font);
     private AssetManager assetManager = context.getAssets();
