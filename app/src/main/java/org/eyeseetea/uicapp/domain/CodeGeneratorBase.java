@@ -70,7 +70,7 @@ public abstract class CodeGeneratorBase {
     protected boolean isValidText(String text , int minCharacters) {
 
         //At least two characters without numbers and with possible blank spaces
-        String regExp = "\\s*(?:[\\w\\.]\\s*){" + minCharacters +",}$";
+        String regExp = "\\s*(?:[A-zÀ-ÿ]\\s*){" + minCharacters +",}$";
         if (text.matches(regExp)) {
             return true;
         } else {
