@@ -29,9 +29,6 @@ import org.eyeseetea.uicapp.R;
 
 import androidx.appcompat.widget.AppCompatRadioButton;
 
-/**
- * Created by adrian on 30/05/15.
- */
 public class CustomRadioButton extends AppCompatRadioButton {
     private Context context = getContext();
     private String mfontName = context.getString(R.string.normal_font);

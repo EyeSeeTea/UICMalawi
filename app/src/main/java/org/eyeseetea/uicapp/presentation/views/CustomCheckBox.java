@@ -30,9 +30,6 @@ import org.eyeseetea.uicapp.R;
 
 import androidx.appcompat.widget.AppCompatCheckBox;
 
-/**
- * TODO: document your custom view class.
- */
 public class CustomCheckBox extends AppCompatCheckBox {
     private Context context = getContext();
     private String mfontName = context.getString(R.string.normal_font);

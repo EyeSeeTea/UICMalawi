@@ -29,9 +29,6 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import org.eyeseetea.uicapp.R;
 
-/**
- * TODO: document your custom view class.
- */
 public class CustomButton extends AppCompatButton {
     private Context context = getContext();
     private String mfontName = context.getString(R.string.normal_font);

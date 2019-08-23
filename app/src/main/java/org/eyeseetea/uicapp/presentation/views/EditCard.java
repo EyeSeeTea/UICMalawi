@@ -29,9 +29,6 @@ import org.eyeseetea.uicapp.R;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
-/**
- * TODO: document your custom view class.
- */
 public class EditCard extends AppCompatEditText {
     private Context context = getContext();
     private String mfontName = context.getString(R.string.normal_font);
