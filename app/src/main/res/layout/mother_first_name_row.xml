@@ -1,58 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mother_background"
     android:layout_marginTop="@dimen/row_margin_top"
     android:layout_marginBottom="@dimen/row_margin_button"
+    android:background="@color/mother_background"
+    android:orientation="vertical"
     android:paddingTop="@dimen/row_padding_top"
     android:paddingBottom="@dimen/row_padding_bottom">
 
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/mother_background" >
+        android:background="@color/mother_background"
+        android:orientation="horizontal">
 
-    <org.eyeseetea.uicapp.presentation.views.TextCard
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/mother_text"
-        android:textSize="@dimen/title_text_size"
-        android:layout_marginLeft="@dimen/text_margin"
-        app:tFontName="@string/condensed_font_name"
-        android:text="@string/mother_title" />
+        <org.eyeseetea.uicapp.presentation.views.TextCard
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/text_margin"
+            android:text="@string/mother_title"
+            android:textColor="@color/mother_text"
+            android:textSize="@dimen/title_text_size"
+            app:tFontName="@string/condensed_font_name" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/input_margin"
-        android:layout_marginBottom="@dimen/info_margin_bottom"
-        android:layout_marginTop="@dimen/info_margin"
-        android:layout_gravity="center"
-        android:onClick="showMotherInfo"
-        android:src="@drawable/info_button"
-        />
-        </LinearLayout>
+        <ImageView
+            android:layout_width="@dimen/info_icon_size"
+            android:layout_height="@dimen/info_icon_size"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/input_margin"
+            android:layout_marginTop="@dimen/info_margin"
+            android:layout_marginBottom="@dimen/info_margin_bottom"
+            android:onClick="showMotherInfo"
+            android:src="@drawable/info_button" />
+    </LinearLayout>
 
     <org.eyeseetea.uicapp.presentation.views.EditCard
         android:id="@+id/mother_edit_text"
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_text_height"
-        android:inputType="textNoSuggestions"
-        android:textColor="@color/mother_text"
-        android:textSize="@dimen/title_text_size"
-        android:hint="@string/mother_hint"
-        android:textColorHint="@color/hint_color"
         android:layout_marginLeft="@dimen/input_margin"
         android:layout_marginRight="@dimen/input_margin"
-        android:paddingLeft="@dimen/edit_text_left_padding"
-        android:minHeight="@dimen/edit_text_height"
+        android:background="@color/white"
         android:drawableRight="@drawable/pen_yellow"
-        app:tFontName="@string/condensed_font_name"
-        android:background="@color/white"/>
+        android:hint="@string/mother_hint"
+        android:inputType="textNoSuggestions"
+        android:minHeight="@dimen/edit_text_height"
+        android:paddingLeft="@dimen/edit_text_left_padding"
+        android:textColor="@color/mother_text"
+        android:textColorHint="@color/hint_color"
+        android:textSize="@dimen/title_text_size"
+        app:tFontName="@string/condensed_font_name" />
 
 </LinearLayout>

@@ -9,14 +9,29 @@
     android:paddingTop="@dimen/row_padding_top"
     android:paddingBottom="@dimen/row_padding_bottom">
 
-    <org.eyeseetea.uicapp.presentation.views.TextCard
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/text_margin"
-        android:textColor="@color/district_text"
-        android:textSize="@dimen/title_text_size"
-        app:tFontName="@string/condensed_font_name"
-        android:text="@string/district_title" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <org.eyeseetea.uicapp.presentation.views.TextCard
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/text_margin"
+            android:textColor="@color/district_text"
+            android:textSize="@dimen/title_text_size"
+            app:tFontName="@string/condensed_font_name"
+            android:text="@string/district_title" />
+        <ImageView
+            android:layout_width="@dimen/info_icon_size"
+            android:layout_height="@dimen/info_icon_size"
+            android:layout_marginLeft="@dimen/input_margin"
+            android:layout_marginBottom="@dimen/info_margin_bottom"
+            android:layout_marginTop="@dimen/info_margin"
+            android:layout_gravity="center"
+            android:onClick="showDistrictOfBirthInfo"
+            android:src="@drawable/info_button"
+            />
+    </LinearLayout>
+
 
     <Spinner
         android:id="@+id/district_dropdown"

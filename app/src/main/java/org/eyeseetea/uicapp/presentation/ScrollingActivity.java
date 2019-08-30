@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -192,7 +193,7 @@ public class ScrollingActivity extends AppCompatActivity {
     private void initTwin() {
         if (getBooleanFromSharedPreference(R.string.shared_key_twin_checkbox, false)) {
             viewHolders.twinCheckBox.setChecked(true);
-            viewHolders.twinDropdown.setVisibility(View.VISIBLE);
+            viewHolders.twinDropdownContainer.setVisibility(View.VISIBLE);
             String spinnerValue = getStringFromSharedPreference(R.string.shared_key_twin_dropdown,
                     getString(R.string.default_twin));
             for (int i = 0; i < viewHolders.twinDropdown.getCount(); i++) {
@@ -461,7 +462,7 @@ public class ScrollingActivity extends AppCompatActivity {
 
         putStringInSharedPreference(getString(R.string.default_twin),
                 R.string.shared_key_twin_dropdown);
-        viewHolders.twinDropdown.setVisibility(View.GONE);
+        viewHolders.twinDropdownContainer.setVisibility(View.GONE);
 
         viewHolders.twinCheckBox.setChecked(false);
         putBooleanInSharedPreference(R.string.shared_key_twin_checkbox, false);
@@ -498,13 +499,13 @@ public class ScrollingActivity extends AppCompatActivity {
         boolean isChecked = viewHolders.twinCheckBox.isChecked();
         putBooleanInSharedPreference(R.string.shared_key_twin_checkbox, isChecked);
         if (isChecked) {
-            viewHolders.twinDropdown.setVisibility(View.VISIBLE);
+            viewHolders.twinDropdownContainer.setVisibility(View.VISIBLE);
             ((Spinner) viewHolders.twinDropdown.findViewById(R.id.twin_dropdown)).setSelection(0);
         } else {
             //Removes the spinner saved values
             putStringInSharedPreference(getString(R.string.default_twin),
                     R.string.shared_key_twin_dropdown);
-            viewHolders.twinDropdown.setVisibility(View.GONE);
+            viewHolders.twinDropdownContainer.setVisibility(View.GONE);
         }
         refreshCode();
     }
@@ -513,8 +514,20 @@ public class ScrollingActivity extends AppCompatActivity {
         showSnackBar(R.string.mother_info);
     }
 
+    public void showDistrictOfBirthInfo(View view) {
+        showSnackBar(R.string.district_of_birth_info);
+    }
+
     public void showDateInfo(View view) {
         showSnackBar(R.string.date_of_birth_info);
+    }
+
+    public void showTwinInfo(View view){
+        showSnackBar(R.string.twin_info);
+    }
+
+    public void showBirthInfo(View view){
+        showSnackBar(R.string.birth_order_info);
     }
 
     private void showSnackBar(int messageId) {
@@ -533,6 +546,8 @@ public class ScrollingActivity extends AppCompatActivity {
         });
         sb.show();
     }
+
+
 
 
     /**
@@ -689,6 +704,10 @@ public class ScrollingActivity extends AppCompatActivity {
         if (viewHolders.twinDropdown == null) {
             viewHolders.twinDropdown = (Spinner) findViewById(R.id.twin_dropdown);
         }
+
+        if (viewHolders.twinDropdownContainer == null){
+            viewHolders.twinDropdownContainer = findViewById(R.id.twin_dropdown_container);
+        }
     }
 
     /**
@@ -706,6 +725,7 @@ public class ScrollingActivity extends AppCompatActivity {
         ImageView codeButton;
         CheckBox twinCheckBox;
         Spinner twinDropdown;
+        LinearLayout twinDropdownContainer;
         CoordinatorLayout coordinator;
     }
 }
