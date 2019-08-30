@@ -81,7 +81,7 @@ public class EditCard extends EditText{
         //InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS does not seem to work as expected on all keyboards
         // whereas InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD has the drawback that it also
         // disables toggling the language in the keyboard and the swipe gesture to add the text.
-        setInputType(this.getInputType() | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+        setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
                 | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
     }
 
