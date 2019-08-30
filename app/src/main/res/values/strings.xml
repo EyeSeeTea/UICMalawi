@@ -33,14 +33,12 @@
     <string name="mother_info">"There's a user convention for certain situations for filling in this field (mother's name):\n  \n If mother's name is still unknown please write XX \n  \n If client refuses to provide mother's name, then please introduce ZZ"    </string>
     <string name="date_of_birth_info">"There's a user convention for certain situations for filling in this field (date of birth): \n  \n If client knows age/year of birth/school year, then date of birth is 15 June, estimated year. \n  \n If client knows year and month, then date of birth is 15 of the given month and given year."    </string>
     <string-array name="twin_list">
-        <item>@string/default_twin</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
         <item>4</item>
     </string-array>
     <string-array name="district_list">
-        <item>@string/default_district</item>
         <item>Beitbridge</item>
         <item>Bikita</item>
         <item>Bindura</item>

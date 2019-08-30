@@ -3,7 +3,6 @@
     <string name="mother_title">"Mother's first name"</string>
     <string name="surname_title">"Client's surname"</string>
     <string-array name="district_list">
-        <item>@string/default_district</item>
         <item>Beitbridge</item>
         <item>Bikita</item>
         <item>Bindura</item>
