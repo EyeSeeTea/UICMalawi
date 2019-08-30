@@ -9,7 +9,6 @@
     <string name="twin_info">"If the client was born as part of a multiple child pregnancy tick this box."</string>
     <string name="birth_order_info">"Select the birth order of the client from this multiple child pregnancy, not the birth order of all the siblings in the entire family."</string>
     <string-array name="district_list">
-        <item>@string/default_district</item>
         <item>Chitipa</item>
         <item>Karonga</item>
         <item>Rumphi</item>

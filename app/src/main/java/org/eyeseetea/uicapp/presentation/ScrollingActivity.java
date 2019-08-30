@@ -43,7 +43,13 @@ import org.eyeseetea.uicapp.presentation.views.EditCard;
 import org.eyeseetea.uicapp.presentation.views.TextCard;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -116,12 +122,12 @@ public class ScrollingActivity extends AppCompatActivity {
     private void refreshCode() {
         TextCard textView = viewHolders.code;
 
-        Client client =  getClient();
+        Client client = getClient();
 
         CodeResult codeResult = codeGenerator.generateCode(client);
 
         if (codeResult.isValid()) {
-            textView.setText(((CodeResult.Success)codeResult).getCode());
+            textView.setText(((CodeResult.Success) codeResult).getCode());
             viewHolders.codeButton.setEnabled(true);
         } else {
             textView.setText(getApplicationContext().getString(R.string.code_invalid));
@@ -133,9 +139,10 @@ public class ScrollingActivity extends AppCompatActivity {
         String mother = getStringFromSharedPreference(R.string.shared_key_mother, DEFAULT_VALUE);
         String surname = getStringFromSharedPreference(R.string.shared_key_surname, DEFAULT_VALUE);
 
-        String district = getStringFromSharedPreference(R.string.shared_key_district, DEFAULT_VALUE);
+        String district = getStringFromSharedPreference(R.string.shared_key_district,
+                DEFAULT_VALUE);
 
-        if (district.equals(getString(R.string.default_district))){
+        if (district.equals(getString(R.string.default_district))) {
             district = DEFAULT_VALUE;
         }
 
@@ -207,10 +214,19 @@ public class ScrollingActivity extends AppCompatActivity {
 
     private void initDropDown(final Spinner spinner, final int keyId, int list_key,
             int id_default) {
-        String value = getStringFromSharedPreference(keyId, getString(id_default));
+        String defaultValue = getString(id_default);
+        String value = getStringFromSharedPreference(keyId, defaultValue);
+
+        List<String> itemsList = new ArrayList<>(
+                Arrays.asList(getResources().getStringArray(list_key)));
+
+        Collections.sort(itemsList);
+
+        itemsList.add(0, defaultValue);
+
         ArrayAdapter<String> districtsList = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_dropdown_item,
-                getResources().getStringArray(list_key));
+                android.R.layout.simple_spinner_dropdown_item, itemsList);
+
         spinner.setAdapter(districtsList);
         if (!value.equals("")) {
             for (int i = 0; i < spinner.getCount(); i++) {
@@ -305,7 +321,8 @@ public class ScrollingActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //Ignore the clear fields validation.
                 putStringInSharedPreference(String.valueOf(s), keyId);
-                if (!codeGenerator.isValidMotherName(String.valueOf(s)) && isValidationErrorActive) {
+                if (!codeGenerator.isValidMotherName(String.valueOf(s))
+                        && isValidationErrorActive) {
                     editText.setError(getApplicationContext().getString(errorId));
                 } else {
                     editText.setError(null);

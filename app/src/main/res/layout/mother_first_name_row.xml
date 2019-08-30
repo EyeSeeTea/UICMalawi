@@ -46,7 +46,6 @@
         android:background="@color/white"
         android:drawableRight="@drawable/pen_yellow"
         android:hint="@string/mother_hint"
-        android:inputType="textNoSuggestions"
         android:minHeight="@dimen/edit_text_height"
         android:paddingLeft="@dimen/edit_text_left_padding"
         android:textColor="@color/mother_text"
