@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nested_scroll_view"
@@ -13,11 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    <include layout="@layout/mother_first_name_row"></include>
-    <include layout="@layout/surname_row"></include>
-    <include layout="@layout/district_of_birth_row"></include>
-    <include layout="@layout/date_of_birth_row"></include>
-    <include layout="@layout/sex_row"></include>
-    <include layout="@layout/code_row"></include>
+    <include layout="@layout/mother_first_name_row"/>
+    <include layout="@layout/surname_row"/>
+    <include layout="@layout/district_of_birth_row"/>
+    <include layout="@layout/date_of_birth_row"/>
+    <include layout="@layout/twin_row"/>
+    <include layout="@layout/sex_row"/>
+    <include layout="@layout/code_row"/>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

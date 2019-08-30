@@ -32,15 +32,16 @@
     <string name="default_twin">Please select the twin number</string>
     <string name="mother_info">"There's a user convention for certain situations for filling in this field (mother's name):\n  \n If mother's name is still unknown please write XX \n  \n If client refuses to provide mother's name, then please introduce ZZ"    </string>
     <string name="date_of_birth_info">"There's a user convention for certain situations for filling in this field (date of birth): \n  \n If client knows age/year of birth/school year, then date of birth is 15 June, estimated year. \n  \n If client knows year and month, then date of birth is 15 of the given month and given year."    </string>
+    <string name="district_of_birth_info">"For clients born outside of Malawi default to OUT as the District of Birth and enter UT in the UIC field."</string>
+    <string name="twin_info">"If the client was born as part of a multiple child pregnancy tick this box."</string>
+    <string name="birth_order_info">"Select the birth order of the client from this multiple child pregnancy, not the birth order of all the siblings in the entire family."</string>
     <string-array name="twin_list">
-        <item>@string/default_twin</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
         <item>4</item>
     </string-array>
     <string-array name="district_list">
-        <item>@string/default_district</item>
         <item>Beitbridge</item>
         <item>Bikita</item>
         <item>Bindura</item>
