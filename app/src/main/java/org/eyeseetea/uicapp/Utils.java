@@ -119,7 +119,7 @@ public class Utils {
 
         //set up text title
         TextView textTile = (TextView) dialog.findViewById(R.id.aboutTitle);
-        textTile.setText(BuildConfig.FLAVOR.toUpperCase() + "(dev) " + BuildConfig.VERSION_NAME);
+        textTile.setText(BuildConfig.FLAVOR.toUpperCase() + " " + BuildConfig.VERSION_NAME);
         textTile.setGravity(Gravity.RIGHT);
 
         //set up text title
