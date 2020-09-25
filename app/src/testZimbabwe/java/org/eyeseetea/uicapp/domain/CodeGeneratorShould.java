@@ -97,7 +97,7 @@ public class CodeGeneratorShould {
 
         Assert.assertTrue(codeResult instanceof CodeResult.Success);
         Assert.assertTrue(codeResult.isValid());
-        Assert.assertEquals("AHESBA020275F", ((CodeResult.Success)codeResult).getCode());
+        Assert.assertEquals("AHESBA020275FT0", ((CodeResult.Success)codeResult).getCode());
     }
 
     @Test
@@ -119,7 +119,7 @@ public class CodeGeneratorShould {
 
         Assert.assertTrue(codeResult instanceof CodeResult.Success);
         Assert.assertTrue(codeResult.isValid());
-        Assert.assertEquals("AHESBA020275F", ((CodeResult.Success) codeResult).getCode());
+        Assert.assertEquals("AHESBA020275FT0", ((CodeResult.Success) codeResult).getCode());
     }
 
     private Client givenAInvalidClientByMotherName() {
