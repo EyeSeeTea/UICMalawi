@@ -16,7 +16,7 @@ public class CodeGenerator extends CodeGeneratorBase{
         code += GeneratorUtils.formatDate(client.getDateOfBirth());
         code += GeneratorUtils.extractFirstLetters(client.getSex(), 1);
 
-        code += "T" + client.getTwinNumber();
+        code += client.getTwinNumber();
 
         return code;
     }
