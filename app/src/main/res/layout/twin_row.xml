@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/row_margin_button"
+    android:background="@color/date_background"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/row_padding_bottom">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/info_icon_size"
+            android:layout_height="@dimen/info_icon_size"
+            android:layout_marginTop="@dimen/input_margin"
+            android:layout_marginBottom="@dimen/input_margin"
+            android:layout_gravity="center_horizontal"
+            android:onClick="showTwinInfo"
+            android:src="@drawable/info_button" />
+
+        <org.eyeseetea.uicapp.presentation.views.CustomCheckBox
+            android:id="@+id/twin_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_marginLeft="@dimen/text_margin"
+            android:layoutDirection="rtl"
+            android:onClick="changeTwinValues"
+            android:text="@string/chk_twin"
+            android:textAlignment="center"
+            android:textColor="@color/date_text"
+            android:textSize="@dimen/title_text_size"
+            app:tFontName="@string/condensed_font_name" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/twin_dropdown_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/info_icon_size"
+            android:layout_height="@dimen/info_icon_size"
+            android:layout_marginLeft="@dimen/input_margin"
+            android:layout_marginTop="@dimen/input_margin"
+            android:layout_marginBottom="@dimen/input_margin"
+            android:layout_gravity="left"
+            android:onClick="showBirthInfo"
+            android:src="@drawable/info_button" />
+
+        <Spinner
+            android:id="@+id/twin_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:layout_marginLeft="@dimen/twin_spinner_margin"
+            android:layout_marginRight="@dimen/input_margin"
+            android:background="@drawable/twin_dropdown_item"
+            android:inputType="textNoSuggestions"
+            android:minHeight="@dimen/edit_text_height"
+            android:paddingLeft="@dimen/twin_spinner_margin"
+            android:spinnerMode="dropdown"
+            android:textColor="@color/date_text"
+            android:textColorHint="@color/hint_color"
+            android:textSize="@dimen/spinner_text_size"
+            android:visibility="visible" />
+
+
+    </LinearLayout>
+</LinearLayout>
