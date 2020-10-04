@@ -13,7 +13,7 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 28
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "GIT_HUB_BOT_TOKEN", "\"$gitHubBotToken\""
         flavorDimensions "default"
     }
@@ -58,11 +58,11 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     //Support Libraries
-    implementation "com.android.support:appcompat-v7:${versions.support_library}"
-    implementation "com.android.support:design:${versions.support_library}"
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'com.google.android.material:material:1.0.0'
 
     //Testing
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.2.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testImplementation 'junit:junit:4.12'

@@ -7,12 +7,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.appbar.AppBarLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.core.widget.NestedScrollView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -552,7 +552,7 @@ public class ScrollingActivity extends AppCompatActivity {
                 .make(viewHolders.coordinator, messageId, Snackbar.LENGTH_INDEFINITE);
         View sbView = sb.getView();
         TextView textView = (TextView) sbView.findViewById(
-                android.support.design.R.id.snackbar_text);
+                R.id.snackbar_text);
         //increase max lines of text in snackbar. default is 2.
         textView.setMaxLines(20);
         sb.setAction(R.string.ok, new View.OnClickListener() {
