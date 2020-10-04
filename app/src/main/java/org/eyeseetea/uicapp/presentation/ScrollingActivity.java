@@ -31,8 +31,6 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
-
 import org.eyeseetea.uicapp.domain.CodeGenerator;
 import org.eyeseetea.uicapp.R;
 import org.eyeseetea.uicapp.Utils;
@@ -50,8 +48,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import io.fabric.sdk.android.Fabric;
 
 public class ScrollingActivity extends AppCompatActivity {
 
@@ -92,7 +88,6 @@ public class ScrollingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_scrolling);
         initViews();
         createActionBar();
