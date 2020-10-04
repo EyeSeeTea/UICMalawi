@@ -7,12 +7,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.appbar.AppBarLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.core.widget.NestedScrollView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -31,8 +31,6 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
-
 import org.eyeseetea.uicapp.domain.CodeGenerator;
 import org.eyeseetea.uicapp.R;
 import org.eyeseetea.uicapp.Utils;
@@ -50,8 +48,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import io.fabric.sdk.android.Fabric;
 
 public class ScrollingActivity extends AppCompatActivity {
 
@@ -92,7 +88,6 @@ public class ScrollingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_scrolling);
         initViews();
         createActionBar();
@@ -552,7 +547,7 @@ public class ScrollingActivity extends AppCompatActivity {
                 .make(viewHolders.coordinator, messageId, Snackbar.LENGTH_INDEFINITE);
         View sbView = sb.getView();
         TextView textView = (TextView) sbView.findViewById(
-                android.support.design.R.id.snackbar_text);
+                R.id.snackbar_text);
         //increase max lines of text in snackbar. default is 2.
         textView.setMaxLines(20);
         sb.setAction(R.string.ok, new View.OnClickListener() {

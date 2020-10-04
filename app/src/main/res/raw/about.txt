@@ -1,4 +1,4 @@
-<p><b>Developed by EyeSeeTea Ltd for PSI ZW</b></p>
+<p><b>Developed by EyeSeeTea SL for PSI ZW</b></p>
 
 <p><b>Build %s</b></p>
 
