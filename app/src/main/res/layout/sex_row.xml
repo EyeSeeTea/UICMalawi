@@ -60,6 +60,16 @@
                 android:textSize="@dimen/sex_text_size"
                 app:tFontName="@string/bold_font_name"
                 android:text="@string/sex_transgender"/>
+            <org.eyeseetea.uicapp.presentation.views.CustomButton
+                android:id="@+id/radio_other"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onOtherClicked"
+                android:background="@drawable/sex_button_drawable"
+                android:padding="@dimen/sex_padding"
+                android:textSize="@dimen/sex_text_size"
+                app:tFontName="@string/bold_font_name"
+                android:text="@string/sex_other"/>
         </RadioGroup>
     </LinearLayout>
 </LinearLayout>
