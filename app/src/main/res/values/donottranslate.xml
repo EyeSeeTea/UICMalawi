@@ -3,6 +3,8 @@
     <string name="shared_key_mother" translatable="false">mother_key</string>
     <string name="shared_key_surname" translatable="false">surname_key</string>
     <string name="shared_key_district" translatable="false">district_key</string>
+    <string name="shared_key_twin_dropdown" translatable="false">twin_dropdown</string>
+    <string name="shared_key_twin_checkbox" translatable="false">twin_checkbox</string>
     <string name="shared_key_sex" translatable="false">sex_key</string>
     <string name="shared_key_timestamp_date" translatable="false">timestamp_date</string>
     <string name="default_no_date" translatable="false">-1</string>

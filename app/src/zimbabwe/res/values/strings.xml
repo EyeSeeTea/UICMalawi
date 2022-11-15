@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UICZim</string>
+    <string name="mother_title">"Mother's first name"</string>
+    <string name="surname_title">"Client's surname"</string>
+    <string-array name="district_list">
+        <item>Beitbridge</item>
+        <item>Bikita</item>
+        <item>Bindura</item>
+        <item>Binga</item>
+        <item>Bubi</item>
+        <item>Buhera</item>
+        <item>Bulawayo</item>
+        <item>Bulilima</item>
+        <item>Centenary</item>
+        <item>Chegutu</item>
+        <item>Chikomba</item>
+        <item>Chimanimani</item>
+        <item>Chipinge</item>
+        <item>Chiredzi</item>
+        <item>Chirumanzi</item>
+        <item>Chivi</item>
+        <item>Gokwe North</item>
+        <item>Gokwe South</item>
+        <item>Goromonzi</item>
+        <item>Guruve</item>
+        <item>Gutu</item>
+        <item>Gwanda</item>
+        <item>Gweru</item>
+        <item>Harare</item>
+        <item>Hurungwe</item>
+        <item>Hwange</item>
+        <item>Hwedza</item>
+        <item>Insiza</item>
+        <item>Kadoma</item>
+        <item>Kariba</item>
+        <item>Kwekwe</item>
+        <item>Lupane</item>
+        <item>Makonde</item>
+        <item>Makoni</item>
+        <item>Mangwe</item>
+        <item>Marondera</item>
+        <item>Masvingo</item>
+        <item>Matobo</item>
+        <item>Mazowe</item>
+        <item>Mberengwa</item>
+        <item>Mt Darwin</item>
+        <item>Mudzi</item>
+        <item>Murehwa</item>
+        <item>Mutare</item>
+        <item>Mutasa</item>
+        <item>Mutoko</item>
+        <item>Mwenezi</item>
+        <item>Nkayi</item>
+        <item>Nyanga</item>
+        <item>Rusape</item>
+        <item>Rushinga</item>
+        <item>Seke</item>
+        <item>Shamva</item>
+        <item>Shurugwi</item>
+        <item>Tsholotsho</item>
+        <item>Umguza</item>
+        <item>Umzingwane</item>
+        <item>UMP WE</item>
+        <item>Zaka</item>
+        <item>Zvimba</item>
+        <item>Zvishavane</item>
+        <item>Out</item>
+    </string-array>
+</resources>

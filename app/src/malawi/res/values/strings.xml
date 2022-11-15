@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Malawi UIC</string>
+    <string name="mother_title">"Mother's first name"</string>
+    <string name="surname_title">"Client's surname"</string>
+    <string name="sex_title">Gender</string>
+    <string name="mother_info">"If the client does not know mother's name or doesn’t have a primary female caregiver default to JANEDOE and enter OE as the UIC code."</string>
+    <string name="district_of_birth_info">"For clients born outside of Malawi default to OUT as the District of Birth and enter UT in the UIC field."</string>
+    <string name="date_of_birth_info">"If the client knows only  their age/year of birth but doesn’t know the day and month, then the default day is 15 and default month is June. If client knows year &amp; month, but not the specific day, then DOB is 15 of the month and given year as indicated by the client."</string>
+    <string name="twin_info">"If the client was born as part of a multiple child pregnancy tick this box."</string>
+    <string name="birth_order_info">"Select the birth order of the client from this multiple child pregnancy, not the birth order of all the siblings in the entire family."</string>
+    <string-array name="district_list">
+        <item>Chitipa</item>
+        <item>Karonga</item>
+        <item>Rumphi</item>
+        <item>Mzimba</item>
+        <item>Nkhatabay</item>
+        <item>Nkhotakota</item>
+        <item>Kasungu</item>
+        <item>Dowa</item>
+        <item>Lilongwe</item>
+        <item>Nchisi</item>
+        <item>Mchinji</item>
+        <item>Salima</item>
+        <item>Dedza</item>
+        <item>Mangochi</item>
+        <item>Ntcheu</item>
+        <item>Balaka</item>
+        <item>Mwanza</item>
+        <item>Neno</item>
+        <item>Machinga</item>
+        <item>Zomba</item>
+        <item>Chiradzulu</item>
+        <item>Blantyre</item>
+        <item>Thyolo</item>
+        <item>Mulanje</item>
+        <item>Phalombe</item>
+        <item>Chikwawa</item>
+        <item>Nsanje</item>
+        <item>Likoma</item>
+        <item>Out</item>
+    </string-array>
+</resources>

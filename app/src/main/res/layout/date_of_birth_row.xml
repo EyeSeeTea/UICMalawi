@@ -1,39 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/date_background"
-    android:layout_marginBottom="@dimen/row_margin_button"
-    android:paddingTop="@dimen/row_padding_top"
-    android:paddingBottom="@dimen/row_padding_bottom">
+    android:orientation="vertical"
+    android:paddingTop="@dimen/row_padding_top">
 
-    <org.eyeseetea.uicapp.views.TextCard
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/text_margin"
-        android:id="@+id/date_header"
-        android:textSize="@dimen/title_text_size"
-        android:textColor="@color/date_text"
-        app:tFontName="@string/condensed_font_name"
-        android:text="@string/date_title" />
-    <org.eyeseetea.uicapp.views.EditCard
+        android:background="@color/date_background"
+        android:orientation="horizontal">
+
+        <org.eyeseetea.uicapp.presentation.views.TextCard
+            android:id="@+id/date_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/text_margin"
+            android:text="@string/date_title"
+            android:textColor="@color/date_text"
+            android:textSize="@dimen/title_text_size"
+            app:tFontName="@string/condensed_font_name" />
+
+        <ImageView
+            android:layout_width="@dimen/info_icon_size"
+            android:layout_height="@dimen/info_icon_size"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/input_margin"
+            android:layout_marginTop="@dimen/info_margin"
+            android:layout_marginBottom="@dimen/info_margin_bottom"
+            android:onClick="showDateInfo"
+            android:src="@drawable/info_button" />
+    </LinearLayout>
+
+    <org.eyeseetea.uicapp.presentation.views.EditCard
         android:id="@+id/date_value"
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_text_height"
-        android:inputType="none"
-        android:textSize="@dimen/title_text_size"
-        android:digits=""
-        android:cursorVisible="false"
         android:layout_marginLeft="@dimen/input_margin"
-        android:textColor="@color/date_text"
-        android:textColorHint="@color/hint_color"
+        android:layout_marginRight="@dimen/input_margin"
+        android:background="@color/white"
+        android:cursorVisible="false"
+        android:digits=""
         android:drawableRight="@drawable/calendar"
         android:gravity="center"
+        android:inputType="none"
         android:minHeight="@dimen/edit_text_height"
         android:paddingLeft="@dimen/edit_text_left_padding"
-        android:layout_marginRight="@dimen/input_margin"
-        app:tFontName="@string/condensed_font_name"
-        android:background="@color/white"/>
+        android:textColor="@color/date_text"
+        android:textColorHint="@color/hint_color"
+        android:textSize="@dimen/title_text_size"
+        app:tFontName="@string/condensed_font_name" />
 </LinearLayout>

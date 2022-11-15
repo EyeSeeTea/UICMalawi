@@ -3,9 +3,7 @@ package org.eyeseetea.uicapp;
 import android.app.Dialog;
 import android.content.Context;
 import android.text.Html;
-import android.text.InputFilter;
 import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.util.Log;
@@ -20,30 +18,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.regex.Pattern;
 
 /**
  * Created by idelcano on 25/10/2016.
  */
 
 public class Utils {
-
-
-    /**
-     * Is the filter to prevent the input of characters
-     *
-     * @return
-     */
-    public static InputFilter filter = new InputFilter() {
-        @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-            String blockCharacterSet = "~#^|$%*!@/()-'\":;,?{}=!$^';,?×÷<>{}€£¥₩%~`¤♡♥_|《》¡¿°•○●□■◇◆♧♣▲▼▶◀↑↓←→☆★▪:-);-):-D:-(:'(:O1234567890+.&";
-            if (source != null && blockCharacterSet.contains(("" + source))) {
-                    return "";
-            }
-            return null;
-        }
-    };
 
     /**
      * Get today date with the correct year month and day but: 00:00:00 00:00:00
@@ -65,7 +45,7 @@ public class Utils {
      *  Returns the year in a calendar date
      * @return
      */
-    static int getYear(Calendar newCalendar) {
+    public static int getYear(Calendar newCalendar) {
         return newCalendar.get(Calendar.YEAR);
     }
 
@@ -73,7 +53,7 @@ public class Utils {
      *  Returns the day in a calendar date
      * @return
      */
-    static int getDay(Calendar newCalendar) {
+    public static int getDay(Calendar newCalendar) {
         return newCalendar.get(Calendar.DAY_OF_MONTH);
     }
 
@@ -81,7 +61,7 @@ public class Utils {
      *  Returns the month in a calendar date
      * @return
      */
-    static int getMonth(Calendar newCalendar) {
+    public static int getMonth(Calendar newCalendar) {
         return newCalendar.get(Calendar.MONTH) + 1;
     }
 
@@ -139,7 +119,7 @@ public class Utils {
 
         //set up text title
         TextView textTile = (TextView) dialog.findViewById(R.id.aboutTitle);
-        textTile.setText(BuildConfig.FLAVOR.toUpperCase() + "(bb) " + BuildConfig.VERSION_NAME);
+        textTile.setText(BuildConfig.FLAVOR.toUpperCase() + "(dev) " + BuildConfig.VERSION_NAME);
         textTile.setGravity(Gravity.RIGHT);
 
         //set up text title
