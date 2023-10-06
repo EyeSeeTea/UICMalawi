@@ -43,13 +43,13 @@ android {
         }
         zimbabwe {
             applicationId "org.eyeseetea.uicapp.zimbabwe_dev"
-            versionCode 9
-            versionName "1.2.1"
+            versionCode 10
+            versionName "1.2.2"
         }
         malawi {
             applicationId "org.eyeseetea.uicapp.malawi_dev"
-            versionCode 4
-            versionName "1.0.3"
+            versionCode 5
+            versionName "1.0.4"
         }
     }
 }
