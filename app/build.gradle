@@ -8,12 +8,12 @@ repositories {
 
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "28.0.3"
+    compileSdkVersion 33
+    buildToolsVersion "33.0.2"
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 28
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        targetSdkVersion 31
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "GIT_HUB_BOT_TOKEN", "\"$gitHubBotToken\""
         flavorDimensions "default"
     }
@@ -43,13 +43,13 @@ android {
         }
         zimbabwe {
             applicationId "org.eyeseetea.uicapp.zimbabwe_dev"
-            versionCode 6
-            versionName "1.0.6"
+            versionCode 10
+            versionName "1.2.2"
         }
         malawi {
             applicationId "org.eyeseetea.uicapp.malawi_dev"
-            versionCode 4
-            versionName "1.0.3"
+            versionCode 5
+            versionName "1.0.4"
         }
     }
 }
@@ -58,16 +58,13 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     //Support Libraries
-    implementation "com.android.support:appcompat-v7:${versions.support_library}"
-    implementation "com.android.support:design:${versions.support_library}"
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'com.google.android.material:material:1.0.0'
 
     //Testing
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.2.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testImplementation 'junit:junit:4.12'
-    implementation('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
-        transitive = true;
-    }
     implementation project(path: ':bugshaker')
 }

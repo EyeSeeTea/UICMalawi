@@ -7,12 +7,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
+import com.google.android.material.appbar.AppBarLayout;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.core.widget.NestedScrollView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -31,8 +36,6 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
-
 import org.eyeseetea.uicapp.domain.CodeGenerator;
 import org.eyeseetea.uicapp.R;
 import org.eyeseetea.uicapp.Utils;
@@ -50,8 +53,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import io.fabric.sdk.android.Fabric;
 
 public class ScrollingActivity extends AppCompatActivity {
 
@@ -92,7 +93,6 @@ public class ScrollingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_scrolling);
         initViews();
         createActionBar();
@@ -213,7 +213,7 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     private void initDropDown(final Spinner spinner, final int keyId, int list_key,
-            int id_default) {
+                              int id_default) {
         String defaultValue = getString(id_default);
         String value = getStringFromSharedPreference(keyId, defaultValue);
 
@@ -240,7 +240,7 @@ public class ScrollingActivity extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1,
-                    int arg2, long arg3) {
+                                       int arg2, long arg3) {
                 putStringInSharedPreference(spinner.getSelectedItem().toString(), keyId);
                 refreshCode();
             }
@@ -282,16 +282,21 @@ public class ScrollingActivity extends AppCompatActivity {
             String female = getApplication().getApplicationContext().getString(R.string.sex_female);
             String trasngender = getApplication().getApplicationContext().getString(
                     R.string.sex_transgender);
+            String other = getApplication().getApplicationContext().getString(
+                    R.string.sex_other);
             if (value.equals(male)) {
                 onMaleClicked(null);
             } else if (value.equals(female)) {
                 onFemaleClicked(null);
             } else if (value.equals(trasngender)) {
                 onTransgenderClicked(null);
+            } else if (value.equals(other)) {
+                onTransgenderClicked(null);
             } else {
                 viewHolders.male.setEnabled(false);
                 viewHolders.female.setEnabled(false);
                 viewHolders.transgender.setEnabled(false);
+                viewHolders.other.setActivated(false);
             }
             //Refresh the generated code
             refreshCode();
@@ -417,6 +422,7 @@ public class ScrollingActivity extends AppCompatActivity {
         viewHolders.male.setActivated(true);
         viewHolders.female.setActivated(false);
         viewHolders.transgender.setActivated(false);
+        viewHolders.other.setActivated(false);
         refreshCode();
     }
 
@@ -430,6 +436,7 @@ public class ScrollingActivity extends AppCompatActivity {
         viewHolders.male.setActivated(false);
         viewHolders.female.setActivated(true);
         viewHolders.transgender.setActivated(false);
+        viewHolders.other.setActivated(false);
         refreshCode();
     }
 
@@ -442,6 +449,20 @@ public class ScrollingActivity extends AppCompatActivity {
         viewHolders.male.setActivated(false);
         viewHolders.female.setActivated(false);
         viewHolders.transgender.setActivated(true);
+        viewHolders.other.setActivated(false);
+        refreshCode();
+    }
+
+    /**
+     * On click on sex other this method save the transgender value
+     */
+    public void onOtherClicked(View view) {
+        putStringInSharedPreference(getApplicationContext().getString(R.string.sex_other),
+                R.string.shared_key_sex);
+        viewHolders.male.setActivated(false);
+        viewHolders.female.setActivated(false);
+        viewHolders.transgender.setActivated(false);
+        viewHolders.other.setActivated(true);
         refreshCode();
     }
 
@@ -471,6 +492,7 @@ public class ScrollingActivity extends AppCompatActivity {
         viewHolders.male.setActivated(false);
         viewHolders.female.setActivated(false);
         viewHolders.transgender.setActivated(false);
+        viewHolders.other.setActivated(false);
 
         putStringInSharedPreference(DEFAULT_VALUE, R.string.shared_key_sex);
         Long defaultNoDate = Long.parseLong(
@@ -539,11 +561,11 @@ public class ScrollingActivity extends AppCompatActivity {
         showSnackBar(R.string.date_of_birth_info);
     }
 
-    public void showTwinInfo(View view){
+    public void showTwinInfo(View view) {
         showSnackBar(R.string.twin_info);
     }
 
-    public void showBirthInfo(View view){
+    public void showBirthInfo(View view) {
         showSnackBar(R.string.birth_order_info);
     }
 
@@ -552,7 +574,7 @@ public class ScrollingActivity extends AppCompatActivity {
                 .make(viewHolders.coordinator, messageId, Snackbar.LENGTH_INDEFINITE);
         View sbView = sb.getView();
         TextView textView = (TextView) sbView.findViewById(
-                android.support.design.R.id.snackbar_text);
+                R.id.snackbar_text);
         //increase max lines of text in snackbar. default is 2.
         textView.setMaxLines(20);
         sb.setAction(R.string.ok, new View.OnClickListener() {
@@ -563,8 +585,6 @@ public class ScrollingActivity extends AppCompatActivity {
         });
         sb.show();
     }
-
-
 
 
     /**
@@ -601,7 +621,7 @@ public class ScrollingActivity extends AppCompatActivity {
             DatePickerDialog.OnDateSetListener datepickerlistener =
                     new DatePickerDialog.OnDateSetListener() {
                         public void onDateSet(DatePicker view, int newYear, int newMonthOfYear,
-                                int newDayOfMonth) {
+                                              int newDayOfMonth) {
                             Calendar newCalendar = Calendar.getInstance();
                             newCalendar.set(newYear, newMonthOfYear, newDayOfMonth);
                             convertCalendarToLocalVariables(newCalendar);
@@ -709,6 +729,9 @@ public class ScrollingActivity extends AppCompatActivity {
         if (viewHolders.transgender == null) {
             viewHolders.transgender = (CustomButton) (findViewById(R.id.radio_transgender));
         }
+        if (viewHolders.other == null) {
+            viewHolders.other = (CustomButton) (findViewById(R.id.radio_other));
+        }
         if (viewHolders.code == null) {
             viewHolders.code = (TextCard) findViewById(R.id.code_text);
         }
@@ -722,7 +745,7 @@ public class ScrollingActivity extends AppCompatActivity {
             viewHolders.twinDropdown = (Spinner) findViewById(R.id.twin_dropdown);
         }
 
-        if (viewHolders.twinDropdownContainer == null){
+        if (viewHolders.twinDropdownContainer == null) {
             viewHolders.twinDropdownContainer = findViewById(R.id.twin_dropdown_container);
         }
     }
@@ -738,6 +761,7 @@ public class ScrollingActivity extends AppCompatActivity {
         CustomButton male;
         CustomButton female;
         CustomButton transgender;
+        CustomButton other;
         TextCard code;
         ImageView codeButton;
         CheckBox twinCheckBox;
