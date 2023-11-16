@@ -7,10 +7,11 @@
     <string name="day_title">Day</string>
     <string name="month_title">Month</string>
     <string name="year_title">Year</string>
-    <string name="sex_title">Sex</string>
+    <string name="sex_title">Gender</string>
     <string name="sex_male">Male</string>
     <string name="sex_female">Female</string>
     <string name="sex_transgender">Transgender</string>
+    <string name="sex_other">Other</string>
     <string name="code_title">YOUR CODE</string>
     <string name="code_copy">Copy</string>
     <string name="code_invalid">INVALID</string>

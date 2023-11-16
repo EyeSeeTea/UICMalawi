@@ -24,14 +24,12 @@ import android.content.res.AssetManager;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.widget.RadioButton;
 
 import org.eyeseetea.uicapp.R;
 
-/**
- * Created by adrian on 30/05/15.
- */
-public class CustomRadioButton extends RadioButton {
+import androidx.appcompat.widget.AppCompatRadioButton;
+
+public class CustomRadioButton extends AppCompatRadioButton {
     private Context context = getContext();
     private String mfontName = context.getString(R.string.normal_font);
     private AssetManager assetManager = context.getAssets();
