@@ -43,7 +43,7 @@ android {
         }
         zimbabwe {
             applicationId "org.eyeseetea.uicapp.zimbabwe_dev"
-            versionCode 10
+            versionCode 11
             versionName "1.2.2"
         }
         malawi {
